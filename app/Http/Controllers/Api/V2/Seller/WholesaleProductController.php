@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V2\Seller;
 
 use Illuminate\Http\Request;
-use CoreComponentRepository;
+use //CoreComponentRepository;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTranslation;
@@ -22,7 +22,7 @@ class WholesaleProductController extends Controller
     }
 
 
-    // Wholesale Products list in Seller panel 
+    // Wholesale Products list in Seller panel
     public function wholesale_products()
     {
 
@@ -80,7 +80,7 @@ class WholesaleProductController extends Controller
     public function product_update(WholesaleProductRequest $request, $id)
     {
         (new WholesaleService)->update($request, $id);
-        
+
         return $this->success(translate('Product has been updated successfully'));
     }
 
