@@ -1,8 +1,7 @@
 /bootstrap/compiled.php
 .env.*.php
 .env.php
-/app/Exceptions
-/node_modules
+de_modules
 /public/hot
 /public/storage
 /public/uploads
@@ -32,4 +31,5 @@ install.zip
 /nbproject
 /public/app-translations
 public/uploads.zip
-server.php
+
+
