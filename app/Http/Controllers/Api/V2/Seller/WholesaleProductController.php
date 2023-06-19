@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V2\Seller;
 
 use Illuminate\Http\Request;
-use //CoreComponentRepository;
+//use CoreComponentRepository;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTranslation;
