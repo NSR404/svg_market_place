@@ -1160,8 +1160,8 @@ if (!function_exists('static_asset')) {
      */
     function static_asset($path, $secure = null)
     {
-        return asset( $path, $secure);
         return app('url')->asset('public/' . $path, $secure);
+        return asset( $path, $secure);
     }
 }
 
