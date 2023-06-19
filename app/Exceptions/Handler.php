@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
             if ($request->is('customer-products/admin')) {
                 return NgeniusUtility::initPayment();
             }
-            
+
             return parent::render($request, $e);
         }
         else
@@ -55,4 +55,5 @@ class Handler extends ExceptionHandler
             return parent::render($request, $e);
         }
     }
+
 }
