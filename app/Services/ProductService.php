@@ -40,7 +40,7 @@ class ProductService
             $discount_end_date   = strtotime($date_var[1]);
         }
         unset($collection['date_range']);
-        
+
         if ($collection['meta_title'] == null) {
             $collection['meta_title'] = $collection['name'];
         }
@@ -81,7 +81,7 @@ class ProductService
         $options = ProductUtility::get_attribute_options($collection);
 
         $combinations = (new CombinationService())->generate_combination($options);
-        
+
         if (count($combinations) > 0) {
             foreach ($combinations as $key => $combination) {
                 $str = ProductUtility::get_combination_string($combination, $collection);
@@ -125,7 +125,7 @@ class ProductService
         }
 
         $published = 1;
-        if ($collection['button'] == 'unpublish' || $collection['button'] == 'draft') {
+        if (@$collection['button'] == 'unpublish' || @$collection['button'] == 'draft') {
             $published = 0;
         }
         unset($collection['button']);
@@ -190,7 +190,7 @@ class ProductService
             $discount_end_date   = strtotime($date_var[1]);
         }
         unset($collection['date_range']);
-        
+
         if ($collection['meta_title'] == null) {
             $collection['meta_title'] = $collection['name'];
         }
@@ -209,7 +209,7 @@ class ProductService
         }
         unset($collection['lang']);
 
-        
+
         $shipping_cost = 0;
         if (isset($collection['shipping_type'])) {
             if ($collection['shipping_type'] == 'free') {
@@ -222,7 +222,7 @@ class ProductService
 
         $colors = json_encode(array());
         if (
-            isset($collection['colors_active']) && 
+            isset($collection['colors_active']) &&
             $collection['colors_active'] &&
             $collection['colors'] &&
             count($collection['colors']) > 0
@@ -276,7 +276,7 @@ class ProductService
         }
 
         unset($collection['button']);
-        
+
         $data = $collection->merge(compact(
             'discount_start_date',
             'discount_end_date',
@@ -286,7 +286,7 @@ class ProductService
             'choice_options',
             'attributes',
         ))->toArray();
-        
+
         $product->update($data);
 
         return $product;

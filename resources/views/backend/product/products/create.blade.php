@@ -62,12 +62,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{translate('Unit')}}</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" name="unit" placeholder="{{ translate('Unit (e.g. KG, Pc etc)') }}" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Weight')}} <small>({{ translate('In Kg') }})</small></label>
                             <div class="col-md-8">
                                 <input type="number" class="form-control" name="weight" step="0.01" value="0.00" placeholder="0.00">
@@ -641,9 +635,9 @@
             </div>
             <div class="col-12">
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="Third group">
+                    {{-- <div class="btn-group mr-2" role="group" aria-label="Third group">
                         <button type="submit" name="button" value="unpublish" class="btn btn-primary action-btn">{{ translate('Save & Unpublish') }}</button>
-                    </div>
+                    </div> --}}
                     <div class="btn-group" role="group" aria-label="Second group">
                         <button type="submit" name="button" value="publish" class="btn btn-success action-btn">{{ translate('Save & Publish') }}</button>
                     </div>
