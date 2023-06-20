@@ -25,7 +25,7 @@
     @if(\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
-	<link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css') }}">
+	<link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=0.01') }}">
 
     <style>
         body {
@@ -61,6 +61,11 @@
 </head>
 <body class="">
 
+    {{-- Loader --}}
+    <div id="preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
+
 	<div class="aiz-main-wrapper">
         @include('backend.inc.admin_sidenav')
 		<div class="aiz-content-wrapper">
@@ -81,6 +86,7 @@
 
 	<script src="{{ static_asset('assets/js/vendors.js') }}" ></script>
 	<script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}" ></script>
+    <script src="{{ static_asset('assets/js/custom/backend/master.js?v=0.01') }}"></script>
 
     @yield('script')
 

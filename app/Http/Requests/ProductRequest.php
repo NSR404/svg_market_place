@@ -27,10 +27,9 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        
+
         $rules['name']          = 'required|max:255';
         $rules['category_id']   = 'required';
-        $rules['unit' ]         = 'required';
         $rules['min_qty' ]      = 'required|numeric';
         $rules['unit_price']    = 'required|numeric';
         if ($this->get('discount_type') == 'amount') {
