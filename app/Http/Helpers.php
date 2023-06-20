@@ -1623,40 +1623,6 @@ if (!function_exists('timezones')) {
 
 
 
-    /**
-     * General Success message
-     */
-    if (! function_exists('getSuccessMessage')) {
-        function getSuccessMessage()
-        {
-            return __('custom.response_messages.Success');
-        }
-    }
-
-    /**
-     * General Error message
-     */
-        if (! function_exists('getErrorMessage')) {
-            function getErrorMessage()
-            {
-                return __('custom.response_messages.error');
-            }
-    }
-
-
-    /**
-     * Create General Response Json
-     */
-    if (!function_exists('generateResponse')) {
-        function generateResponse($status , $redirect = null)
-        {
-                return [
-                    'status'    =>   $status,
-                    'messsage'  =>  $status ? getSuccessMessage() : getErrorMessage(),
-                    'redirect'  =>  $redirect ? route($redirect) : null,
-                ];
-        }
-    }
 
 
 }

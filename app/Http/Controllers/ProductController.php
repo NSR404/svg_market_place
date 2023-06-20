@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use AizPackages\CombinationGenerate\Services\CombinationService;
+use App\Helpers\ResponseHelper;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -224,11 +225,13 @@ class ProductController extends Controller
                     'lang', 'name', 'unit', 'description', 'product_id'
                 ]));
                 DB::commit();
-                $response = generateResponse(true  , 'products.index');
+                $response = ResponseHelper::generateResponse(true  , 'products.index');
+                Artisan::call('view:clear');
+                Artisan::call('cache:clear');
         }catch(Throwable $e)
         {
             DB::rollBack();
-            $response   =   generateResponse(false);
+            $response   =   ResponseHelper::generateResponse(false);
         }
         return response()->json($response);
     }
@@ -339,11 +342,13 @@ class ProductController extends Controller
                 ])
             );
             DB::commit();
-            $response = generateResponse(true  , 'products.index');
+            $response = ResponseHelper::generateResponse(true  , 'products.index');
+            Artisan::call('view:clear');
+            Artisan::call('cache:clear');
         }catch(Throwable $e)
         {
             DB::rollBack();
-            $response = generateResponse(false);
+            $response = ResponseHelper::generateResponse(false);
         }
         return response()->json($response);
     }
