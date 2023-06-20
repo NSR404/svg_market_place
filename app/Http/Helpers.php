@@ -1648,7 +1648,7 @@ if (!function_exists('timezones')) {
     /**
      * Create General Response Json
      */
-    if (! function_exists('generateResponse')) {
+    if (!function_exists('generateResponse')) {
         function generateResponse($status , $redirect = null)
         {
                 return [
