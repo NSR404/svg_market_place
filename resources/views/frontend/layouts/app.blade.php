@@ -111,7 +111,7 @@
             font-family: 'Public Sans', sans-serif;
             font-weight: 400;
         }
-        
+
         .pagination .page-link,
         .page-item.disabled .page-link {
             min-width: 32px;
@@ -252,7 +252,7 @@
     @endif
 
     @include('frontend.partials.modal')
-    
+
     @include('frontend.partials.account_delete_modal')
 
     <div class="modal fade" id="addToCart">
@@ -275,7 +275,7 @@
 
     <!-- SCRIPTS -->
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
-    <script src="{{ static_asset('assets/js/aiz-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}{{ rand(1000,9999) }}"></script>
 
 
 
@@ -399,7 +399,7 @@
             if($trigger !== event.target && !$trigger.has(event.target).length){
                 $("#click-category-menu").slideUp("fast");;
                 $("#category-menu-bar-icon").removeClass('show');
-            }   
+            }
         });
 
         function updateNavCart(view,count){
@@ -555,7 +555,7 @@
                 AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
                 return false;
             @endif
-            
+
             if(checkAddToCartValidity()) {
                 $('#addToCart-modal-body').html(null);
                 $('#addToCart').modal();
@@ -597,7 +597,7 @@
                 $('#login_modal').modal('show');
             @endif
         }
-        
+
         function clickToSlide(btn,id){
             $('#'+id+' .aiz-carousel').find('.'+btn).trigger('click');
             $('#'+id+' .slide-arrow').removeClass('link-disable');
@@ -631,7 +631,7 @@
             setTimeout(function(){
                 $('.cart-ok').css({ fill: '#d43533' });
             }, 2000);
-            
+
         });
     </script>
 
@@ -698,7 +698,7 @@
                     panel.style.maxHeight = null;
                 } else {
                     panel.style.maxHeight = panel.scrollHeight + "px";
-                } 
+                }
             });
         }
     </script>

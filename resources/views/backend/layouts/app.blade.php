@@ -80,7 +80,7 @@
 
 
 	<script src="{{ static_asset('assets/js/vendors.js') }}" ></script>
-	<script src="{{ static_asset('assets/js/aiz-core.js') }}" ></script>
+	<script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}" ></script>
 
     @yield('script')
 
