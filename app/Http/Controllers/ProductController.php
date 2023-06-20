@@ -224,13 +224,13 @@ class ProductController extends Controller
                     'lang', 'name', 'unit', 'description', 'product_id'
                 ]));
                 DB::commit();
-                $response = generateResponse(true  , 'products.index');
+                $response = $this->generateResponse(true  , 'products.index');
                 Artisan::call('view:clear');
                 Artisan::call('cache:clear');
         }catch(Throwable $e)
         {
             DB::rollBack();
-            $response   =   generateResponse(false);
+            $response   =   $this->generateResponse(false);
         }
         return response()->json($response);
     }
@@ -341,13 +341,13 @@ class ProductController extends Controller
                 ])
             );
             DB::commit();
-            $response = generateResponse(true  , 'products.index');
+            $response = $this->generateResponse(true  , 'products.index');
             Artisan::call('view:clear');
             Artisan::call('cache:clear');
         }catch(Throwable $e)
         {
             DB::rollBack();
-            $response = generateResponse(false);
+            $response = $this->generateResponse(false);
         }
         return response()->json($response);
     }

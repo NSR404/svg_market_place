@@ -10,4 +10,14 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+
+    public function generateResponse($status , $redirect = null)
+    {
+            return [
+                'status'    =>   $status,
+                'messsage'  =>  $status ? getSuccessMessage() : getErrorMessage(),
+                'redirect'  =>  $redirect,
+            ];
+    }
 }
