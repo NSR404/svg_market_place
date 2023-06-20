@@ -27,7 +27,7 @@ class ResponseHelper
         {
                 return [
                     'status'    =>   $status,
-                    'messsage'  =>  $status ? self::getSuccessMessage() : self::getErrorMessage(),
+                    'message'  =>  $status ? self::getSuccessMessage() : self::getErrorMessage(),
                     'redirect'  =>  $redirect ? route($redirect) : null,
                 ];
         }
