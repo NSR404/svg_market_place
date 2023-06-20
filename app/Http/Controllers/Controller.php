@@ -10,24 +10,4 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-
-    public function generateResponse($status , $redirect = null) :array
-    {
-            return [
-                'status'    =>   $status,
-                'messsage'  =>  $status ? $this->getSuccessMessage() : $this->getErrorMessage(),
-                'redirect'  =>  route($redirect),
-            ];
-    }
-
-    public function getSuccessMessage()
-    {
-        return __('custom.response_messages.Success');
-    }
-
-    public function getErrorMessage()
-    {
-        return __('custom.response_messages.error');
-    }
 }

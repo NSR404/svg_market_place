@@ -1654,7 +1654,7 @@ if (!function_exists('timezones')) {
                 return [
                     'status'    =>   $status,
                     'messsage'  =>  $status ? getSuccessMessage() : getErrorMessage(),
-                    'redirect'  =>  $redirect,
+                    'redirect'  =>  $redirect ? route($redirect) : null,
                 ];
         }
     }
