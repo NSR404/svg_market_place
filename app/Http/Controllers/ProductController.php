@@ -224,9 +224,9 @@ class ProductController extends Controller
                     'lang', 'name', 'unit', 'description', 'product_id'
                 ]));
                 DB::commit();
-                $response = $this->generateResponse(true  , 'products.index');
                 Artisan::call('view:clear');
                 Artisan::call('cache:clear');
+                $response = $this->generateResponse(true  , 'products.index');
         }catch(Throwable $e)
         {
             DB::rollBack();
@@ -341,9 +341,9 @@ class ProductController extends Controller
                 ])
             );
             DB::commit();
-            $response = $this->generateResponse(true  , 'products.index');
             Artisan::call('view:clear');
             Artisan::call('cache:clear');
+            $response = $this->generateResponse(true  , 'products.index');
         }catch(Throwable $e)
         {
             DB::rollBack();

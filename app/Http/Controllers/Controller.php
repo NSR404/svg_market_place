@@ -12,12 +12,12 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
-    public function generateResponse($status , $redirect = null)
+    public function generateResponse($status , $redirect = null) :array
     {
             return [
                 'status'    =>   $status,
                 'messsage'  =>  $status ? $this->getSuccessMessage() : $this->getErrorMessage(),
-                'redirect'  =>  $redirect,
+                'redirect'  =>  route($redirect),
             ];
     }
 
