@@ -16,8 +16,18 @@ class Controller extends BaseController
     {
             return [
                 'status'    =>   $status,
-                'messsage'  =>  $status ? getSuccessMessage() : getErrorMessage(),
+                'messsage'  =>  $status ? $this->getSuccessMessage() : $this->getErrorMessage(),
                 'redirect'  =>  $redirect,
             ];
+    }
+
+    public function getSuccessMessage()
+    {
+        return __('custom.response_messages.Success');
+    }
+
+    public function getErrorMessage()
+    {
+        return __('custom.response_messages.error');
     }
 }
