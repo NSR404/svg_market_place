@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Http;
 use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\City;
