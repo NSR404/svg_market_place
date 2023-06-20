@@ -225,7 +225,7 @@ class ProductController extends Controller
                     'lang', 'name', 'unit', 'description', 'product_id'
                 ]));
                 DB::commit();
-                $response = ResponseHelper::generateResponse(true  , 'products.index');
+                $response = ResponseHelper::generateResponse(true  , 'products.all');
                 Artisan::call('view:clear');
                 Artisan::call('cache:clear');
         }catch(Throwable $e)
@@ -342,7 +342,7 @@ class ProductController extends Controller
                 ])
             );
             DB::commit();
-            $response = ResponseHelper::generateResponse(true  , 'products.index');
+            $response = ResponseHelper::generateResponse(true  , 'products.all');
             Artisan::call('view:clear');
             Artisan::call('cache:clear');
         }catch(Throwable $e)
