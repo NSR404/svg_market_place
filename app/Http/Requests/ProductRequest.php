@@ -41,46 +41,4 @@ class ProductRequest extends FormRequest
 
         return $rules;
     }
-
-    /**
-     * Get the validation messages of rules that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'name.required'             => 'Product name is required',
-            'category_id.required'      => 'Category is required',
-            'unit.required'             => 'Unit field is required',
-            'min_qty.required'          => 'Minimum purchase quantity is required',
-            'min_qty.numeric'           => 'Minimum purchase must be numeric',
-            'unit_price.required'       => 'Unit price is required',
-            'unit_price.numeric'        => 'Unit price must be numeric',
-            'discount.required'         => 'Discount is required',
-            'discount.numeric'          => 'Discount must be numeric',
-            'discount.lt:unit_price'    => 'Discount can not be gretaer than unit price',
-            'current_stock.required'    => 'Current stock is required',
-            'current_stock.numeric'     => 'Current stock must be numeric',
-        ];
-    }
-
-    /**
-     * Get the error messages for the defined validation rules.*
-     * @return array
-     */
-    public function failedValidation(Validator $validator)
-    {
-        // dd($this->expectsJson());
-        if ($this->expectsJson()) {
-            throw new HttpResponseException(response()->json([
-                'message' => $validator->errors()->all(),
-                'result' => false
-            ], 422));
-        } else {
-            throw (new ValidationException($validator))
-                    ->errorBag($this->errorBag)
-                    ->redirectTo($this->getRedirectUrl());
-        }
-    }
 }

@@ -21,6 +21,8 @@ use App\Services\ProductService;
 use App\Services\ProductTaxService;
 use App\Services\ProductFlashDealService;
 use App\Services\ProductStockService;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -192,40 +194,45 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = $this->productService->store($request->except([
-            '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
-        ]));
-        $request->merge(['product_id' => $product->id]);
+            try{
+                    DB::beginTransaction();
+                    $product = $this->productService->store($request->except([
+                        '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
+                ]));
+                $request->merge(['product_id' => $product->id]);
 
-        //VAT & Tax
-        if ($request->tax_id) {
-            $this->productTaxService->store($request->only([
-                'tax_id', 'tax', 'tax_type', 'product_id'
-            ]));
+                //VAT & Tax
+                if ($request->tax_id) {
+                    $this->productTaxService->store($request->only([
+                        'tax_id', 'tax', 'tax_type', 'product_id'
+                    ]));
+                }
+
+                //Flash Deal
+                $this->productFlashDealService->store($request->only([
+                    'flash_deal_id', 'flash_discount', 'flash_discount_type'
+                ]), $product);
+
+                //Product Stock
+                $this->productStockService->store($request->only([
+                    'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
+                ]), $product);
+
+                // Product Translations
+                $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
+                ProductTranslation::create($request->only([
+                    'lang', 'name', 'unit', 'description', 'product_id'
+                ]));
+                DB::commit();
+                Artisan::call('view:clear');
+                Artisan::call('cache:clear');
+                $response = generateResponse(true  , 'products.index');
+        }catch(Throwable $e)
+        {
+            DB::rollBack();
+            $response   =   generateResponse(false);
         }
-
-        //Flash Deal
-        $this->productFlashDealService->store($request->only([
-            'flash_deal_id', 'flash_discount', 'flash_discount_type'
-        ]), $product);
-
-        //Product Stock
-        $this->productStockService->store($request->only([
-            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
-        ]), $product);
-
-        // Product Translations
-        $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
-        ProductTranslation::create($request->only([
-            'lang', 'name', 'unit', 'description', 'product_id'
-        ]));
-
-        flash(translate('Product has been inserted successfully'))->success();
-
-        Artisan::call('view:clear');
-        Artisan::call('cache:clear');
-
-        return redirect()->route('products.admin');
+        return response()->json($response);
     }
 
     /**
@@ -294,50 +301,55 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        //Product
-        $product = $this->productService->update($request->except([
-            '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
-        ]), $product);
+        try{
+            DB::beginTransaction();
+            //Product
+            $product = $this->productService->update($request->except([
+                '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
+            ]), $product);
 
-        //Product Stock
-        foreach ($product->stocks as $key => $stock) {
-            $stock->delete();
+            //Product Stock
+            foreach ($product->stocks as $key => $stock) {
+                $stock->delete();
+            }
+
+            $request->merge(['product_id' => $product->id]);
+            $this->productStockService->store($request->only([
+                'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
+            ]), $product);
+
+            //Flash Deal
+            $this->productFlashDealService->store($request->only([
+                'flash_deal_id', 'flash_discount', 'flash_discount_type'
+            ]), $product);
+
+            //VAT & Tax
+            if ($request->tax_id) {
+                ProductTax::where('product_id', $product->id)->delete();
+                $this->productTaxService->store($request->only([
+                    'tax_id', 'tax', 'tax_type', 'product_id'
+                ]));
+            }
+
+            // Product Translations
+            ProductTranslation::updateOrCreate(
+                $request->only([
+                    'lang', 'product_id'
+                ]),
+                $request->only([
+                    'name', 'unit', 'description'
+                ])
+            );
+            DB::commit();
+            Artisan::call('view:clear');
+            Artisan::call('cache:clear');
+            $response = generateResponse(true  , 'products.index');
+        }catch(Throwable $e)
+        {
+            DB::rollBack();
+            $response = generateResponse(false);
         }
-
-        $request->merge(['product_id' => $product->id]);
-        $this->productStockService->store($request->only([
-            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
-        ]), $product);
-
-        //Flash Deal
-        $this->productFlashDealService->store($request->only([
-            'flash_deal_id', 'flash_discount', 'flash_discount_type'
-        ]), $product);
-
-        //VAT & Tax
-        if ($request->tax_id) {
-            ProductTax::where('product_id', $product->id)->delete();
-            $this->productTaxService->store($request->only([
-                'tax_id', 'tax', 'tax_type', 'product_id'
-            ]));
-        }
-
-        // Product Translations
-        ProductTranslation::updateOrCreate(
-            $request->only([
-                'lang', 'product_id'
-            ]),
-            $request->only([
-                'name', 'unit', 'description'
-            ])
-        );
-
-        flash(translate('Product has been updated successfully'))->success();
-
-        Artisan::call('view:clear');
-        Artisan::call('cache:clear');
-
-        return back();
+        return response()->json($response);
     }
 
     /**

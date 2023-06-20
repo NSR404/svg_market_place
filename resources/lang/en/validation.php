@@ -112,6 +112,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'iban'                  => 'The :attribute must be a valid International Bank Account Number (IBAN).',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,6 +129,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'ksa_phone_number'                          => 'The :attribute must be a valid KSA phone number.',
+        'no_intersect'                              =>      'The first and second phase times cannot intersect.',
+        'invalid_location'                          =>      'Location Is Invalid',
     ],
 
     /*
@@ -141,6 +145,31 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'shop_short_desc'               =>          'Branch Name',
+        'shop_short_desc_en'               =>          'Branch Name In English',
+        'latitude'                      =>          'Location',
+        'longitude'                     =>          'Location',
+        'pickup_manager_email'          =>          'PickUp Manager Email',
+        'pickup_manager_phone'          =>          'PickUp Manager Phone',
+        'current_stock'                 =>          'Current Stock',
+        'platform_commission_from_date'  =>         'Platform Commission start Date',
+        'platform_commission_to_date'  =>         'Platform Commission end Date',
+        'paymentgateway_commission_from_date'  =>         'Payment Gateway Commission start Date',
+        'paymentgateway_commission_to_date'  =>         'Payment Gateway Commission end Date',
+        'main_category_id'                 =>          'Main Category',
+        'bank_id'                       =>          'Bank',
+        'your_name_en'                  =>          'Your Name "EN"',
+        'shop_name_en'                  =>          'Shop Name "EN"',
+        'logo'                           =>          'Logo',
+        'refund_policy_en'              => 'Refund Policy In English',
+        'applicable_discount.*'           =>  'Applicable Discount',
+        'description_en'                =>  'Description In English',
+        'description'                       =>  'Description',
+        'applicable_discount_type.*'          =>  'Applicable Discount Type',
+
+
+
+    ],
 
 ];
