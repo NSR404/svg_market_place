@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\ContactUsRequest;
 use Auth;
 use Hash;
 use Mail;
@@ -29,7 +31,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Mail\SecondEmailVerifyMailManager;
+use App\Models\Branch;
 use App\Models\Cart;
+use App\Models\Contact;
+use Throwable;
 
 class HomeController extends Controller
 {
@@ -241,7 +246,7 @@ class HomeController extends Controller
         if (!Auth::check()) {
             session(['link' => url()->current()]);
         }
-        
+
         $detailedProduct  = Product::with('reviews', 'brand', 'stocks', 'user', 'user.shop')->where('auction_product', 0)->where('slug', $slug)->where('approved', 1)->first();
 
         if ($detailedProduct != null && $detailedProduct->published) {
@@ -716,5 +721,26 @@ class HomeController extends Controller
     {
         $products = filter_products(Product::where('added_by', 'admin'))->with('taxes')->paginate(12)->appends(request()->query());
         return view('frontend.inhouse_products', compact('products'));
+    }
+
+    public function contactUs()
+    {
+        $data['branches']   =   Branch::query()->get();
+        return view('frontend.contact_us' , $data);
+    }
+
+
+    public function submitContactUs(ContactUsRequest $request)
+    {
+        try{
+            $data = $request->toArray();
+            $data['phone']  =   "+{$data['country_code']}{$data['phone']}";
+            Contact::query()->create($data);
+            $response_data = ResponseHelper::generateResponse(true , 'home');
+        }catch(Throwable $e)
+        {
+            $response_data = ResponseHelper::generateResponse(false);
+        }
+        return response()->json($response_data);
     }
 }

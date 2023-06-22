@@ -200,7 +200,7 @@
                         </li>
                         <li class="mb-2">
                             <p  class="fs-13 text-secondary mb-1">{{ translate('Phone') }}</p>
-                            <p  class="fs-13 text-soft-light">{{ get_setting('contact_phone') }}</p>
+                            <p  class="fs-13 text-soft-light"><a href="tel:{{ get_setting('contact_phone') }}" class="fs-13 text-soft-light hove-text-primary">{{ get_setting('contact_phone') }}</a></p>
                         </li>
                         <li class="mb-2">
                             <p  class="fs-13 text-secondary mb-1">{{ translate('Email') }}</p>
@@ -358,7 +358,7 @@
                         </li>
                         <li class="mb-2">
                             <p  class="fs-13 text-secondary mb-1">{{ translate('Phone') }}</p>
-                            <p  class="fs-13 text-soft-light">{{ get_setting('contact_phone') }}</p>
+                            <p  class="fs-13 text-soft-light"><a href="tel:{{ get_setting('contact_phone') }}" class="fs-13 text-soft-light hove-text-primary">{{ get_setting('contact_phone') }}</a></p>
                         </li>
                         <li class="mb-2">
                             <p  class="fs-13 text-secondary mb-1">{{ translate('Email') }}</p>

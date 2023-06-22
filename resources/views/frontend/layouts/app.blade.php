@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=') }}{{ rand(1000,9999) }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.02') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.03') }}">
 
 
     <script>
@@ -190,9 +190,14 @@
 @php
     echo get_setting('header_script');
 @endphp
-
+@stack('css')
 </head>
 <body>
+
+     {{-- Loader --}}
+     <div id="preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
     <!-- aiz-main-wrapper -->
     <div class="aiz-main-wrapper d-flex flex-column bg-white">
 
@@ -276,6 +281,7 @@
     <!-- SCRIPTS -->
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     <script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('assets/js/custom/frontend/master.js?v=0.01') }}"></script>
 
 
 

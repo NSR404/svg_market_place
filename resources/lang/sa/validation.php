@@ -234,6 +234,9 @@ return [
     'saturday_phase_1_from'                  =>  'بداية الفترة الاولى يوم السبت',
     'saturday_phase_1_to'                     =>  'نهاية الفترة الاولى يوم السبت',
     'colors'                                =>  'اللون',
+    'google_map'                            =>      'الخريطة على جوجل',
+    'phone_numbers'                         =>  'رقم الهاتف',
+    'message'                               =>  'الرسالة',
 
     ],
 ];

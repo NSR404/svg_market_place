@@ -87,6 +87,11 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
     Auth::routes(['verify' => true]);
 });
 
+// Contact Us
+Route::get('contact-us' , [HomeController::class , 'contactUs'])->name('contact_us');
+Route::post('contact-us-send' , [HomeController::class , 'submitContactUs'])->name('contact_us.send');
+
+
 // Login
 Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout');
@@ -204,7 +209,7 @@ Route::controller(MercadopagoController::class)->group(function () {
     Route::any('/mercadopago/payment/done', 'paymentstatus')->name('mercadopago.done');
     Route::any('/mercadopago/payment/cancel', 'callback')->name('mercadopago.cancel');
 });
-//Mercadopago 
+//Mercadopago
 
 // SSLCOMMERZ Start
 Route::controller(SslcommerzController::class)->group(function () {
@@ -440,3 +445,7 @@ Route::controller(PageController::class)->group(function () {
     //Custom page
     Route::get('/{slug}', 'show_custom_page')->name('custom-pages.show_custom_page');
 });
+
+
+
+
