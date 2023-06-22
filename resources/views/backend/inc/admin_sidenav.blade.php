@@ -706,11 +706,11 @@
                     </li>
                 @endcanany
                 @can('view_contacts')
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="{{route('contacts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['contacts.index']) }}">
                         <span class="aiz-side-nav-text">{{translate('Contacts Messages')}}</span>
                     </a>
-                </li>
+                </li> --}}
                 @endcan
                 <!-- Affiliate Addon -->
                 @if (addon_is_activated('affiliate_system'))
