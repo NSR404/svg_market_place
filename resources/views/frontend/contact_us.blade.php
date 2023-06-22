@@ -105,7 +105,7 @@
                             <li>
                                 <h3 class="mt-2"><i class="las la-map"></i> {{ $branch->getTranslation('name') }} </h5>
                             </li>
-                            <li><i class="las la-map-marker"></i> {{ $branch->address }}</li>
+                            <li><i class="las la-map-marker"></i> {{ $branch->getTranslation('address') }}</li>
                             @foreach ($branch->phone_numbers as $phone_number)
                                 <li>
                                     <i class="las la-phone"></i> <a href="tel:{{ $phone_number }}">{{ $phone_number }}</a>
