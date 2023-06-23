@@ -705,13 +705,13 @@
                         </ul>
                     </li>
                 @endcanany
-                @can('view_contacts')
-                {{-- <li class="aiz-side-nav-item">
-                    <a href="{{route('contacts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['contacts.index']) }}">
+                @canany(['view_contacts' , 'edit_contacts'])
+                <li class="aiz-side-nav-item">
+                    <a href="{{route('contacts.index' , ['type' =>  'unread'])}}" class="aiz-side-nav-link {{ areActiveRoutes(['contacts.index']) }}">
                         <span class="aiz-side-nav-text">{{translate('Contacts Messages')}}</span>
                     </a>
-                </li> --}}
-                @endcan
+                </li>
+                @endcanany
                 <!-- Affiliate Addon -->
                 @if (addon_is_activated('affiliate_system'))
                     @canany(['affiliate_registration_form_config','affiliate_configurations','view_affiliate_users','view_all_referral_users','view_affiliate_withdraw_requests','view_affiliate_logs'])
@@ -1027,7 +1027,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @canany(['view_branches'  , 'create_branch' , 'update_branch' , 'delete_branch'])
+                            @canany(['view_branch'  , 'create_branch' , 'update_branch' , 'delete_branch'])
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('branches.index' , ['lang'=>  App::getLocale()] ) }}" class="aiz-side-nav-link {{ areActiveRoutes(['branches.index' ,  'branches.edit' , 'branches.update']) }}">
                                         <span class="aiz-side-nav-text">{{translate('Branches')}}</span>

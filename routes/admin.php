@@ -493,5 +493,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
     Route::get('branches_delete/{id}' , [BranchController::class  , 'destroy'])->name('branches.destroy');
     Route::post('bulk-branch-delete', [BranchController::class , 'bulkBranchDelete'])->name('bulk-branch-delete');
     Route::get('contacts' , [ContactController::class , 'index'])->name('contacts.index');
+    Route::post('contacts-mark-as-read' , [ContactController::class , 'markAsRead'])->name('contacts.mark_as_read');
 
 });

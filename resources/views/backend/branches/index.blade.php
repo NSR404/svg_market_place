@@ -44,17 +44,6 @@
                 <table class="table aiz-table mb-0">
                     <thead>
                         <tr>
-                            <!--<th data-breakpoints="lg">#</th>-->
-                            <th>
-                                <div class="form-group">
-                                    <div class="aiz-checkbox-inline">
-                                        <label class="aiz-checkbox">
-                                            <input type="checkbox" class="check-all">
-                                            <span class="aiz-square-check"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </th>
                             <th>{{ translate('Name') }}</th>
                             <th>{{ translate('Address') }}</th>
                             <th class="text-right">{{ translate('Options') }}</th>
@@ -62,20 +51,7 @@
                     </thead>
                     <tbody>
                         @foreach ($branches as $key => $branch)
-                            @if ($branch != null)
                                 <tr>
-                                    <!--<td>{{ $key + 1 + ($branches->currentPage() - 1) * $branches->perPage() }}</td>-->
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="aiz-checkbox-inline">
-                                                <label class="aiz-checkbox">
-                                                    <input type="checkbox" class="check-one" name="id[]"
-                                                        value="{{ $branch->id }}">
-                                                    <span class="aiz-square-check"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </td>
                                     <td>{{ $branch->getTranslation('name') }}</td>
                                     <td>{{ $branch->getTranslation('address') }}</td>
                                     <td class="text-right">
@@ -96,7 +72,6 @@
                                         @endcan
                                     </td>
                                 </tr>
-                            @endif
                         @endforeach
                     </tbody>
                 </table>

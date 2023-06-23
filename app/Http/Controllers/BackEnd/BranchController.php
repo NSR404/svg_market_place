@@ -12,6 +12,20 @@ use Throwable;
 
 class BranchController extends Controller
 {
+
+
+    public function __construct()
+    {
+        // Staff Permission Check
+        $this->middleware(['permission:view_branch'])->only('index');
+        $this->middleware(['permission:create_branch'])->only(['create' , 'store']);
+        $this->middleware(['permission:update_branch'])->only(['edit' , 'update']);
+        $this->middleware(['permission:delete_branch'])->only('destroy');
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      *

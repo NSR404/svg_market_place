@@ -20,15 +20,17 @@ class ResponseHelper
             }
 
 
-    /**
-     * Create General Response Json
-     */
-        static function generateResponse($status , $redirect = null)
+        /**
+         * Create General Response Json
+         */
+        static function generateResponse($status , $redirect = null , $modal_to_hide  = null , $row_to_delete = null)
         {
                 return [
-                    'status'    =>   $status,
-                    'message'  =>  $status ? self::getSuccessMessage() : self::getErrorMessage(),
-                    'redirect'  =>  $redirect ? route($redirect) : null,
+                    'status'             =>   $status,
+                    'message'            =>  $status ? self::getSuccessMessage() : self::getErrorMessage(),
+                    'redirect'           =>  $redirect ? route($redirect) : null,
+                    'modal_to_hide'      =>  $modal_to_hide,
+                    'row_to_delete'      =>  $row_to_delete
                 ];
         }
 
