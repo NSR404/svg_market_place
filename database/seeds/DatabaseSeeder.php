@@ -15,7 +15,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->seedBranchPermissions();
         $this->seedContactsPermissions();
+        $this->seedUploiadedFilesPermissions();
     }
+
+
 
 
     /**
@@ -46,6 +49,24 @@ class DatabaseSeeder extends Seeder
             $permission =   [
                 'name'      =>  $contact_permission,
                 'section'   =>  'Contact Messages',
+                'guard_name'     =>  'web',
+            ];
+            Permission::query()->updateOrCreate($permission , $permission);
+        }
+    }
+
+
+    /**
+     * Seed Cotnact Permissions
+     */
+    public function seedUploiadedFilesPermissions()
+    {
+        $contact_permissions    =   ['view_uploaded_files'];
+        foreach($contact_permissions as $contact_permission)
+        {
+            $permission =   [
+                'name'      =>  $contact_permission,
+                'section'   =>  'Uploaded Files',
                 'guard_name'     =>  'web',
             ];
             Permission::query()->updateOrCreate($permission , $permission);

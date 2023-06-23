@@ -12,6 +12,17 @@ use enshrined\svgSanitize\Sanitizer;
 
 class AizUploadController extends Controller
 {
+
+
+    public function __construct()
+    {
+        // Staff Permission Check
+        $this->middleware(['permission:view_uploaded_files'])->only('index');
+    }
+
+
+
+
     public function index(Request $request)
     {
 
