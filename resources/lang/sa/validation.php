@@ -38,6 +38,7 @@ return [
     'dimensions'           => 'الـ :attribute يحتوي على أبعاد صورة غير صالحة.',
     'distinct'             => 'للحقل :attribute قيمة مُكرّرة.',
     'email'                => 'يجب أن يكون :attribute عنوان بريد إلكتروني صحيح البُنية',
+    'custom_email_validation'                => 'يجب أن يكون :attribute عنوان بريد إلكتروني صحيح البُنية',
     'exists'               => 'القيمة المحددة :attribute غير موجودة',
     'file'                 => 'الـ :attribute يجب أن يكون ملفا.',
     'filled'               => ':attribute إجباري',
@@ -237,6 +238,8 @@ return [
     'google_map'                            =>      'الخريطة على جوجل',
     'phone_numbers'                         =>  'رقم الهاتف',
     'message'                               =>  'الرسالة',
+    'type'                          =>      'نوع الطلب',
+
 
     ],
 ];

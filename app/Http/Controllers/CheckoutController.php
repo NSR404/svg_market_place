@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\CreateSvgOrderRequest;
 use App\Utility\PayfastUtility;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -12,11 +14,16 @@ use App\Models\CouponUsage;
 use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\CombinedOrder;
+use App\Models\Country;
 use App\Models\Product;
+use App\Models\SvgOrder;
 use App\Utility\PayhereUtility;
 use App\Utility\NotificationUtility;
 use Session;
 use Auth;
+use PHPUnit\Framework\Constraint\Count;
+use Response;
+use Throwable;
 
 class CheckoutController extends Controller
 {
@@ -32,7 +39,7 @@ class CheckoutController extends Controller
         // Minumum order amount check
         if(get_setting('minimum_order_amount_check') == 1){
             $subtotal = 0;
-            foreach (Cart::where('user_id', Auth::user()->id)->get() as $key => $cartItem){ 
+            foreach (Cart::where('user_id', Auth::user()->id)->get() as $key => $cartItem){
                 $product = Product::find($cartItem['product_id']);
                 $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
             }
@@ -42,12 +49,12 @@ class CheckoutController extends Controller
             }
         }
         // Minumum order amount check end
-        
+
         if ($request->payment_option != null) {
             (new OrderController)->store($request);
 
             $request->session()->put('payment_type', 'cart_payment');
-            
+
             $data['combined_order_id'] = $request->session()->get('combined_order_id');
             $request->session()->put('payment_data', $data);
 
@@ -104,8 +111,10 @@ class CheckoutController extends Controller
 //        if (Session::has('cart') && count(Session::get('cart')) > 0) {
         if ($carts && count($carts) > 0) {
             $categories = Category::all();
-            return view('frontend.shipping_info', compact('categories', 'carts'));
+            $countries  =   Country::query()->get();
+            return view('frontend.shipping_info', compact('categories', 'carts' , 'countries'));
         }
+
         flash(translate('Your cart is empty'))->success();
         return back();
     }
@@ -139,8 +148,8 @@ class CheckoutController extends Controller
             })->orWhere('free_shipping', 1);
             $carrier_list = $carrier_query->get();
         }
-        
-        return view('frontend.delivery_info', compact('carts','carrier_list'));
+
+        return view('frontend.reserveation_info', compact('carts','carrier_list')); #refactored  part.
     }
 
     public function store_delivery_info(Request $request)
@@ -211,12 +220,12 @@ class CheckoutController extends Controller
                                     ->get();
 
                     $coupon_discount = 0;
-                    
+
                     if ($coupon->type == 'cart_base') {
                         $subtotal = 0;
                         $tax = 0;
                         $shipping = 0;
-                        foreach ($carts as $key => $cartItem) { 
+                        foreach ($carts as $key => $cartItem) {
                             $product = Product::find($cartItem['product_id']);
                             $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
                             $tax += cart_product_tax($cartItem, $product,false) * $cartItem['quantity'];
@@ -235,7 +244,7 @@ class CheckoutController extends Controller
 
                         }
                     } elseif ($coupon->type == 'product_base') {
-                        foreach ($carts as $key => $cartItem) { 
+                        foreach ($carts as $key => $cartItem) {
                             $product = Product::find($cartItem['product_id']);
                             foreach ($coupon_details as $key => $coupon_detail) {
                                 if ($coupon_detail->product_id == $cartItem['product_id']) {
@@ -266,7 +275,7 @@ class CheckoutController extends Controller
                         $response_message['response'] = 'warning';
                         $response_message['message'] = translate('This coupon is not applicable to your cart products!');
                     }
-                    
+
                 } else {
                     $response_message['response'] = 'warning';
                     $response_message['message'] = translate('You already used this coupon!');
@@ -338,11 +347,66 @@ class CheckoutController extends Controller
 
         //Session::forget('club_point');
         //Session::forget('combined_order_id');
-        
+
         // foreach($combined_order->orders as $order){
         //     NotificationUtility::sendOrderPlacedNotification($order);
         // }
 
         return view('frontend.order_confirmed', compact('combined_order'));
+    }
+
+
+    /**
+     * Submit SVG Order
+     */
+    public function submitSvgOrder(CreateSvgOrderRequest $request)
+    {
+        try{
+                $data   =   $request->toArray();
+                $carts = Cart::where('user_id', Auth::user()->id)->get();
+                if($carts->isEmpty()) {
+                    $response   =   [
+                        'status'    =>  false,
+                        'message'   =>  translate('Your cart is empty'),
+                        'redirect'  =>  route('home'),
+                    ];
+                }else{
+                    $this->createSvgOrderAndSyncProducts($data , $carts);
+                    $response   =   [
+                        'status'        =>   true,
+                        'message'       =>  translate('Order Created Sucessfully.. We Will Contact You Soon'),
+                        'redirect'      =>  route('home'),
+                    ];
+                }
+        }catch(Throwable $e)
+        {
+            dd($e);
+            $response       =   ResponseHelper::generateResponse(false);
+        }
+        return response()->json($response);
+    }
+
+
+
+    /**
+     * Create Svg order.
+     * sync products with created svg order
+     * clean the cart
+     */
+    protected function createSvgOrderAndSyncProducts($data , $carts)
+    {
+        $product_ids    =   [];
+        foreach($carts as $cart)
+        {
+            array_push($product_ids , $cart['product_id']);
+        }
+        $svg_order  =   [
+            'address_id'        =>  $carts[0]->address_id,
+            'type'              =>  $data['type'],
+            'user_id'           =>  Auth::id(),
+        ];
+        $created_svg_order      =   SvgOrder::query()->create($svg_order);
+        $created_svg_order->products()->sync($product_ids);
+        Cart::where('user_id', Auth::user()->id)->delete();
     }
 }

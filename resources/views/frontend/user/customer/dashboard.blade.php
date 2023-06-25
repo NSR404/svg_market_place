@@ -158,7 +158,7 @@
                                 $total += count($order->orderDetails);
                             }
                         @endphp
-                        <span class="fs-20 fw-700 mb-1">{{ $total > 0 ? sprintf("%02d", $total) : 0 }}</span>
+                        <span class="fs-20 fw-700 mb-1">{{ $total_products_orderd }}</span>
                         <span class="fs-14 fw-400 text-secondary">{{ translate('Total Products Ordered') }}</span>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                     $customer_package = \App\Models\CustomerPackage::find(Auth::user()->customer_package_id);
                 @endphp
                 @if($customer_package != null)
-                    <img src="{{ uploaded_asset($customer_package->logo) }}" class="img-fluid mb-4 h-70px" 
+                    <img src="{{ uploaded_asset($customer_package->logo) }}" class="img-fluid mb-4 h-70px"
                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/avatar-place.png') }}';">
                     <p class="fs-14 fw-700 mb-3 text-primary">{{ translate('Current Package') }}: {{ $customer_package->getTranslation('name') }}</p>
                     <p class="mb-2 d-flex justify-content-between">
@@ -193,7 +193,7 @@
             </div>
         </div>
         @endif
-        
+
         <!-- Default Shipping Address -->
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="p-4 border h-100">
@@ -205,8 +205,6 @@
                     @if($address != null)
                         <ul class="list-unstyled mb-5">
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->address }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->postal_code }} - {{ $address->city->name }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->state->name }},</span></li>
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->country->name }}.</span></li>
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->phone }}</span></li>
                         </ul>
@@ -250,7 +248,7 @@
                                 </a>
                             </div>
                             <!-- add to cart -->
-                            <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex justify-content-center align-items-center" 
+                            <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex justify-content-center align-items-center"
                                 href="javascript:void(0)" onclick="showAddToCartModal({{ $wishlist->product->id }})">{{ translate('Add to Cart') }}</a>
                         </div>
                         <!-- Product Name -->
@@ -289,7 +287,7 @@
             $('#wallet_modal').modal('show');
         }
     </script>
-    
+
     <!-- Address modal Modal -->
     @include('frontend.partials.address_modal')
 @endsection

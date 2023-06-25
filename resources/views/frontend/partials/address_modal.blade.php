@@ -1,5 +1,6 @@
 <!-- New Address Modal -->
-<div class="modal fade" id="new-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="new-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,65 +9,53 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form-default" role="form" action="{{ route('addresses.store') }}" method="POST">
+            <form class="form-default custom-form" role="form" action="{{ route('addresses.store') }}"
+                method="POST">
                 @csrf
                 <div class="modal-body c-scrollbar-light">
+
+                    <!-- Country -->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>{{ translate('Country') }}</label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="mb-3">
+                                <select class="form-control aiz-selectpicker rounded-0" data-live-search="true"
+                                    data-placeholder="{{ translate('Select your country') }}" name="country_id"
+                                    required>
+                                    <option value="">{{ translate('Select your country') }}</option>
+                                    @foreach ($countries as $key => $country)
+                                        <option value="{{ $country->id }}"
+                                            @if ($country->code == 'AE') selected @endif>
+                                            {{ $country->getTranslation('name') }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="p-3">
                         <!-- Address -->
                         <div class="row">
                             <div class="col-md-2">
-                                <label>{{ translate('Address')}}</label>
+                                <label>{{ translate('Address') }}</label>
                             </div>
                             <div class="col-md-10">
-                                <textarea class="form-control mb-3 rounded-0" placeholder="{{ translate('Your Address')}}" rows="2" name="address" required></textarea>
+                                <textarea required class="form-control mb-3 rounded-0" placeholder="{{ translate('Your Address') }}" rows="2"
+                                    name="address" required></textarea>
                             </div>
                         </div>
 
-                        <!-- Country -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Country')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="mb-3">
-                                    <select class="form-control aiz-selectpicker rounded-0" data-live-search="true" data-placeholder="{{ translate('Select your country') }}" name="country_id" required>
-                                        <option value="">{{ translate('Select your country') }}</option>
-                                        @foreach (\App\Models\Country::where('status', 1)->get() as $key => $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- State -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('State')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <select class="form-control mb-3 aiz-selectpicker rounded-0" data-live-search="true" name="state_id" required>
 
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- City -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('City')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <select class="form-control mb-3 aiz-selectpicker rounded-0" data-live-search="true" name="city_id" required>
-
-                                </select>
-                            </div>
-                        </div>
 
                         @if (get_setting('google_map') == 1)
                             <!-- Google Map -->
                             <div class="row mt-3 mb-3">
-                                <input id="searchInput" class="controls" type="text" placeholder="{{translate('Enter a location')}}">
+                                <input id="searchInput" class="controls" type="text"
+                                    placeholder="{{ translate('Enter a location') }}">
                                 <div id="map"></div>
                                 <ul id="geoData">
                                     <li style="display: none;">Full Address: <span id="location"></span></li>
@@ -79,45 +68,41 @@
                             <!-- Longitude -->
                             <div class="row">
                                 <div class="col-md-2" id="">
-                                    <label for="exampleInputuname">{{ translate('Longitude')}}</label>
+                                    <label for="exampleInputuname">{{ translate('Longitude') }}</label>
                                 </div>
                                 <div class="col-md-10" id="">
-                                    <input type="text" class="form-control mb-3 rounded-0" id="longitude" name="longitude" readonly="">
+                                    <input type="text" class="form-control mb-3 rounded-0" id="longitude"
+                                        name="longitude" readonly="">
                                 </div>
                             </div>
                             <!-- Latitude -->
                             <div class="row">
                                 <div class="col-md-2" id="">
-                                    <label for="exampleInputuname">{{ translate('Latitude')}}</label>
+                                    <label for="exampleInputuname">{{ translate('Latitude') }}</label>
                                 </div>
                                 <div class="col-md-10" id="">
-                                    <input type="text" class="form-control mb-3 rounded-0" id="latitude" name="latitude" readonly="">
+                                    <input type="text" class="form-control mb-3 rounded-0" id="latitude"
+                                        name="latitude" readonly="">
                                 </div>
                             </div>
                         @endif
-                        
-                        <!-- Postal code -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Postal code')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <input type="text" class="form-control mb-3 rounded-0" placeholder="{{ translate('Your Postal Code')}}" name="postal_code" value="" required>
-                            </div>
-                        </div>
 
                         <!-- Phone -->
                         <div class="row">
                             <div class="col-md-2">
-                                <label>{{ translate('Phone')}}</label>
+                                <label>{{ translate('Phone') }}</label>
                             </div>
                             <div class="col-md-10">
-                                <input type="text" class="form-control mb-3 rounded-0" placeholder="{{ translate('+880')}}" name="phone" value="" required>
+                                <input type="tel" id="phone-code" class="form-control mb-3 rounded-0" name="phone"
+                                    required>
                             </div>
+                            <input type="hidden" name="country_code">
                         </div>
+
                         <!-- Save button -->
-                        <div class="form-group text-right">
-                            <button type="submit" class="btn btn-primary rounded-0 w-150px">{{translate('Save')}}</button>
+                        <div class="form-group text-right mt-2">
+                            <button type="submit"
+                                class="btn btn-primary rounded-0 w-150px">{{ translate('Save') }}</button>
                         </div>
                     </div>
                 </div>
@@ -127,7 +112,8 @@
 </div>
 
 <!-- Edit Address Modal -->
-<div class="modal fade" id="edit-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -136,7 +122,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <div class="modal-body c-scrollbar-light" id="edit_modal_body">
 
             </div>
@@ -146,32 +132,32 @@
 
 @section('script')
     <script type="text/javascript">
-        function add_new_address(){
+        function add_new_address() {
             $('#new-address-modal').modal('show');
         }
 
         function edit_address(address) {
-            var url = '{{ route("addresses.edit", ":id") }}';
+            var url = '{{ route('addresses.edit', ':id') }}';
             url = url.replace(':id', address);
-            
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url: url,
                 type: 'GET',
-                success: function (response) {
+                success: function(response) {
                     $('#edit_modal_body').html(response.html);
                     $('#edit-address-modal').modal('show');
                     AIZ.plugins.bootstrapSelect('refresh');
 
                     @if (get_setting('google_map') == 1)
-                        var lat     = -33.8688;
-                        var long    = 151.2195;
+                        var lat = -33.8688;
+                        var long = 151.2195;
 
-                        if(response.data.address_data.latitude && response.data.address_data.longitude) {
-                            lat     = parseFloat(response.data.address_data.latitude);
-                            long    = parseFloat(response.data.address_data.longitude);
+                        if (response.data.address_data.latitude && response.data.address_data.longitude) {
+                            lat = parseFloat(response.data.address_data.latitude);
+                            long = parseFloat(response.data.address_data.longitude);
                         }
 
                         initialize(lat, long, 'edit_');
@@ -179,61 +165,10 @@
                 }
             });
         }
-        
-        $(document).on('change', '[name=country_id]', function() {
-            var country_id = $(this).val();
-            get_states(country_id);
-        });
-
-        $(document).on('change', '[name=state_id]', function() {
-            var state_id = $(this).val();
-            get_city(state_id);
-        });
-        
-        function get_states(country_id) {
-            $('[name="state"]').html("");
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{route('get-state')}}",
-                type: 'POST',
-                data: {
-                    country_id  : country_id
-                },
-                success: function (response) {
-                    var obj = JSON.parse(response);
-                    if(obj != '') {
-                        $('[name="state_id"]').html(obj);
-                        AIZ.plugins.bootstrapSelect('refresh');
-                    }
-                }
-            });
-        }
-
-        function get_city(state_id) {
-            $('[name="city"]').html("");
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{route('get-city')}}",
-                type: 'POST',
-                data: {
-                    state_id: state_id
-                },
-                success: function (response) {
-                    var obj = JSON.parse(response);
-                    if(obj != '') {
-                        $('[name="city_id"]').html(obj);
-                        AIZ.plugins.bootstrapSelect('refresh');
-                    }
-                }
-            });
-        }
+        var utilsScriptVar = "{{ static_asset('assets/js/intlTelutils.js') }}";
     </script>
+    <script src="{{ static_asset('assets/js/custom/phone.js?v=0.01') }}"></script>
 
-    
     @if (get_setting('google_map') == 1)
         @include('frontend.partials.google_map')
     @endif

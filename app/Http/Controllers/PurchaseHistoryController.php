@@ -7,6 +7,7 @@ use Auth;
 use App\Models\Order;
 use App\Models\Upload;
 use App\Models\Product;
+use App\Models\SvgOrder;
 use Illuminate\Http\Request;
 
 class PurchaseHistoryController extends Controller
@@ -16,10 +17,28 @@ class PurchaseHistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('orderDetails')->where('user_id', Auth::user()->id)->orderBy('code', 'desc')->paginate(10);
-        return view('frontend.user.purchase_history', compact('orders'));
+        $type               =   $request->query('type');
+        $search             =   $request->serach;
+        $data['orders']     =   SvgOrder::query()
+                                ->whereBelongsTo(Auth::user())
+                                ->when($type , function($query)use($type){
+                                    return $query->where('type' , $type);
+                                });
+        if($search)
+        {
+            $data['orders']     =   $data['orders']->where('code' , 'like' , '%'.$search.'%')
+                                                    ->orWhereHas('products' , function($products) use($search){
+                                                        $products->where('name' , 'like' , '%'.$search.'%')
+                                                                ->orWhereHas('product_translation' , function($translation)use($search){
+                                                                    $translation->where('name' , 'like' , '%'.$search.'%');
+                                                                });
+                                                    });
+        }
+        $data['orders'] =   $data['orders']->orderByDesc('created_at')->paginate(15);
+        $data['type']   =   $type;
+        return view('frontend.user.purchase_history', $data);
     }
 
     public function digital_index()

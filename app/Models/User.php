@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Cart;
 use App\Notifications\EmailVerificationNotification;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -151,5 +153,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function uploads(){
         return $this->hasMany(Upload::class);
     }
-    
+
+    /**
+     * Each User Has Many Products Orderd Through his Svg Orders
+     */
+    public function svgProductsOrderdCount() : int
+    {
+        return SvgOrderProduct::query()->whereIn('svg_order_id' , $this->svgOrders()->pluck('id'))->count();
+    }
+
+    /**
+     * Each User Has
+     */
+    public function svgOrders() : HasMany
+    {
+        return $this->hasMany(SvgOrder::class , 'user_id');
+    }
+
 }

@@ -39,6 +39,7 @@ return [
     'dimensions'           => 'The :attribute has invalid image dimensions.',
     'distinct'             => 'The :attribute field has a duplicate value.',
     'email'                => 'The :attribute must be a valid email address.',
+    'custom_email_validation'                => 'The :attribute must be a valid email address.',
     'exists'               => 'The selected :attribute is invalid.',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'The :attribute field must have a value.',
@@ -167,6 +168,7 @@ return [
         'description_en'                =>  'Description In English',
         'description'                       =>  'Description',
         'applicable_discount_type.*'          =>  'Applicable Discount Type',
+        'type'                          =>      'Order Type',
 
 
 

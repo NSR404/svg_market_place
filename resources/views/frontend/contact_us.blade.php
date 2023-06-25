@@ -7,20 +7,6 @@
         }
     </style>
 @endpush
-@push('css')
-    @if (app()->getLocale() == 'sa')
-        <style>
-            #phone-code {
-                padding-right: 20% !important;
-            }
-
-            .iti__flag-container {
-                left: auto !important;
-                right: 0 !important;
-            }
-        </style>
-    @endif
-@endpush
 @section('content')
     <section class="pt-4 mb-4">
         <div class="container text-center">

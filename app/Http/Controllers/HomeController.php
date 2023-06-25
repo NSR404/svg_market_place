@@ -34,6 +34,7 @@ use App\Mail\SecondEmailVerifyMailManager;
 use App\Models\Branch;
 use App\Models\Cart;
 use App\Models\Contact;
+use App\Models\Country;
 use Throwable;
 
 class HomeController extends Controller
@@ -147,7 +148,9 @@ class HomeController extends Controller
             if($users_cart) {
                 flash(translate('You had placed your items in the shopping cart. Try to order before the product quantity runs out.'))->warning();
             }
-            return view('frontend.user.customer.dashboard');
+            $data['countries']  =   Country::query()->get();
+            $data['total_products_orderd']  =   Auth::user()?->svgProductsOrderdCount();
+            return view('frontend.user.customer.dashboard' , $data);
         } elseif (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.dashboard');
         } else {
@@ -162,7 +165,8 @@ class HomeController extends Controller
         } elseif (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.profile');
         } else {
-            return view('frontend.user.profile');
+            $data['countries']  =   Country::query()->get();
+            return view('frontend.user.profile' , $data);
         }
     }
 

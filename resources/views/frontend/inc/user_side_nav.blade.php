@@ -34,7 +34,7 @@
         <!-- Menus -->
         <div class="sidemnenu">
             <ul class="aiz-side-nav-list mb-3 pb-3 border-bottom" data-toggle="aiz-side-menu">
-                
+
                 <!-- Dashboard -->
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('dashboard') }}" class="aiz-side-nav-link {{ areActiveRoutes(['dashboard']) }}">
@@ -82,7 +82,7 @@
                 </li>
 
                 <!-- Downloads -->
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="{{ route('digital_purchase_history.index') }}"
                         class="aiz-side-nav-link {{ areActiveRoutes(['digital_purchase_history.index']) }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16.001" height="16" viewBox="0 0 16.001 16">
@@ -93,8 +93,8 @@
                         </svg>
                         <span class="aiz-side-nav-text ml-3">{{ translate('Downloads') }}</span>
                     </a>
-                </li>
-                
+                </li> --}}
+
                 <!-- Refund Requests -->
                 @if (addon_is_activated('refund_request'))
                     <li class="aiz-side-nav-item">
@@ -343,7 +343,7 @@
                         @endif
                     </a>
                 </li>
-                
+
                 <!-- Manage Profile -->
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('profile') }}" class="aiz-side-nav-link {{ areActiveRoutes(['profile']) }}">
@@ -358,7 +358,7 @@
                 </li>
 
                 <!-- Delete My Account -->
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="javascript:void(0)" onclick="account_delete_confirm_modal('{{ route('account_delete') }}')" class="aiz-side-nav-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                             <g id="Group_25000" data-name="Group 25000" transform="translate(-240.535 -537)">
@@ -368,10 +368,10 @@
                         </svg>
                         <span class="aiz-side-nav-text ml-3">{{ translate('Delete My Account') }}</span>
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
-        
+
             <!-- logout -->
             <a href="{{ route('logout') }}" class="btn btn-primary btn-block fs-14 fw-700 mb-5 mb-md-0" style="border-radius: 25px;">{{ translate('Sign Out') }}</a>
         </div>

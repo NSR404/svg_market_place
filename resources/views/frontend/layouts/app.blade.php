@@ -191,6 +191,18 @@
     echo get_setting('header_script');
 @endphp
 @stack('css')
+@if (app()->getLocale() == 'sa')
+<style>
+    #phone-code ,  #phone-code-2 {
+        padding-right: 20% !important;
+    }
+
+    .iti__flag-container {
+        left: auto !important;
+        right: 0 !important;
+    }
+</style>
+@endif
 </head>
 <body>
 
@@ -647,34 +659,34 @@
             countryData = window.intlTelInputGlobals.getCountryData(),
             input = document.querySelector("#phone-code");
 
-        for (var i = 0; i < countryData.length; i++) {
-            var country = countryData[i];
-            if (country.iso2 == 'bd') {
-                country.dialCode = '88';
-            }
-        }
+        // for (var i = 0; i < countryData.length; i++) {
+        //     var country = countryData[i];
+        //     if (country.iso2 == 'bd') {
+        //         country.dialCode = '88';
+        //     }
+        // }
 
-        var iti = intlTelInput(input, {
-            separateDialCode: true,
-            utilsScript: "{{ static_asset('assets/js/intlTelutils.js') }}?1590403638580",
-            onlyCountries: @php echo json_encode(\App\Models\Country::where('status', 1)->pluck('code')->toArray()) @endphp,
-            customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
-                if (selectedCountryData.iso2 == 'bd') {
-                    return "01xxxxxxxxx";
-                }
-                return selectedCountryPlaceholder;
-            }
-        });
+        // var iti = intlTelInput(input, {
+        //     separateDialCode: true,
+        //     utilsScript: "{{ static_asset('assets/js/intlTelutils.js') }}?1590403638580",
+        //     onlyCountries: @php echo json_encode(\App\Models\Country::where('status', 1)->pluck('code')->toArray()) @endphp,
+        //     customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+        //         if (selectedCountryData.iso2 == 'bd') {
+        //             return "01xxxxxxxxx";
+        //         }
+        //         return selectedCountryPlaceholder;
+        //     }
+        // });
 
-        var country = iti.getSelectedCountryData();
-        $('input[name=country_code]').val(country.dialCode);
+        // var country = iti.getSelectedCountryData();
+        // $('input[name=country_code]').val(country.dialCode);
 
-        input.addEventListener("countrychange", function(e) {
-            // var currentMask = e.currentTarget.placeholder;
-            var country = iti.getSelectedCountryData();
-            $('input[name=country_code]').val(country.dialCode);
+        // input.addEventListener("countrychange", function(e) {
+        //     // var currentMask = e.currentTarget.placeholder;
+        //     var country = iti.getSelectedCountryData();
+        //     $('input[name=country_code]').val(country.dialCode);
 
-        });
+        // });
 
         function toggleEmailPhone(el) {
             if (isPhoneShown) {
