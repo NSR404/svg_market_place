@@ -47,17 +47,15 @@ class SvgOrder extends Model
     }
 
 
-
+    ############ START RELATIONS ##################
 
     /**
      * Each Svg Order Has many Products
      */
     public function products()
     {
-        return $this->belongsToMany(SvgOrderProduct::class, 'svg_order_products', 'svg_order_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'svg_order_products', 'svg_order_id', 'product_id');
     }
-
-
 
 
 
@@ -72,7 +70,23 @@ class SvgOrder extends Model
 
 
 
-    public function getStatusAttribute()
+    /**
+     * Each Svg Order Belongs To One Address
+     */
+    public function   address() : BelongsTo
+    {
+        return $this->belongsTo(Address::class , 'address_id');
+    }
+
+
+
+
+
+
+    ############ End  RELATIONS ##################
+
+
+    public function getStatusAttributeInHtml()
     {
         $status     =   $this->attributes['status'];
         $html_class =   'warning';
@@ -83,7 +97,7 @@ class SvgOrder extends Model
         {
             $html_class =   'success';
         }
-        echo '<span class="text-'.$html_class.'">'.$status.'</span>';
+        echo '<span class="text-'.$html_class.'">'.__('custom.'.$status).'</span>';
     }
 
 }

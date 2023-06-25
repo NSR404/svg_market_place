@@ -36,7 +36,7 @@ class PurchaseHistoryController extends Controller
                                                                 });
                                                     });
         }
-        $data['orders'] =   $data['orders']->orderByDesc('created_at')->paginate(15);
+        $data['orders'] =   $data['orders']->where('status' , '!=' , 'cancelled')->orderByDesc('created_at')->paginate(15);
         $data['type']   =   $type;
         return view('frontend.user.purchase_history', $data);
     }
@@ -55,13 +55,11 @@ class PurchaseHistoryController extends Controller
         return view('frontend.user.digital_purchase_history', compact('orders'));
     }
 
+
     public function purchase_history_details($id)
     {
-        $order = Order::findOrFail(decrypt($id));
-        $order->delivery_viewed = 1;
-        $order->payment_status_viewed = 1;
-        $order->save();
-        return view('frontend.user.order_details_customer', compact('order'));
+        $order = SvgOrder::query()->with('products.category')->findOrFail(decrypt($id));
+        return view('frontend.user.svg_order_details_customer', compact('order'));
     }
 
     public function download(Request $request)
@@ -90,6 +88,7 @@ class PurchaseHistoryController extends Controller
         }
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -98,22 +97,14 @@ class PurchaseHistoryController extends Controller
      */
     public function order_cancel($id)
     {
-        $order = Order::where('id', $id)->where('user_id', auth()->user()->id)->first();
-        if($order && ($order->delivery_status == 'pending' && $order->payment_status == 'unpaid')) {
-            $order->delivery_status = 'cancelled';
+        $order = SvgOrder::where('id', $id)->where('user_id', auth()->user()->id)->first();
+        if($order && ($order->status == 'pending')) {
+            $order->status = 'cancelled';
             $order->save();
-
-            foreach ($order->orderDetails as $key => $orderDetail) {
-                $orderDetail->delivery_status = 'cancelled';
-                $orderDetail->save();
-                product_restock($orderDetail);
-            }
-
             flash(translate('Order has been canceled successfully'))->success();
         } else {
             flash(translate('Something went wrong'))->error();
         }
-
         return back();
     }
 }
