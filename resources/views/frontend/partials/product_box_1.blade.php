@@ -8,7 +8,7 @@
             $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
         }
     }
-    
+
     $cart_added = [];
     if (isset($cart) && count($cart) > 0) {
         $cart_added = $cart->pluck('product_id')->toArray();
@@ -102,7 +102,7 @@
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>
-        <div class="fs-14 d-flex justify-content-center mt-3">
+        {{-- <div class="fs-14 d-flex justify-content-center mt-3 custom-d-none">
             @if ($product->auction_product == 0)
                 <!-- Previous price -->
                 @if (home_base_price($product) != home_discounted_base_price($product))
@@ -111,7 +111,7 @@
                     </div>
                 @endif
                 <!-- price -->
-                <div class="">
+                <div class="custom-d-none">
                     <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
                 </div>
             @endif
@@ -121,6 +121,6 @@
                     <span class="fw-700 text-primary">{{ single_price($product->starting_bid) }}</span>
                 </div>
             @endif
-        </div>
+        </div> --}}
     </div>
 </div>

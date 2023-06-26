@@ -100,7 +100,7 @@
                                 </div>
 
                                 <!-- Price range -->
-                                <div class="bg-white border mb-3">
+                                {{-- <div class="bg-white border mb-3 ">
                                     <div class="fs-16 fw-700 p-3">
                                         {{ translate('Price range')}}
                                     </div>
@@ -143,13 +143,13 @@
                                     <!-- Hidden Items -->
                                     <input type="hidden" name="min_price" value="">
                                     <input type="hidden" name="max_price" value="">
-                                </div>
-                                
+                                </div> --}}
+
                                 <!-- Attributes -->
                                 @foreach ($attributes as $attribute)
                                     <div class="bg-white border mb-3">
                                         <div class="fs-16 fw-700 p-3">
-                                            <a href="#" class="dropdown-toggle text-dark filter-section collapsed d-flex align-items-center justify-content-between" 
+                                            <a href="#" class="dropdown-toggle text-dark filter-section collapsed d-flex align-items-center justify-content-between"
                                                 data-toggle="collapse" data-target="#collapse_{{ str_replace(' ', '_', $attribute->name) }}" style="white-space: normal;">
                                                 {{ $attribute->getTranslation('name') }}
                                             </a>
@@ -180,7 +180,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                    
+
                                 <!-- Color -->
                                 @if (get_setting('color_filter_activation'))
                                     <div class="bg-white border mb-3">
@@ -220,10 +220,10 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Contents -->
                     <div class="col-xl-9">
-                        
+
                         <!-- Breadcrumb -->
                         <ul class="breadcrumb bg-transparent py-0 px-1">
                             <li class="breadcrumb-item has-transition opacity-50 hov-opacity-100">
@@ -244,7 +244,7 @@
                                 </li>
                             @endif
                         </ul>
-                        
+
                         <!-- Top Filters -->
                         <div class="text-left">
                             <div class="row gutters-5 flex-wrap align-items-center">
@@ -280,13 +280,13 @@
                                         <option value="">{{ translate('Sort by')}}</option>
                                         <option value="newest" @isset($sort_by) @if ($sort_by == 'newest') selected @endif @endisset>{{ translate('Newest')}}</option>
                                         <option value="oldest" @isset($sort_by) @if ($sort_by == 'oldest') selected @endif @endisset>{{ translate('Oldest')}}</option>
-                                        <option value="price-asc" @isset($sort_by) @if ($sort_by == 'price-asc') selected @endif @endisset>{{ translate('Price low to high')}}</option>
-                                        <option value="price-desc" @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option>
+                                        {{-- <option value="price-asc" @isset($sort_by) @if ($sort_by == 'price-asc') selected @endif @endisset>{{ translate('Price low to high')}}</option>
+                                        <option value="price-desc" @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option> --}}
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Products -->
                         <div class="px-3">
                             <div class="row gutters-16 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2 border-top border-left">

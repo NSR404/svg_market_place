@@ -27,7 +27,7 @@
                                         class="d-block text-reset hov-text-primary">{{ $top_product->getTranslation('name') }}</a>
                                 </h4>
                             </div>
-                            <div class="">
+                            {{-- <div class="custom-d-none">
                                 <!-- Price -->
                                 <span class="fs-14 fw-700 text-primary">{{ home_discounted_base_price($top_product) }}</span>
                                 <!-- Home Price -->
@@ -36,7 +36,7 @@
                                     {{ home_price($top_product) }}
                                 </del>
                                 @endif
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </li>

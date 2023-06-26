@@ -1,5 +1,11 @@
 @extends('frontend.layouts.app')
-
+@push('css')
+  <style>
+      .custom-d-none{
+        display: none !important;
+    }
+  </style>
+@endpush
 @section('content')
     <!-- Sliders & Today's deal -->
     <div class="home-banner-area mb-3" style="">
@@ -169,7 +175,7 @@
                                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                         </div>
                                         <!-- Price -->
-                                        <div class="fs-14 mt-3 text-center">
+                                        <div class="fs-14 mt-3 text-center custom-d-none">
                                             <span class="d-block text-white fw-700">{{ home_discounted_base_price($product) }}</span>
                                             @if(home_base_price($product) != home_discounted_base_price($product))
                                                 <del class="d-block text-secondary fw-400">{{ home_base_price($product) }}</del>

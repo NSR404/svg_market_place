@@ -29,29 +29,50 @@
     </section>
     <section class="mb-5">
         <div class="container text-center">
-            <div class="row">
-                <div class="col-sm-4 mx-auto">
+
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h4 class="text-center">{{ translate('Our Branches') }}</h4>
+                </div>
+            </div>
+            <div class="row mt-2 mb-5">
+                {{-- <h5 class="text-center">{{ translate('Our Branches') }}</h5> --}}
+                @foreach ($branches as $branch)
+                    <div class="col-4">
+                        <a href="#{{ $branch->id }}"><i class="las la-map-marker"></i>
+                            {{ $branch->getTranslation('name') }}</a>
+                    </div>
+                @endforeach
+            </div>
+            <hr>
+            <div class="row text-center mt-5">
+                <div class="col-sm-12">
+                    <h4 class="text-center">{{ translate('Contact Us') }}</h4>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-4 mx-auto">
                     <i class="las la-phone"></i>
                     {{ translate('Phone') }}
                 </div>
-                <div class="col-sm-4 mx-auto">
+                <div class="col-4 mx-auto">
                     <i class="las la-map"></i>
                     {{ translate('Address') }}
                 </div>
-                <div class="col-sm-4 mx-auto">
+                <div class="col-4 mx-auto">
                     <i class="las la-envelope"></i>
                     {{ translate('E-mail') }}
                 </div>
             </div>
             <div class="row mt-2">
-                <div class="col-sm-4 mx-auto">
-                    <a href="tel:{{ get_setting('contact_phone') }}" >{{ get_setting('contact_phone') }}</a>
+                <div class="col-4 mx-auto">
+                    <a href="tel:{{ get_setting('contact_phone') }}">{{ get_setting('contact_phone') }}</a>
                 </div>
-                <div class="col-sm-4 mx-auto hove-text-primary text-primary">
+                <div class="col-4   mx-auto hove-text-primary text-primary">
                     {{ get_setting('contact_address', null, App::getLocale()) }}
                 </div>
-                <div class="col-sm-4 mx-auto">
-                    <a href="mailto:{{ get_setting('contact_email') }}" >{{ get_setting('contact_email')  }}</a>
+                <div class="col-4 mx-auto">
+                    <a href="mailto:{{ get_setting('contact_email') }}">{{ get_setting('contact_email') }}</a>
                 </div>
             </div>
             <hr>
@@ -61,19 +82,21 @@
                 <div class="row mt-5 text-left">
                     <div class="col-sm-4 mb-2">
                         <label>{{ translate('Name') }}</label>
-                        <input type="text" name="name" class="form-control" required value="{{ Auth::user()?->name }}">
-                    </div>
-                    <div class="col-sm-4 ">
-                        <label>{{ translate('Phone') }}</label>
-                        <input type="tel" id="phone-code" class="form-control rounded-0" name="phone" value="{{ Auth::user()?->phone }}"
-                            autocomplete="off">
-                        <input type="hidden" name="country_code" value="">
+                        <input type="text" name="name" class="form-control" required
+                            value="{{ Auth::user()?->name }}">
                     </div>
                     <div class="col-sm-4 mb-2">
-                        <label>{{ translate('E-mail') }}</label>
-                        <input type="email" name="email" class="form-control" value="{{ Auth::user()?->email }}" required>
+                        <label>{{ translate('Phone') }}</label>
+                        <input type="tel" id="phone-code" class="form-control rounded-0" name="phone"
+                            value="{{ Auth::user()?->phone }}" autocomplete="off">
+                        <input type="hidden" name="country_code" value="">
                     </div>
-                    <div class="col-sm-12 mt-3">
+                    <div class="col-sm-4 mb-3">
+                        <label>{{ translate('E-mail') }}</label>
+                        <input type="email" name="email" class="form-control" value="{{ Auth::user()?->email }}"
+                            required>
+                    </div>
+                    <div class="col-sm-12">
                         <label>{{ translate('Message') }}</label>
                         <textarea name="message" class="form-control" required></textarea>
                     </div>
@@ -85,7 +108,7 @@
             <hr>
             <div class="row mt-5 text-center">
                 @forelse ($branches as $branch)
-                    <div
+                    <div id="{{ $branch->id }}"
                         class="col-md-6 mb-2 has-transition hov-scale-img hov-animate-outline border-right border-top border-bottom text-center">
                         <ul class="p5">
                             <li>
