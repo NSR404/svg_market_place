@@ -47,11 +47,17 @@
     .fs-mobile-9{
         font-size: 9px !important;
     }
+    .product-box-to-custom{
+        height: 180px !important;
+    }
 }
 
 @media (max-width: 576px) {
     .fs-mobile-9{
         font-size: 9px !important;
+    }
+    .product-box-to-custom{
+        height: 180px !important;
     }
 }
 
