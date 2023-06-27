@@ -58,8 +58,8 @@
             <div class="row">
                 <div class="col-sm-6 mt-5">
                     <h6>
-                        We Work as a Creative partners. to Perform for our customer the best designs & the highest level of
-                        quality construction services at fair and market competitive.
+                        {{ translate('We Work as a Creative partners. to Perform for our customer the best designs & the highest level of
+                        quality construction services at fair and market competitive.') }}
                     </h6>
                     <div class="container mt-5">
                         <div class="row">
