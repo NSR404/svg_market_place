@@ -12,7 +12,7 @@
             <!-- Top Section -->
             <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
                 <!-- Title -->
-                <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
+                <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0 mb-3">
                     <span class="">{{ translate('Best Selling') }}</span>
                 </h3>
                 <!-- Links -->
