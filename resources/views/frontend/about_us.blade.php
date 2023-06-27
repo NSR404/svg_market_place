@@ -42,10 +42,10 @@
                         {{ translate('Our Vision') }}</h1>
                 </div>
                 <div class="col-6 text-center">
-                    <p class="fw-200 fs-14 fs-md-15 text-dark">{{ translate('about_us_our_goal_text') }}</p>
+                    <p class="fw-300 fs-14 fs-md-15 text-dark">{{ translate('about_us_our_goal_text') }}</p>
                 </div>
                 <div class="col-6 text-center">
-                    <p class="fw-200 fs-14 fs-md-15 text-dark">{{ translate('about_us_our_vision_text') }}</p>
+                    <p class="fw-300 fs-14 fs-md-15 text-dark">{{ translate('about_us_our_vision_text') }}</p>
                 </div>
             </div>
             <hr>
@@ -96,23 +96,23 @@
                 </div>
                 <div class="col-sm-6 bg-light mb-2 border-right border-left p-5 text-center">
                     <p class="fs-24 fw-700 hov-text-primary"><i class="text-primary las la-list"></i> {{ translate('Contract Managment') }}</p>
-                    <p class="">{{ translate('about_us_contract_text') }}</p>
+                    <p class="fw-300 fs-16 hov-text-primary">{{ translate('about_us_contract_text') }}</p>
                 </div>
                 <div class="col-sm-6 bg-light mb-2 border-right border-left p-5 text-center">
                     <p class="fs-24 fw-700 hov-text-primary"><i class="text-primary las la-home"></i> {{ translate('Landscape Architecture') }}</p>
-                    <p class="">{{ translate('about_us_langscape_arch_text') }}</p>
+                    <p class="fw-300 fs-16 hov-text-primary">{{ translate('about_us_langscape_arch_text') }}</p>
                 </div>
                 <div class="col-sm-6 bg-light mb-2 border-right border-left p-5 text-center">
                     <p class="fs-24 fw-700 hov-text-primary"><i class="text-primary las la-users"></i> {{ translate('Sustainability') }}</p>
-                    <p class="">{{ translate('about_us_sustainability_text') }}</p>
+                    <p class="fw-300 fs-16 hov-text-primary">{{ translate('about_us_sustainability_text') }}</p>
                 </div>
                 <div class="col-sm-6 bg-light mb-2 border-right border-left p-5 text-center">
                     <p class="fs-24 fw-700 hov-text-primary"><i class="text-primary las la-palette"></i> {{ translate('Architecture & Design') }}</p>
-                    <p class="">{{ translate('about_us_architecture_text') }}</p>
+                    <p class="fw-300 fs-16 hov-text-primary">{{ translate('about_us_architecture_text') }}</p>
                 </div>
                 <div class="col-sm-6 bg-light mb-2 border-right border-left p-5 text-center">
                     <p class="fs-24 fw-700 hov-text-primary"><i class="text-primary las la-sitemap"></i> {{ translate('Construction Supervision') }}</p>
-                    <p class="">{{ translate('about_us_construction_text') }}</p>
+                    <p class="fw-300 fs-16 hov-text-primary">{{ translate('about_us_construction_text') }}</p>
                 </div>
             </div>
         </div>
