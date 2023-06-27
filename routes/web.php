@@ -90,6 +90,8 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 // Contact Us
 Route::get('contact-us' , [HomeController::class , 'contactUs'])->name('contact_us');
 Route::post('contact-us-send' , [HomeController::class , 'submitContactUs'])->name('contact_us.send');
+Route::get('about-us' , [HomeController::class , 'aboutUs'])->name('about_us');
+
 
 
 // Login

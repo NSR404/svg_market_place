@@ -732,6 +732,11 @@ class HomeController extends Controller
         $data['branches']   =   Branch::query()->get();
         return view('frontend.contact_us' , $data);
     }
+    public function aboutUs()
+    {
+        $data['branches']   =   Branch::query()->get();
+        return view('frontend.about_us' , $data);
+    }
 
 
     public function submitContactUs(ContactUsRequest $request)
