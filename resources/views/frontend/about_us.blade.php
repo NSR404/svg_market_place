@@ -10,17 +10,12 @@
             .img-xs-400 {
                 width: 400px !important;
             }
-            .mission-container{
-                font-size: 15px !important;
-            }
+
         }
 
         @media (min-width: 576px) and (max-width: 768px) {
-            .img-xs-400 {
+            img-xs-400 {
                 width: 400px !important;
-            }
-            .mission-container{
-                font-size: 15px !important;
             }
         }
     </style>
@@ -70,19 +65,19 @@
                     <div class="container mt-5 mission-container">
                         <div class="row">
                             <div class="col-6 fs-20 fw-500 mb-5">
-                                <i class="text-primary las la-money-bill"></i>
+                                <i class="text-primary las la-money-bill"></i> <br>
                                 {{ translate('Save Money') }}
                             </div>
                             <div class="col-6  fs-20 fw-500 mb-5">
-                                <i class="text-primary las la-lightbulb"></i>
+                                <i class="text-primary las la-lightbulb"></i> <br>
                                 {{ translate('Better Ideas') }}
                             </div>
                             <div class="col-6  fs-20 fw-500 mb-5">
-                                <i class="text-primary las la-users"></i>
+                                <i class="text-primary las la-users"></i> <br>
                                 {{ translate('Collaboration') }}
                             </div>
                             <div class="col-6  fs-20 fw-500">
-                                <i class="text-primary las la-search"></i>
+                                <i class="text-primary las la-search"></i> <br>
                                 {{ translate('Easy To Find') }}
                             </div>
                         </div>
