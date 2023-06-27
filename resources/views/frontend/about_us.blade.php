@@ -10,11 +10,17 @@
             .img-xs-400 {
                 width: 400px !important;
             }
+            .mission-container{
+                font-size: 15px !important;
+            }
         }
 
         @media (min-width: 576px) and (max-width: 768px) {
-            img-xs-400 {
+            .img-xs-400 {
                 width: 400px !important;
+            }
+            .mission-container{
+                font-size: 15px !important;
             }
         }
     </style>
@@ -61,7 +67,7 @@
                         {{ translate('We Work as a Creative partners. to Perform for our customer the best designs & the highest level of
                         quality construction services at fair and market competitive.') }}
                     </h6>
-                    <div class="container mt-5">
+                    <div class="container mt-5 mission-container">
                         <div class="row">
                             <div class="col-6 fs-20 fw-500 mb-5">
                                 <i class="text-primary las la-money-bill"></i>
