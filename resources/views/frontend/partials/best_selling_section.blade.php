@@ -1,7 +1,7 @@
 @php
     $best_selling_products = Cache::remember('best_selling_products', 86400, function () {
         return filter_products(\App\Models\Product::orderBy('num_of_sale', 'desc'))
-            ->limit(20)
+            ->limit(12)
             ->get();
     });
 @endphp
@@ -28,7 +28,7 @@
             <!-- Products Section -->
             <div class="px-sm-3">
                 <div
-                    class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-4 row-cols-sm-4 row-cols-4 gutters-16 border-top border-left">
+                    class="row row-cols-xxl-4 row-cols-xl-4 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-2 gutters-16 border-top border-left">
                     @foreach ($best_selling_products as $key => $product)
                         <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">
                             @include('frontend.partials.product_box_1', ['product' => $product])
