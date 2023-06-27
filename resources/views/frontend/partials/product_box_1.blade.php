@@ -96,13 +96,13 @@
         @endif
     </div>
 
-    <div class="p-2 p-md-3 text-left">
+    {{-- <div class="p-2 p-md-3 text-left">
         <!-- Product name -->
         <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>
-        {{-- <div class="fs-14 d-flex justify-content-center mt-3 custom-d-none">
+        <div class="fs-14 d-flex justify-content-center mt-3 custom-d-none">
             @if ($product->auction_product == 0)
                 <!-- Previous price -->
                 @if (home_base_price($product) != home_discounted_base_price($product))
@@ -121,6 +121,6 @@
                     <span class="fw-700 text-primary">{{ single_price($product->starting_bid) }}</span>
                 </div>
             @endif
-        </div> --}}
-    </div>
+        </div>
+    </div> --}}
 </div>
