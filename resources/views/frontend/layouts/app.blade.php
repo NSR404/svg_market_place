@@ -57,8 +57,8 @@
     @if(\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
-    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=') }}{{ rand(1000,9999) }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.03') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=0.01') }}{{ rand(1000,9999) }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.04') }}">
 
 
     <script>

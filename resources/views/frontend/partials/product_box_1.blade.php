@@ -98,7 +98,7 @@
 
     <div class="p-2 p-md-3 text-left">
         <!-- Product name -->
-        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center">
+        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>

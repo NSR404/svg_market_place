@@ -11277,3 +11277,17 @@ ul.apps a:hover i{
         transform: rotate(360deg);
     }
 }
+
+
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .fs-mobile-9{
+        font-size: 9px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .fs-mobile-9{
+        font-size: 9px !important;
+    }
+}
