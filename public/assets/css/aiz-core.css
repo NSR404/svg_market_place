@@ -133,6 +133,10 @@ html {
     object-fit: cover;
 }
 
+.box_products .img-fit {
+    max-height: 100%;
+}
+
 .overlay {
     position: absolute;
     width: 100%;
@@ -7180,8 +7184,16 @@ input[type="number"] {
     margin-bottom: 2px;
 }
 
+@media (min-width:575px) and (max-width:1400px) {
+    .carousel-box .aiz-card-box{
+        min-width: 100%!important;
+        padding: 0!important;
+    }
+}
+
+
 .cart-btn{
-    background: #000;
+    background-color:black;
     opacity: 0.7;
     transform: translateY(100%);
     transition: 0.3s;
@@ -7194,12 +7206,20 @@ input[type="number"] {
 .cart-btn .cart-btn-text{
     margin-top: 48px;
     transition: 0.4s;
+
+}
+
+.cart-btn-text:hover{
+    font-weight:600;
+    letter-spacing:1.5px;
 }
 .cart-btn:hover .cart-btn-text{
     margin-top: -40px;
+
 }
 .aiz-card-box:hover .cart-btn{
     transform: translateY(0);
+
 }
 
 /*tabs*/
@@ -9270,6 +9290,7 @@ div.footable-loader > span.fooicon:after {
     padding-left: 15px;
     padding-right: 15px;
 }
+
 .aiz-carousel.gutters-16{
     width: calc(100% + 32px);
 }
@@ -9344,10 +9365,14 @@ div.footable-loader > span.fooicon:after {
     color: var(--warning);
 }
 .todays-deal.aiz-carousel .slick-prev {
-    left: -30px;
+    left: -22px;
+    background-color: #0A7368;
+   margin-top: 10px;
 }
 .todays-deal.aiz-carousel .slick-next {
-    right: -30px;
+    right: -22px;
+    background-color: #0A7368;
+    margin-top: 10px;
 }
 .aiz-carousel .slick-dots {
     list-style: none;
@@ -11291,3 +11316,23 @@ ul.apps a:hover i{
         font-size: 9px !important;
     }
 }
+
+
+@media (min-width:320px) and (max-width: 576px) {
+    /* .div_img_slid{
+        width: 100%;
+        margin: 0 10px!important;
+    } */
+    .todays-deal.aiz-carousel .slick-prev , .todays-deal.aiz-carousel .slick-next{
+       margin-top: 0px;
+       background-color: transparent;
+    }
+
+    .aiz-p-hov-icon a {
+        display: block;
+        height: 25px;
+        width: 25px;
+        line-height: 25px;
+
+    }
+ }

@@ -179,27 +179,28 @@
                 @endif
                 <!-- Products -->
                 <div class="" style="background-color: {{ get_setting('todays_deal_bg_color', '#3d4666') }}">
-                    <div class="text-right px-4 px-xl-5 pt-4 pt-md-3">
+                    <div class="text-right px-4 px-xl-5 pt-2 pt-md-2">
                         <a href="{{ route('todays-deal') }}"
                             class="fs-12 fw-700 text-white has-transition hov-text-warning">{{ translate('View All') }}</a>
                     </div>
-                    <div class="c-scrollbar-light overflow-hidden pl-5 pr-5 pb-3 pt-2 pb-md-5 pt-md-3">
+                    <div class="c-scrollbar-light overflow-hidden p-3 pb-3 pt-2  pt-md-2">
                         <div class="h-100 d-flex flex-column justify-content-center">
                             <div class="todays-deal aiz-carousel" data-items="7" data-xxl-items="7" data-xl-items="6"
                                 data-lg-items="5" data-md-items="4" data-sm-items="4" data-xs-items="4" data-arrows="true"
                                 data-dots="false" data-autoplay="true" data-infinite="true">
+
                                 @foreach ($todays_deal_products as $key => $product)
-                                    <div class="carousel-box h-100 px-3 px-lg-0">
+                                    <div class="carousel-box mx-sm-5">
                                         <a href="{{ route('product', $product->slug) }}"
                                             class="h-100 overflow-hidden hov-scale-img mx-auto"
                                             title="{{ $product->getTranslation('name') }}">
                                             <!-- Image -->
-                                            <div class="img h-80px w-80px rounded-content overflow-hidden mx-auto">
+                                            <div class="div_img_slid img rounded-content overflow-hidden mx-2 w-lg-90">
                                                 <img class="lazyload img-fit m-auto has-transition"
                                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                                     data-src="{{ uploaded_asset($product->thumbnail_img) }}"
                                                     alt="{{ $product->getTranslation('name') }}"
-                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
                                             </div>
                                             <!-- Price -->
                                             <div class="fs-14 mt-3 text-center custom-d-none">
@@ -221,7 +222,7 @@
         </section>
     @endif
 
-    <!-- New Products -->
+    {{--  <!-- New Products -->  --}}
     <div id="section_newest">
         @if (count($newest_products) > 0)
             <section class="mb-2 mb-md-3 mt-2 mt-md-3">
@@ -234,23 +235,35 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            {{-- <a type="button" class="arrow-prev slide-arrow link-disable text-secondary mr-2" onclick="clickToSlide('slick-prev','section_newest')"><i class="las la-angle-left fs-20 fw-600"></i></a> --}}
+                            {{-- <a type="button" class="arrow-prev slide-arrow link-disable text-secondary mr-2 px-3" onclick="clickToSlide('slick-prev','section_newest')"><i class="las la-angle-left fs-20 fw-600"></i></a> --}}
                             <a class="text-blue fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
                             {{-- <a type="button" class="arrow-next slide-arrow text-secondary ml-2" onclick="clickToSlide('slick-next','section_newest')"><i class="las la-angle-right fs-20 fw-600"></i></a> --}}
                         </div>
                     </div>
                     <!-- Products Section -->
-                    <div class="px-sm-3">
-                        <div
-                            class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-4 row-cols-sm-4 row-cols-4 gutters-16 border-top border-left">
-                            @foreach ($newest_products as $key => $product)
-                                <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">
-                                    @include('frontend.partials.product_box_1', ['product' => $product])
-                                </div>
-                            @endforeach
-                        </div>
+                  <div class="box_products">
+                      <div class="row">
+                          @foreach ($newest_products as $key => $product)
+                           {{--  <div class="col-lg-4 col-d-4 col-sm-4 col-xs-4">  --}}
+                            {{--  <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">  --}}
+                                @include('frontend.partials.product_box_1', ['product' => $product])
+                            {{--  </div>  --}}
+                        {{--  </div>  --}}
+                        @endforeach
+                      </div>
+                  </div>
+
+                  {{--  <div class="px-sm-3">
+                    <div
+                        class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-4 row-cols-sm-4 row-cols-4 gutters-16 border-top border-left">
+                        @foreach ($newest_products as $key => $product)
+                            <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">
+                                @include('frontend.partials.product_box_1', ['product' => $product])
+                            </div>
+                        @endforeach
                     </div>
+                </div>  --}}
                     {{-- <!-- Products Section -->
                 <div class="px-sm-3">
                     <div class="aiz-carousel arrow-none sm-gutters-16" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="4" data-sm-items="4" data-xs-items="4" data-arrows='true' data-infinite='false'>
@@ -527,7 +540,7 @@
                     <!-- Top Section -->
                     <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
                         <!-- Title -->
-                        <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
+                        <h3 class="fs-16 fs-md-20 fw-700 mb- mb-sm-0">
                             <span class="">{{ translate('Classified Ads') }}</span>
                         </h3>
                         <!-- Links -->
