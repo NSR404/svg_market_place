@@ -49,8 +49,14 @@
         height: 50px !important;
     }
     .product-box-to-custom{
-        height: 150px !important;
+        /* height: 150px !important; */
     }
+}
+
+/* Box Products */
+.text-reset{
+    display: -webkit-box!important;
+    padding: 4px;
 }
 
 @media (max-width: 576px) {
@@ -59,7 +65,32 @@
         height: 50px !important;
     }
     .product-box-to-custom{
-        height: 150px !important;
+        width:75px;
+        padding: 0 3px;
+    }
+}
+
+@media (min-width: 374px) and (max-width: 378px) {
+
+    .product-box-to-custom{
+        width:88px!important;
+    }
+    .fs-16 {
+        font-size: 13px !important;
+    }
+}
+
+
+
+/* Categories */
+.aiz-main-wrapper .container .row .col-6{
+    margin-right: inherit;
+}
+
+@media (min-width:576px) and (max-width:1400px) {
+    .gutters-16  .aiz-card-box{
+        min-width: 100%!important;
+        padding: 0!important;
     }
 }
 

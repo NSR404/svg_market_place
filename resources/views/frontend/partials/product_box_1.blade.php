@@ -14,8 +14,8 @@
         $cart_added = $cart->pluck('product_id')->toArray();
     }
 @endphp
-<div class="aiz-card-box h-auto bg-white py-3 hov-scale-img product-box-to-custom">
-    <div class="position-relative h-140px h-md-200px img-fit overflow-hidden">
+<div class="aiz-card-box h-auto bg-white py-3 hov-scale-img product-box-to-custom col-lg-2 col-md-2 col-sm-3 col-xs-3">
+    <div class="position-relative img-fit overflow-hidden w-100">
         @php
             $product_url = route('product', $product->slug);
             if ($product->auction_product == 1) {
@@ -23,12 +23,16 @@
             }
         @endphp
         <!-- Image -->
-        <a href="{{ $product_url }}" class="d-block h-100">
+        <a href="{{ $product_url }}" >
             <img class="lazyload mx-auto img-fit has-transition" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                 data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->getTranslation('name') }}"
                 title="{{ $product->getTranslation('name') }}"
-                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
         </a>
+        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mt-2 mb-2">
+            <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
+                title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
+        </h3>
         <!-- Discount percentage tag -->
         @if (discount_in_percentage($product) > 0)
             <span class="absolute-top-left bg-primary ml-1 mt-1 fs-11 fw-700 text-white w-35px text-center"
@@ -46,7 +50,7 @@
             <div class="absolute-top-right aiz-p-hov-icon">
                 <a href="javascript:void(0)" class="hov-svg-white" onclick="addToWishList({{ $product->id }})"
                     data-toggle="tooltip" data-title="{{ translate('Add to wishlist') }}" data-placement="left">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4" viewBox="0 0 16 14.4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4" viewBox="0 0 16 14.4" class="w-sm-10">
                         <g id="_51a3dbe0e593ba390ac13cba118295e4" data-name="51a3dbe0e593ba390ac13cba118295e4"
                             transform="translate(-3.05 -4.178)">
                             <path id="Path_32649" data-name="Path 32649"
@@ -96,7 +100,7 @@
         @endif
     </div>
 
-    {{-- <div class="p-2 p-md-3 text-left">
+    {{--  <div class="p-2 p-md-3 text-left">
         <!-- Product name -->
         <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
@@ -122,5 +126,5 @@
                 </div>
             @endif
         </div>
-    </div> --}}
+    </div>  --}}
 </div>
