@@ -100,7 +100,7 @@
                                 </div>
 
                                 <!-- Price range -->
-                                {{-- <div class="bg-white border mb-3 ">
+                                <div class="bg-white border mb-3 ">
                                     <div class="fs-16 fw-700 p-3">
                                         {{ translate('Price range')}}
                                     </div>
@@ -143,7 +143,7 @@
                                     <!-- Hidden Items -->
                                     <input type="hidden" name="min_price" value="">
                                     <input type="hidden" name="max_price" value="">
-                                </div> --}}
+                                </div>
 
                                 <!-- Attributes -->
                                 @foreach ($attributes as $attribute)
