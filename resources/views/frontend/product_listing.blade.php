@@ -173,7 +173,7 @@
                                                             onchange="filter()"
                                                         >
                                                         <span class="aiz-square-check"></span>
-                                                        <span class="fs-14 fw-400 text-dark">{{ $attribute_value->value }}</span>
+                                                        <span class="fs-14 fw-400 text-dark">{{ $attribute_value->getTranslation('value') }}</span>
                                                     </label>
                                                 @endforeach
                                             </div>

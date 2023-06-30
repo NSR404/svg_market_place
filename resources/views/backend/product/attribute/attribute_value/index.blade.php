@@ -31,12 +31,12 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        {{ $attribute_value->value }}
+                                        {{ $attribute_value->getTranslation('value') }}
                                     </td>
                                     <td class="text-right">
                                         @can('edit_product_attribute_value')
                                             <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                                                href="{{ route('edit-attribute-value', ['id' => $attribute_value->id]) }}"
+                                                href="{{ route('edit-attribute-value', ['id' => $attribute_value->id , 'lang'   => app()->getLocale()]) }}"
                                                 title="{{ translate('Edit') }}">
                                                 <i class="las la-edit"></i>
                                             </a>

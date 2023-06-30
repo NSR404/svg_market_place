@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttributeValueTranslation;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
 use App\Models\Color;
@@ -147,6 +148,17 @@ class AttributeController extends Controller
         $attribute_value->attribute_id = $request->attribute_id;
         $attribute_value->value = ucfirst($request->value);
         $attribute_value->save();
+        AttributeValueTranslation::query()->updateOrCreate(
+            [
+                'lang'      =>  env("DEFAULT_LANGUAGE"),
+                'attribute_value_id'    =>  $attribute_value->id,
+            ],
+            [
+                'lang'      =>  env("DEFAULT_LANGUAGE"),
+                'attribute_value_id'    =>  $attribute_value->id,
+                'value'     =>  $attribute_value->value,
+            ]
+        );
 
         flash(translate('Attribute value has been inserted successfully'))->success();
         return redirect()->route('attributes.show', $request->attribute_id);
@@ -154,8 +166,10 @@ class AttributeController extends Controller
 
     public function edit_attribute_value(Request $request, $id)
     {
-        $attribute_value = AttributeValue::findOrFail($id);
-        return view("backend.product.attribute.attribute_value.edit", compact('attribute_value'));
+        $data['attribute_value'] = AttributeValue::findOrFail($id);
+        $data['lang']            =  $request->lang;
+
+        return view("backend.product.attribute.attribute_value.edit", $data);
     }
 
     public function update_attribute_value(Request $request, $id)
@@ -166,6 +180,17 @@ class AttributeController extends Controller
         $attribute_value->value = ucfirst($request->value);
 
         $attribute_value->save();
+        AttributeValueTranslation::query()->updateOrCreate(
+                [
+                    'lang'      =>  $request->lang,
+                    'attribute_value_id'    =>  $attribute_value->id,
+                ],
+                [
+                    'lang'      =>  $request->lang,
+                    'attribute_value_id'    =>  $attribute_value->id,
+                    'value'     =>  $attribute_value->value,
+                ]
+            );
 
         flash(translate('Attribute value has been updated successfully'))->success();
         return back();
