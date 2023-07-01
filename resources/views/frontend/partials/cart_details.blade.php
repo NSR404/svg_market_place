@@ -6,11 +6,11 @@
                     <div class="mb-4">
                         <!-- Headers -->
                         <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 pb-3 text-secondary fs-12">
-                            <div class="col col-md-1 fw-600">{{ translate('Qty')}}</div>
+                            <div class="col col-md-3 fw-600">{{ translate('Qty')}}</div>
                             <div class="col-md-5 fw-600">{{ translate('Product')}}</div>
-                            <div class="col fw-600">{{ translate('Price')}}</div>
-                            <div class="col fw-600">{{ translate('Tax')}}</div>
-                            <div class="col fw-600">{{ translate('Total')}}</div>
+                            <div class="col fw-600">{{ translate('Category')}}</div>
+                            {{-- <div class="col fw-600">{{ translate('Tax')}}</div> --}}
+                            {{-- <div class="col fw-600">{{ translate('Total')}}</div> --}}
                             <div class="col-auto fw-600">{{ translate('Remove')}}</div>
                         </div>
                         <!-- Cart Items -->
@@ -68,21 +68,26 @@
                                             </span>
                                             <span class="fs-14">{{ $product_name_with_choice }}</span>
                                         </div>
+                                        <!-- Category -->
+                                        <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0 text-center">
+                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Category')}}</span>
+                                            <span class="fw-700 fs-14">{{ $product->category->getTranslation('name') }}</span>
+                                        </div>
                                         <!-- Price -->
-                                        <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0">
+                                        {{-- <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0">
                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Price')}}</span>
                                             <span class="fw-700 fs-14">{{ cart_product_price($cartItem, $product, true, false) }}</span>
-                                        </div>
+                                        </div> --}}
                                         <!-- Tax -->
-                                        <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
+                                        {{-- <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
                                             <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
-                                        </div>
+                                        </div> --}}
                                         <!-- Total -->
-                                        <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
+                                        {{-- <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
                                             <span class="fw-700 fs-16 text-primary">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
-                                        </div>
+                                        </div> --}}
                                         <!-- Remove From Cart -->
                                         <div class="col-md-auto col-6 order-5 order-md-0 text-right">
                                             <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle">
@@ -96,10 +101,10 @@
                     </div>
 
                     <!-- Subtotal -->
-                    <div class="px-0 py-2 mb-4 border-top d-flex justify-content-between">
+                    {{-- <div class="px-0 py-2 mb-4 border-top d-flex justify-content-between">
                         <span class="opacity-60 fs-14">{{translate('Subtotal')}}</span>
                         <span class="fw-700 fs-16">{{ single_price($total) }}</span>
-                    </div>
+                    </div> --}}
                     <div class="row align-items-center">
                         <!-- Return to shop -->
                         <div class="col-md-6 text-center text-md-left order-1 order-md-0">

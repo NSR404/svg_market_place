@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     protected $fillable = ['set_default'];
-    
+
+
+    ##### START GETTER/SETTER #######
+    public function getPhoneAttribute()
+    {
+        return "+{$this->attributes['phone_country_code']} {$this->attributes['phone']}";
+    }
+    ##### END GETTER/SETTER #######
+
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -27,4 +36,6 @@ class Address extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+
 }

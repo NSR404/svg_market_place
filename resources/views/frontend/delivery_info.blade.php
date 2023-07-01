@@ -7,38 +7,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 mx-auto">
-                    <div class="row gutters-5 sm-gutters-10">
-                        <div class="col done">
-                            <div class="text-center border border-bottom-6px p-2 text-success">
-                                <i class="la-3x mb-2 las la-shopping-cart"></i>
-                                <h3 class="fs-14 fw-600 d-none d-lg-block">{{ translate('1. My Cart') }}</h3>
+                    <div class="col-xl-8 mx-auto">
+                        <div class="row gutters-5 sm-gutters-10">
+                            <div class="col ">
+                                <div class="text-center border border-bottom-6px p-2 text-primary">
+                                    <i class="la-3x mb-2 las la-shopping-cart cart-animate" style="margin-left: -100px; transition: 2s;"></i>
+                                    <h3 class="fs-14 fw-600 d-none d-lg-block">{{ translate('1. My Cart') }}</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col done">
-                            <div class="text-center border border-bottom-6px p-2 text-success">
-                                <i class="la-3x mb-2 las la-map"></i>
-                                <h3 class="fs-14 fw-600 d-none d-lg-block">{{ translate('2. Shipping info') }}
-                                </h3>
+                            <div class="col ">
+                                <div class="text-center border border-bottom-6px p-2">
+                                    <i class="la-3x mb-2 opacity-50 las la-map"></i>
+                                    <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">{{ translate('2. Address info') }}
+                                    </h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col active">
-                            <div class="text-center border border-bottom-6px p-2 text-primary">
-                                <i class="la-3x mb-2 las la-truck cart-animate" style="margin-left: -100px; transition: 2s;"></i>
-                                <h3 class="fs-14 fw-600 d-none d-lg-block">{{ translate('3. Delivery info') }}
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center border border-bottom-6px p-2">
-                                <i class="la-3x mb-2 opacity-50 las la-credit-card"></i>
-                                <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">{{ translate('4. Payment') }}</h3>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center border border-bottom-6px p-2">
-                                <i class="la-3x mb-2 opacity-50 las la-check-circle"></i>
-                                <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">{{ translate('5. Confirmation') }}
-                                </h3>
+                            <div class="col active">
+                                <div class="text-center border border-bottom-6px p-2">
+                                    <i class="la-3x mb-2 opacity-50 las la-check-circle"></i>
+                                    <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">{{ translate('3. Confirmation') }}
+                                    </h3>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -77,7 +66,7 @@
                                         $seller_product_variation[] = $cartItem['variation'];
                                     }
                                 }
-                                
+
                                 $pickup_point_list = array();
                                 if (get_setting('pickup_point') == 1) {
                                     $pickup_point_list = \App\Models\PickupPoint::where('pick_up_status',1)->get();
@@ -373,7 +362,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+
                                                 <!-- Carrier Wise Shipping -->
                                                 @if (get_setting('shipping_type') == 'carrier_wise_shipping')
                                                     <div class="row pt-3 carrier_id_{{ $key }}">

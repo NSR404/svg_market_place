@@ -42,9 +42,7 @@
                             <td class="text-secondary">{{ date('d-m-Y', $order->date) }}</td>
                             <!-- Delivery Status -->
                             <td class="fw-700">
-                                @if ($order->status == 'pending')
                                     {!! $order->getStatusAttributeInHtml() !!}
-                                @endif
                             </td>
                             <!-- Options -->
                             <td class="text-right pr-0">

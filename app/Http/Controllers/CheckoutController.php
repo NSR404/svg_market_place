@@ -17,10 +17,12 @@ use App\Models\CombinedOrder;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\SvgOrder;
+use App\Models\SvgOrderProduct;
 use App\Utility\PayhereUtility;
 use App\Utility\NotificationUtility;
 use Session;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\Count;
 use Response;
 use Throwable;
@@ -380,7 +382,7 @@ class CheckoutController extends Controller
                 }
         }catch(Throwable $e)
         {
-            dd($e);
+            DB::rollBack();
             $response       =   ResponseHelper::generateResponse(false);
         }
         return response()->json($response);
@@ -395,18 +397,36 @@ class CheckoutController extends Controller
      */
     protected function createSvgOrderAndSyncProducts($data , $carts)
     {
-        $product_ids    =   [];
-        foreach($carts as $cart)
-        {
-            array_push($product_ids , $cart['product_id']);
-        }
         $svg_order  =   [
             'address_id'        =>  $carts[0]->address_id,
             'type'              =>  $data['type'],
             'user_id'           =>  Auth::id(),
         ];
         $created_svg_order      =   SvgOrder::query()->create($svg_order);
-        $created_svg_order->products()->sync($product_ids);
+        $product_ids            =   [];
+        DB::beginTransaction();
+        foreach($carts as $cart)
+        {
+            SvgOrderProduct::query()->create([
+                'product_id'        =>  $cart['product_id'],
+                'quantity'          =>  $cart['quantity'],
+                'variation'          =>  $cart['variation'],
+                'svg_order_id'      =>  $created_svg_order->id,
+            ]);
+            array_push($product_ids  , $cart['product_id']);
+        }
+        $this->updateProductNumOfSale($product_ids);
+        DB::commit();
         Cart::where('user_id', Auth::user()->id)->delete();
+    }
+    public function updateProductNumOfSale(array $product_ids)
+    {
+        Product::query()->whereIn('id' , $product_ids)->chunk(20 , function($products){
+            foreach($products as $product)
+            {
+                $product->num_of_sale += 1;
+                $product->save();
+            }
+        });
     }
 }

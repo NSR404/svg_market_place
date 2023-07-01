@@ -63,7 +63,7 @@
 
                 <!-- Product Price & Club Point -->
                 @if(home_price($product) != home_discounted_price($product))
-                    <div class="row no-gutters mt-3">
+                    {{-- <div class="row no-gutters mt-3">
                         <div class="col-3">
                             <div class="text-secondary fs-14 fw-400">{{ translate('Price')}}</div>
                         </div>
@@ -100,9 +100,9 @@
                             </div>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
                 @else
-                    <div class="row no-gutters mt-3">
+                    {{-- <div class="row no-gutters mt-3">
                         <div class="col-3">
                             <div class="text-secondary fs-14 fw-400">{{ translate('Price')}}</div>
                         </div>
@@ -116,7 +116,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 @endif
 
                 @php
@@ -130,7 +130,7 @@
                 <form id="option-choice-form">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
-                    
+
                     @if($product->digital !=1)
                         <!-- Product Choice options -->
                         @if ($product->choice_options != null)
@@ -215,9 +215,9 @@
                             </div>
                         </div>
                     @endif
-                    
+
                     <!-- Total Price -->
-                    <div class="row no-gutters mt-3 pb-3 d-none" id="chosen_price_div">
+                    {{-- <div class="row no-gutters mt-3 pb-3 d-none" id="chosen_price_div">
                         <div class="col-3">
                             <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Total Price')}}</div>
                         </div>
@@ -228,7 +228,7 @@
                                 </strong>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </form>
 

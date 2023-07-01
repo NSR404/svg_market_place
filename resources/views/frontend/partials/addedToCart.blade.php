@@ -19,7 +19,7 @@
             <h6 class="fs-14 fw-700 text-truncate-2">
                 {{  $product->getTranslation('name')  }}
             </h6>
-            <div class="row mt-2">
+            {{-- <div class="row mt-2">
                 <div class="col-sm-3 fs-14 fw-400 text-secondary">
                     <div>{{ translate('Price')}}</div>
                 </div>
@@ -30,7 +30,7 @@
                         </strong>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -59,12 +59,12 @@
                             <h3 class="fw-400 fs-14 text-dark text-truncate-2 lh-1-4 mb-0 h-35px">
                                 <a href="{{ route('product', $related_product->slug) }}" class="d-block text-reset hov-text-primary">{{ $related_product->getTranslation('name') }}</a>
                             </h3>
-                            <div class="fs-14 mt-3">
+                            {{-- <div class="fs-14 mt-3">
                                 <span class="fw-700 text-primary">{{ home_discounted_base_price($related_product) }}</span>
                                 @if(home_base_price($related_product) != home_discounted_base_price($related_product))
                                     <del class="fw-600 opacity-50 ml-1">{{ home_base_price($related_product) }}</del>
                                 @endif
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -81,6 +81,6 @@
         <div class="col-sm-6">
             <a href="{{ route('cart') }}" class="btn btn-primary mb-3 mb-sm-0 btn-block rounded-0">{{ translate('Proceed to Checkout')}}</a>
         </div>
-        
+
     </div>
 </div>

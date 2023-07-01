@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SvgOrder;
+use App\Models\SvgOrderProduct;
 use Artisan;
 use Cache;
 //use CoreComponentRepository;
@@ -27,16 +29,21 @@ class AdminController extends Controller
             foreach ($root_categories as $key => $category){
                 $category_ids = \App\Utility\CategoryUtility::children_ids($category->id);
                 $category_ids[] = $category->id;
-
-                $products = Product::with('stocks')->whereIn('category_id', $category_ids)->get();
                 $qty = 0;
                 $sale = 0;
-                foreach ($products as $key => $product) {
-                    $sale += $product->num_of_sale;
-                    foreach ($product->stocks as $key => $stock) {
-                        $qty += $stock->qty;
+                SvgOrder::query()->whereHas('products' , function($products)use($category_ids){
+                    $products->whereIn('category_id', $category_ids);
+                })->chunk(50 , function($orders)use(&$sale , &$qty){
+                    foreach($orders as $order)
+                    {
+                        foreach($order->products as $product)
+                        {
+                            ++$sale;
+                            $qty += $product->pivot->quantity;
+                        }
                     }
-                }
+                });
+
                 $qty_data .= $qty.',';
                 $num_of_sale_data .= $sale.',';
             }

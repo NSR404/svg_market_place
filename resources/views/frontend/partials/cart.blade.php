@@ -64,8 +64,8 @@
                                     <span class="fw-700 fs-13 text-dark mb-2 text-truncate-2" title="{{ $product->getTranslation('name') }}">
                                         {{ $product->getTranslation('name') }}
                                     </span>
-                                    <span class="fs-14 fw-400 text-secondary">{{ $cartItem['quantity'] }}x</span>
-                                    <span class="fs-14 fw-400 text-secondary">{{ cart_product_price($cartItem, $product) }}</span>
+                                    <span class="fs-14 fw-400 text-secondary">{{ $cartItem['quantity'] }}</span>
+                                    {{-- <span class="fs-14 fw-400 text-secondary">{{ cart_product_price($cartItem, $product) }}</span> --}}
                                 </span>
                             </a>
                             <span class="">
@@ -81,8 +81,8 @@
         </ul>
         <!-- Subtotal -->
         <div class="px-3 py-2 fs-15 border-top d-flex justify-content-between mx-4" style="border-color: #e5e5e5 !important;">
-            <span class="fs-14 fw-400 text-secondary">{{ translate('Subtotal') }}</span>
-            <span class="fs-16 fw-700 text-dark">{{ single_price($total) }}</span>
+            {{-- <span class="fs-14 fw-400 text-secondary">{{ translate('Subtotal') }}</span>
+            <span class="fs-16 fw-700 text-dark">{{ single_price($total) }}</span> --}}
         </div>
         <!-- View cart & Checkout Buttons -->
         <div class="py-3 text-center border-top mx-4" style="border-color: #e5e5e5 !important;">
@@ -95,7 +95,7 @@
                 @if (Auth::check())
                 <div class="col-sm-6">
                     <a href="{{ route('checkout.shipping_info') }}" class="btn btn-primary btn-sm btn-block rounded-4">
-                        {{ translate('Checkout') }}
+                        {{ translate('Finish') }}
                     </a>
                 </div>
                 @endif

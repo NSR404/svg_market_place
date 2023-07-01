@@ -54,7 +54,8 @@ class SvgOrder extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'svg_order_products', 'svg_order_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'svg_order_products', 'svg_order_id', 'product_id')
+                ->withPivot(['quantity' , 'variation']);
     }
 
 

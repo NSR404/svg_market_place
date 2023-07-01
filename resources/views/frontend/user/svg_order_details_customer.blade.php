@@ -88,7 +88,7 @@
                                     </td>
 
                                     <td class="text-xl-right pr-0">
-                                        @if ($product->status == 'completed')
+                                        @if ($order->status == 'completed')
                                             <a href="javascript:void(0);" onclick="product_review('{{ $product->id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Review') }} </a>
                                         @else

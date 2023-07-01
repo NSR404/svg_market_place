@@ -18,6 +18,7 @@ use App\Models\SmsTemplate;
 use Auth;
 use Mail;
 use App\Mail\InvoiceEmailManager;
+use App\Models\SvgOrder;
 use App\Utility\NotificationUtility;
 //use CoreComponentRepository;
 use App\Utility\SmsUtility;
@@ -41,42 +42,10 @@ class OrderController extends Controller
 
         $date = $request->date;
         $sort_search = null;
-        $delivery_status = null;
+        $status = null;
         $payment_status = '';
 
-        $orders = Order::orderBy('id', 'desc');
-        $admin_user_id = User::where('user_type', 'admin')->first()->id;
-
-
-        if (
-            Route::currentRouteName() == 'inhouse_orders.index' &&
-            Auth::user()->can('view_inhouse_orders')
-        ) {
-            $orders = $orders->where('orders.seller_id', '=', $admin_user_id);
-        } else if (
-            Route::currentRouteName() == 'seller_orders.index' &&
-            Auth::user()->can('view_seller_orders')
-        ) {
-            $orders = $orders->where('orders.seller_id', '!=', $admin_user_id);
-        } else if (
-            Route::currentRouteName() == 'pick_up_point.index' &&
-            Auth::user()->can('view_pickup_point_orders')
-        ) {
-            $orders->where('shipping_type', 'pickup_point')->orderBy('code', 'desc');
-            if (
-                Auth::user()->user_type == 'staff' &&
-                Auth::user()->staff->pick_up_point != null
-            ) {
-                $orders->where('shipping_type', 'pickup_point')
-                    ->where('pickup_point_id', Auth::user()->staff->pick_up_point->id);
-            }
-        } else if (
-            Route::currentRouteName() == 'all_orders.index' &&
-            Auth::user()->can('view_all_orders')
-        ) {
-        } else {
-            abort(403);
-        }
+        $orders = SvgOrder::query()->orderBy('id', 'desc');
 
         if ($request->search) {
             $sort_search = $request->search;
@@ -86,29 +55,37 @@ class OrderController extends Controller
             $orders = $orders->where('payment_status', $request->payment_status);
             $payment_status = $request->payment_status;
         }
-        if ($request->delivery_status != null) {
-            $orders = $orders->where('delivery_status', $request->delivery_status);
-            $delivery_status = $request->delivery_status;
+        if ($request->status != null) {
+            $orders = $orders->where('status', $request->status);
+            $status = $request->status;
         }
         if ($date != null) {
             $orders = $orders->where('created_at', '>=', date('Y-m-d', strtotime(explode(" to ", $date)[0])) . '  00:00:00')
                 ->where('created_at', '<=', date('Y-m-d', strtotime(explode(" to ", $date)[1])) . '  23:59:59');
         }
         $orders = $orders->paginate(15);
-        return view('backend.sales.index', compact('orders', 'sort_search', 'payment_status', 'delivery_status', 'date'));
+        return view('backend.sales.index', compact('orders', 'sort_search', 'payment_status', 'status', 'date'));
     }
 
+    // public function show($id)
+    // {
+    //     $order = Order::findOrFail(decrypt($id));
+    //     $order_shipping_address = json_decode($order->shipping_address);
+    //     $delivery_boys = User::where('city', $order_shipping_address->city)
+    //         ->where('user_type', 'delivery_boy')
+    //         ->get();
+
+    //     $order->viewed = 1;
+    //     $order->save();
+    //     return view('backend.sales.show', compact('order', 'delivery_boys'));
+    // }
     public function show($id)
     {
-        $order = Order::findOrFail(decrypt($id));
-        $order_shipping_address = json_decode($order->shipping_address);
-        $delivery_boys = User::where('city', $order_shipping_address->city)
-            ->where('user_type', 'delivery_boy')
-            ->get();
-
+        $order = SvgOrder::query()->with(['user' , 'products'])
+                ->findOrFail(decrypt($id));
         $order->viewed = 1;
         $order->save();
-        return view('backend.sales.show', compact('order', 'delivery_boys'));
+        return view('backend.sales.show', compact('order'));
     }
 
     /**
@@ -334,21 +311,21 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
+        $order = SvgOrder::findOrFail($id);
         if ($order != null) {
-            foreach ($order->orderDetails as $key => $orderDetail) {
-                try {
+            // foreach ($order->orderDetails as $key => $orderDetail) {
+            //     try {
 
-                    $product_stock = ProductStock::where('product_id', $orderDetail->product_id)->where('variant', $orderDetail->variation)->first();
-                    if ($product_stock != null) {
-                        $product_stock->qty += $orderDetail->quantity;
-                        $product_stock->save();
-                    }
-                } catch (\Exception $e) {
-                }
+            //         $product_stock = ProductStock::where('product_id', $orderDetail->product_id)->where('variant', $orderDetail->variation)->first();
+            //         if ($product_stock != null) {
+            //             $product_stock->qty += $orderDetail->quantity;
+            //             $product_stock->save();
+            //         }
+            //     } catch (\Exception $e) {
+            //     }
 
-                $orderDetail->delete();
-            }
+            //     $orderDetail->delete();
+            // }
             $order->delete();
             flash(translate('Order has been deleted successfully'))->success();
         } else {
@@ -375,115 +352,122 @@ class OrderController extends Controller
         return view('seller.order_details_seller', compact('order'));
     }
 
+    // public function update_delivery_status(Request $request)
+    // {
+    //     $order = Order::findOrFail($request->order_id);
+    //     $order->delivery_viewed = '0';
+    //     $order->delivery_status = $request->status;
+    //     $order->save();
+
+    //     if ($request->status == 'cancelled' && $order->payment_type == 'wallet') {
+    //         $user = User::where('id', $order->user_id)->first();
+    //         $user->balance += $order->grand_total;
+    //         $user->save();
+    //     }
+
+    //     if (Auth::user()->user_type == 'seller') {
+    //         foreach ($order->orderDetails->where('seller_id', Auth::user()->id) as $key => $orderDetail) {
+    //             $orderDetail->delivery_status = $request->status;
+    //             $orderDetail->save();
+
+    //             if ($request->status == 'cancelled') {
+    //                 $variant = $orderDetail->variation;
+    //                 if ($orderDetail->variation == null) {
+    //                     $variant = '';
+    //                 }
+
+    //                 $product_stock = ProductStock::where('product_id', $orderDetail->product_id)
+    //                     ->where('variant', $variant)
+    //                     ->first();
+
+    //                 if ($product_stock != null) {
+    //                     $product_stock->qty += $orderDetail->quantity;
+    //                     $product_stock->save();
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         foreach ($order->orderDetails as $key => $orderDetail) {
+
+    //             $orderDetail->delivery_status = $request->status;
+    //             $orderDetail->save();
+
+    //             if ($request->status == 'cancelled') {
+    //                 $variant = $orderDetail->variation;
+    //                 if ($orderDetail->variation == null) {
+    //                     $variant = '';
+    //                 }
+
+    //                 $product_stock = ProductStock::where('product_id', $orderDetail->product_id)
+    //                     ->where('variant', $variant)
+    //                     ->first();
+
+    //                 if ($product_stock != null) {
+    //                     $product_stock->qty += $orderDetail->quantity;
+    //                     $product_stock->save();
+    //                 }
+    //             }
+
+    //             if (addon_is_activated('affiliate_system')) {
+    //                 if (($request->status == 'delivered' || $request->status == 'cancelled') &&
+    //                     $orderDetail->product_referral_code
+    //                 ) {
+
+    //                     $no_of_delivered = 0;
+    //                     $no_of_canceled = 0;
+
+    //                     if ($request->status == 'delivered') {
+    //                         $no_of_delivered = $orderDetail->quantity;
+    //                     }
+    //                     if ($request->status == 'cancelled') {
+    //                         $no_of_canceled = $orderDetail->quantity;
+    //                     }
+
+    //                     $referred_by_user = User::where('referral_code', $orderDetail->product_referral_code)->first();
+
+    //                     $affiliateController = new AffiliateController;
+    //                     $affiliateController->processAffiliateStats($referred_by_user->id, 0, 0, $no_of_delivered, $no_of_canceled);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (addon_is_activated('otp_system') && SmsTemplate::where('identifier', 'delivery_status_change')->first()->status == 1) {
+    //         try {
+    //             SmsUtility::delivery_status_change(json_decode($order->shipping_address)->phone, $order);
+    //         } catch (\Exception $e) {
+    //         }
+    //     }
+
+    //     //sends Notifications to user
+    //     NotificationUtility::sendNotification($order, $request->status);
+    //     if (get_setting('google_firebase') == 1 && $order->user->device_token != null) {
+    //         $request->device_token = $order->user->device_token;
+    //         $request->title = "Order updated !";
+    //         $status = str_replace("_", "", $order->delivery_status);
+    //         $request->text = " Your order {$order->code} has been {$status}";
+
+    //         $request->type = "order";
+    //         $request->id = $order->id;
+    //         $request->user_id = $order->user->id;
+
+    //         NotificationUtility::sendFirebaseNotification($request);
+    //     }
+
+
+    //     if (addon_is_activated('delivery_boy')) {
+    //         if (Auth::user()->user_type == 'delivery_boy') {
+    //             $deliveryBoyController = new DeliveryBoyController;
+    //             $deliveryBoyController->store_delivery_history($order);
+    //         }
+    //     }
+
+    //     return 1;
+    // }
     public function update_delivery_status(Request $request)
     {
-        $order = Order::findOrFail($request->order_id);
-        $order->delivery_viewed = '0';
-        $order->delivery_status = $request->status;
+        $order = SvgOrder::findOrFail($request->order_id);
+        $order->status = $request->status;
         $order->save();
-
-        if ($request->status == 'cancelled' && $order->payment_type == 'wallet') {
-            $user = User::where('id', $order->user_id)->first();
-            $user->balance += $order->grand_total;
-            $user->save();
-        }
-
-        if (Auth::user()->user_type == 'seller') {
-            foreach ($order->orderDetails->where('seller_id', Auth::user()->id) as $key => $orderDetail) {
-                $orderDetail->delivery_status = $request->status;
-                $orderDetail->save();
-
-                if ($request->status == 'cancelled') {
-                    $variant = $orderDetail->variation;
-                    if ($orderDetail->variation == null) {
-                        $variant = '';
-                    }
-
-                    $product_stock = ProductStock::where('product_id', $orderDetail->product_id)
-                        ->where('variant', $variant)
-                        ->first();
-
-                    if ($product_stock != null) {
-                        $product_stock->qty += $orderDetail->quantity;
-                        $product_stock->save();
-                    }
-                }
-            }
-        } else {
-            foreach ($order->orderDetails as $key => $orderDetail) {
-
-                $orderDetail->delivery_status = $request->status;
-                $orderDetail->save();
-
-                if ($request->status == 'cancelled') {
-                    $variant = $orderDetail->variation;
-                    if ($orderDetail->variation == null) {
-                        $variant = '';
-                    }
-
-                    $product_stock = ProductStock::where('product_id', $orderDetail->product_id)
-                        ->where('variant', $variant)
-                        ->first();
-
-                    if ($product_stock != null) {
-                        $product_stock->qty += $orderDetail->quantity;
-                        $product_stock->save();
-                    }
-                }
-
-                if (addon_is_activated('affiliate_system')) {
-                    if (($request->status == 'delivered' || $request->status == 'cancelled') &&
-                        $orderDetail->product_referral_code
-                    ) {
-
-                        $no_of_delivered = 0;
-                        $no_of_canceled = 0;
-
-                        if ($request->status == 'delivered') {
-                            $no_of_delivered = $orderDetail->quantity;
-                        }
-                        if ($request->status == 'cancelled') {
-                            $no_of_canceled = $orderDetail->quantity;
-                        }
-
-                        $referred_by_user = User::where('referral_code', $orderDetail->product_referral_code)->first();
-
-                        $affiliateController = new AffiliateController;
-                        $affiliateController->processAffiliateStats($referred_by_user->id, 0, 0, $no_of_delivered, $no_of_canceled);
-                    }
-                }
-            }
-        }
-        if (addon_is_activated('otp_system') && SmsTemplate::where('identifier', 'delivery_status_change')->first()->status == 1) {
-            try {
-                SmsUtility::delivery_status_change(json_decode($order->shipping_address)->phone, $order);
-            } catch (\Exception $e) {
-            }
-        }
-
-        //sends Notifications to user
-        NotificationUtility::sendNotification($order, $request->status);
-        if (get_setting('google_firebase') == 1 && $order->user->device_token != null) {
-            $request->device_token = $order->user->device_token;
-            $request->title = "Order updated !";
-            $status = str_replace("_", "", $order->delivery_status);
-            $request->text = " Your order {$order->code} has been {$status}";
-
-            $request->type = "order";
-            $request->id = $order->id;
-            $request->user_id = $order->user->id;
-
-            NotificationUtility::sendFirebaseNotification($request);
-        }
-
-
-        if (addon_is_activated('delivery_boy')) {
-            if (Auth::user()->user_type == 'delivery_boy') {
-                $deliveryBoyController = new DeliveryBoyController;
-                $deliveryBoyController->store_delivery_history($order);
-            }
-        }
-
         return 1;
     }
 
