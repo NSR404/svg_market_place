@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=0.03') }}{{ rand(1000,9999) }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.09') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.10') }}">
 
 
     <script>

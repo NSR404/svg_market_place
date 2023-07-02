@@ -293,7 +293,7 @@
                         data-md-items="1" data-sm-items="1" data-xs-items="1" data-arrows="true"
                         data-dots="false">
                         <div class="carousel-box overflow-hidden hov-scale-img ">
-                            <iframe  width="450" height="315" src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}" style="margin:auto !important;"
+                            <iframe   id="home_iframe" src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}" style="margin:auto !important;"
                                 frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
