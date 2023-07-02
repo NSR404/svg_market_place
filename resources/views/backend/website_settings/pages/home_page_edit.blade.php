@@ -147,7 +147,7 @@
 		{{-- Home Banner 1 --}}
 		<div class="card">
 			<div class="card-header">
-				<h6 class="mb-0">{{ translate('Home Banner 1 (Max 3)') }}</h6>
+				<h6 class="mb-0">{{ translate('Home Video  (Max 1)') }}</h6>
 			</div>
 			<div class="card-body">
 				<form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -157,10 +157,10 @@
 						<div class="home-banner1-target">
 							<input type="hidden" name="types[]" value="home_banner1_images">
 							<input type="hidden" name="types[]" value="home_banner1_links">
-							@if (get_setting('home_banner1_images') != null)
-								@foreach (json_decode(get_setting('home_banner1_images'), true) as $key => $value)
+							{{-- @if (get_setting('home_banner1_images') != null) --}}
+								{{-- @foreach (json_decode(get_setting('home_banner1_images'), true) as $key => $value) --}}
 									<div class="row gutters-5">
-										<div class="col-md-5">
+										{{-- <div class="col-md-5">
 											<div class="form-group">
 												<div class="input-group" data-toggle="aizuploader" data-type="image">
 					                                <div class="input-group-prepend">
@@ -173,25 +173,25 @@
 					                            <div class="file-preview box sm">
 					                            </div>
 				                            </div>
-										</div>
-										<div class="col-md">
+										</div> --}}
+										<div class="col-md-6">
 											<div class="form-group">
 												<input type="hidden" name="types[]" value="home_banner1_links">
-												<input type="text" class="form-control" placeholder="http://" name="home_banner1_links[]" value="{{ json_decode(get_setting('home_banner1_links'), true)[$key] }}">
+												<input type="text" class="form-control" placeholder="http://" name="home_banner1_links[]" value="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}">
 											</div>
 										</div>
 										<div class="col-md-auto">
-											<div class="form-group">
+											{{-- <div class="form-group">
 												<button type="button" class="mt-1 btn btn-icon btn-circle btn-sm btn-soft-danger" data-toggle="remove-parent" data-parent=".row">
 													<i class="las la-times"></i>
 												</button>
-											</div>
+											</div> --}}
 										</div>
 									</div>
-								@endforeach
-							@endif
+								{{-- @endforeach --}}
+							{{-- @endif --}}
 						</div>
-						<button
+						{{-- <button
 							type="button"
 							class="btn btn-soft-secondary btn-sm"
 							data-toggle="add-more"
@@ -227,7 +227,7 @@
 							</div>'
 							data-target=".home-banner1-target">
 							{{ translate('Add New') }}
-						</button>
+						</button> --}}
 					</div>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">{{ translate('Update') }}</button>
@@ -429,7 +429,7 @@
 			<div class="card-body">
 				<form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
-					
+
 					<div class="form-group">
 						<div class="input-group" data-toggle="aizuploader" data-type="image">
 							<div class="input-group-prepend">

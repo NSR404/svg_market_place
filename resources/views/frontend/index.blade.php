@@ -200,7 +200,8 @@
                                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                                     data-src="{{ uploaded_asset($product->thumbnail_img) }}"
                                                     alt="{{ $product->getTranslation('name') }}"
-                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
+                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                                    width="100%">
                                             </div>
                                             <!-- Price -->
                                             <div class="fs-14 mt-3 text-center custom-d-none">
@@ -242,19 +243,19 @@
                         </div>
                     </div>
                     <!-- Products Section -->
-                  <div class="box_products">
-                      <div class="row">
-                          @foreach ($newest_products as $key => $product)
-                           {{--  <div class="col-lg-4 col-d-4 col-sm-4 col-xs-4">  --}}
-                            {{--  <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">  --}}
+                    <div class="box_products">
+                        <div class="row">
+                            @foreach ($newest_products as $key => $product)
+                                {{--  <div class="col-lg-4 col-d-4 col-sm-4 col-xs-4">  --}}
+                                {{--  <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">  --}}
                                 @include('frontend.partials.product_box_1', ['product' => $product])
-                            {{--  </div>  --}}
-                        {{--  </div>  --}}
-                        @endforeach
-                      </div>
-                  </div>
+                                {{--  </div>  --}}
+                                {{--  </div>  --}}
+                            @endforeach
+                        </div>
+                    </div>
 
-                  {{--  <div class="px-sm-3">
+                    {{--  <div class="px-sm-3">
                     <div
                         class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-4 row-cols-sm-4 row-cols-4 gutters-16 border-top border-left">
                         @foreach ($newest_products as $key => $product)
@@ -282,35 +283,25 @@
 
 
     <!-- Banner section 1 -->
-    @if (get_setting('home_banner1_images') != null)
+    @if (@json_decode(get_setting('home_banner1_links'), true)[0] )
         <div class="mb-2 mb-md-3 mt-2 mt-md-3">
             <div class="container">
-                @php
-                    $banner_1_imags = json_decode(get_setting('home_banner1_images'));
-                    $data_md = count($banner_1_imags) >= 2 ? 2 : 1;
-                @endphp
                 <div class="w-100">
-                    <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15"
-                        data-items="{{ count($banner_1_imags) }}" data-xxl-items="{{ count($banner_1_imags) }}"
-                        data-xl-items="{{ count($banner_1_imags) }}" data-lg-items="{{ $data_md }}"
-                        data-md-items="{{ $data_md }}" data-sm-items="1" data-xs-items="1" data-arrows="true"
+                    <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15 text-center"
+                        data-items="1" data-xxl-items="1"
+                        data-xl-items="1" data-lg-items="1"
+                        data-md-items="1" data-sm-items="1" data-xs-items="1" data-arrows="true"
                         data-dots="false">
-                        @foreach ($banner_1_imags as $key => $value)
-                            <div class="carousel-box overflow-hidden hov-scale-img">
-                                <a href="{{ json_decode(get_setting('home_banner1_links'), true)[$key] }}"
-                                    class="d-block text-reset overflow-hidden">
-                                    <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
-                                        data-src="{{ uploaded_asset($value) }}" alt="{{ env('APP_NAME') }} promo"
-                                        class="img-fluid lazyload w-100 has-transition"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                                </a>
-                            </div>
-                        @endforeach
+                        <div class="carousel-box overflow-hidden hov-scale-img ">
+                            <iframe  width="450" height="315" src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}" style="margin:auto !important;"
+                                frameborder="0" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     @endif
+
 
     <!-- Featured Categories -->
     @if (count($featured_categories) > 0)
