@@ -55,7 +55,7 @@ class HomeController extends Controller
         });
 
         $newest_products = Cache::remember('newest_products', 3600, function () {
-            return filter_products(Product::latest())->limit(15)->get();
+            return filter_products(Product::latest())->limit(18)->get();
         });
 
         return view('frontend.index', compact('featured_categories', 'todays_deal_products', 'newest_products'));
