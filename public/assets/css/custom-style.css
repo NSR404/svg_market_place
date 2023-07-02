@@ -102,7 +102,7 @@
 @media (min-width: 374px) and (max-width: 500px) {
 
     #home_iframe{
-        width: 400px !important;
+        width: 350px !important;
         height: 315px !important;
     }
 }

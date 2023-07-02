@@ -244,7 +244,7 @@
                     </div>
                     <!-- Products Section -->
                     <div class="box_products">
-                        <div class="row">
+                        <div class="row m-auto">
                             @foreach ($newest_products as $key => $product)
                                 {{--  <div class="col-lg-4 col-d-4 col-sm-4 col-xs-4">  --}}
                                 {{--  <div class="col text-center border-right border-bottom has-transition hov-shadow-out z-1">  --}}
