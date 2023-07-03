@@ -88,8 +88,8 @@
                         <!-- Helpline -->
                         <li class="list-inline-item ml-3 pl-3 mr-0 pr-0">
                             <a href="tel:{{ get_setting('helpline_number') }}" class="text-secondary fs-12 d-inline-block py-2">
-                                <span>{{ translate('Helpline')}}</span>  
-                                <span>{{ get_setting('helpline_number') }}</span>    
+                                <span>{{ translate('Helpline')}}</span>
+                                <span>{{ get_setting('helpline_number') }}</span>
                             </a>
                         </li>
                     @endif
@@ -111,7 +111,7 @@
                         <rect id="Rectangle_19063" data-name="Rectangle 19063" width="16" height="2" fill="#919199"/>
                         <rect id="Rectangle_19064" data-name="Rectangle 19064" width="16" height="2" transform="translate(0 14)" fill="#919199"/>
                     </svg>
-                    
+
                 </button>
                 <!-- Header Logo -->
                 <div class="col-auto pl-0 pr-3 d-flex align-items-center">
@@ -148,7 +148,7 @@
                                     <svg id="Group_723" data-name="Group 723" xmlns="http://www.w3.org/2000/svg" width="20.001" height="20" viewBox="0 0 20.001 20">
                                         <path id="Path_3090" data-name="Path 3090" d="M9.847,17.839a7.993,7.993,0,1,1,7.993-7.993A8,8,0,0,1,9.847,17.839Zm0-14.387a6.394,6.394,0,1,0,6.394,6.394A6.4,6.4,0,0,0,9.847,3.453Z" transform="translate(-1.854 -1.854)" fill="#b5b5bf"/>
                                         <path id="Path_3091" data-name="Path 3091" d="M24.4,25.2a.8.8,0,0,1-.565-.234l-6.15-6.15a.8.8,0,0,1,1.13-1.13l6.15,6.15A.8.8,0,0,1,24.4,25.2Z" transform="translate(-5.2 -5.2)" fill="#b5b5bf"/>
-                                    </svg>                    
+                                    </svg>
                                 </div>
                             </div>
                         </form>
@@ -304,7 +304,7 @@
                                     </a>
                                 </li>
                             @endif
-                            
+
                             @if(isCustomer())
                                 <li class="user-top-nav-element border border-top-0" data-id="1">
                                     <a href="{{ route('purchase_history.index') }}" class="text-truncate text-dark px-4 fs-14 d-flex align-items-center hov-column-gap-1">
@@ -405,7 +405,7 @@
             <div class="d-flex h-100">
                 <!-- Categoty Menu Button -->
                 <div class="d-none d-xl-block all-category has-transition bg-black-10" id="category-menu-bar">
-                    <div class="px-3 h-100" style="padding-top: 12px;padding-bottom: 12px; width:270px; cursor: pointer;">
+                    <div class="px-3 h-100" style="padding-top: 6px;padding-bottom: 12px; width:270px; cursor: pointer;">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <span class="fw-700 fs-16 text-white mr-3">{{ translate('Categories') }}</span>
@@ -424,7 +424,7 @@
                             @if (get_setting('header_menu_labels') != null)
                                 @foreach (json_decode( get_setting('header_menu_labels'), true) as $key => $value)
                                 <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{ json_decode( get_setting('header_menu_links'), true)[$key] }}" 
+                                    <a href="{{ json_decode( get_setting('header_menu_links'), true)[$key] }}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10
                                         @if (url()->current() == json_decode( get_setting('header_menu_links'), true)[$key]) active @endif">
                                         {{ translate($value) }}
@@ -496,7 +496,7 @@
             @if (get_setting('header_menu_labels') != null)
                 @foreach (json_decode( get_setting('header_menu_labels'), true) as $key => $value)
                 <li class="mr-0">
-                    <a href="{{ json_decode( get_setting('header_menu_links'), true)[$key] }}" 
+                    <a href="{{ json_decode( get_setting('header_menu_links'), true)[$key] }}"
                         class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                         @if (url()->current() == json_decode( get_setting('header_menu_links'), true)[$key]) active @endif">
                         {{ translate($value) }}
@@ -508,7 +508,7 @@
                 @if(isAdmin())
                     <hr>
                     <li class="mr-0">
-                        <a href="{{ route('admin.dashboard') }}" 
+                        <a href="{{ route('admin.dashboard') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links">
                             {{ translate('My Account') }}
                         </a>
@@ -516,7 +516,7 @@
                 @else
                     <hr>
                     <li class="mr-0">
-                        <a href="{{ route('dashboard') }}" 
+                        <a href="{{ route('dashboard') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                             {{ areActiveRoutes(['dashboard'],' active')}}">
                             {{ translate('My Account') }}
@@ -525,21 +525,21 @@
                 @endif
                 @if(isCustomer())
                     <li class="mr-0">
-                        <a href="{{ route('all-notifications') }}" 
+                        <a href="{{ route('all-notifications') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                             {{ areActiveRoutes(['all-notifications'],' active')}}">
                             {{ translate('Notifications') }}
                         </a>
                     </li>
                     <li class="mr-0">
-                        <a href="{{ route('wishlists.index') }}" 
+                        <a href="{{ route('wishlists.index') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                             {{ areActiveRoutes(['wishlists.index'],' active')}}">
                             {{ translate('Wishlist') }}
                         </a>
                     </li>
                     <li class="mr-0">
-                        <a href="{{ route('compare') }}" 
+                        <a href="{{ route('compare') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                             {{ areActiveRoutes(['compare'],' active')}}">
                             {{ translate('Compare') }}
@@ -548,7 +548,7 @@
                 @endif
                 <hr>
                 <li class="mr-0">
-                    <a href="{{ route('logout') }}" 
+                    <a href="{{ route('logout') }}"
                         class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-primary header_menu_links">
                         {{ translate('Logout') }}
                     </a>
