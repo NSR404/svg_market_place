@@ -61,6 +61,7 @@
 
                         <div class="form-group row">
                             <input type="hidden" name="types[]" value="FACEBOOK_CLIENT_SECRET">
+                            <input type="hidden" name="login_type" value="facebook_login">
                             <div class="col-lg-3">
                                 <label class="col-from-label">{{ translate('App Secret') }}</label>
                             </div>

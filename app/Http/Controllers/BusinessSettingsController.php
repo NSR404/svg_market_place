@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BusinessSetting;
 use Artisan;
+use Illuminate\Support\Facades\DB;
+
 //use CoreComponentRepository;
 
 class BusinessSettingsController extends Controller
@@ -323,6 +325,13 @@ class BusinessSettingsController extends Controller
     {
         foreach ($request->types as $key => $type) {
                 $this->overWriteEnvFile($type, $request[$type]);
+        }
+        if($request->has('login_type') && !is_null($request->types))
+        {
+            $setting        =   DB::table('business_settings')->where('type' , $request->login_type)->first();
+            $setting        =  BusinessSetting::query()->find($setting->id);
+            $setting->update(['value'   =>  1]);
+            Artisan::call('cache:clear');
         }
 
         flash(translate("Settings updated successfully"))->success();
