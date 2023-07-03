@@ -1044,13 +1044,13 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('vat_&_tax_setup')
+                            {{-- @can('vat_&_tax_setup')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('tax.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['tax.index', 'tax.create', 'tax.store', 'tax.show', 'tax.edit'])}}">
                                         <span class="aiz-side-nav-text">{{translate('Vat & TAX')}}</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                             {{-- @can('pickup_point_setup')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('pick_up_points.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['pick_up_points.index','pick_up_points.create','pick_up_points.edit'])}}">
