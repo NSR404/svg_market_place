@@ -1037,13 +1037,13 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @can('currency_setup')
+                            {{-- @can('currency_setup')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('currency.index')}}" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('Currency')}}</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                             {{-- @can('vat_&_tax_setup')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('tax.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['tax.index', 'tax.create', 'tax.store', 'tax.show', 'tax.edit'])}}">
@@ -1058,13 +1058,13 @@
                                     </a>
                                 </li>
                             @endcan --}}
-                            @can('smtp_settings')
+                            {{-- @can('smtp_settings')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('smtp_settings.index') }}" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('SMTP Settings')}}</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                             {{-- @can('payment_methods_configurations')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('payment_method.index') }}" class="aiz-side-nav-link">
@@ -1093,7 +1093,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @canany(['facebook_chat','facebook_comment'])
+                            {{-- @canany(['facebook_chat','facebook_comment'])
                                 <li class="aiz-side-nav-item">
                                     <a href="javascript:void(0);" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('Facebook')}}</span>
@@ -1116,7 +1116,7 @@
                                         @endcan --}}
                                     </ul>
                                 </li>
-                            @endcanany
+                            @endcanany --}}
                             {{-- @canany(['analytics_tools_configuration','google_recaptcha_configuration','google_map_setting','google_firebase_setting'])
                                 <li class="aiz-side-nav-item">
                                     <a href="javascript:void(0);" class="aiz-side-nav-link">
