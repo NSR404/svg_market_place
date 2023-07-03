@@ -11,7 +11,7 @@ use App\Models\Order;
 class OrderNotification extends Notification
 {
     use Queueable;
-    
+
     protected $order_notification;
 
     /**
@@ -62,7 +62,7 @@ class OrderNotification extends Notification
             'order_id'      => $this->order_notification['order_id'],
             'order_code'    => $this->order_notification['order_code'],
             'user_id'       => $this->order_notification['user_id'],
-            'seller_id'     => $this->order_notification['seller_id'],
+            // 'seller_id'     => $this->order_notification['seller_id'],
             'status'        => $this->order_notification['status']
         ];
     }

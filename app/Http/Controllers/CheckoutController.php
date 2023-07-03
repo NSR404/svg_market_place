@@ -373,15 +373,18 @@ class CheckoutController extends Controller
                         'redirect'  =>  route('home'),
                     ];
                 }else{
-                    $this->createSvgOrderAndSyncProducts($data , $carts);
+                    $svg_order      =   $this->createSvgOrderAndSyncProducts($data , $carts);
+                    NotificationUtility::sendNotification($svg_order ,  $svg_order->status);
                     $response   =   [
                         'status'        =>   true,
                         'message'       =>  translate('Order Created Sucessfully.. We Will Contact You Soon'),
                         'redirect'      =>  route('home'),
                     ];
+                Cart::where('user_id', Auth::user()->id)->delete();
                 }
         }catch(Throwable $e)
         {
+            dd($e);
             DB::rollBack();
             $response       =   ResponseHelper::generateResponse(false);
         }
@@ -417,7 +420,7 @@ class CheckoutController extends Controller
         }
         $this->updateProductNumOfSale($product_ids);
         DB::commit();
-        Cart::where('user_id', Auth::user()->id)->delete();
+        return $created_svg_order;
     }
     public function updateProductNumOfSale(array $product_ids)
     {
