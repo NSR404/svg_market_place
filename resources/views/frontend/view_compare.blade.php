@@ -17,13 +17,13 @@
                                     @php
                                         $product = \App\Models\Product::find($item);
                                     @endphp
-                                    <div class="col-xl-3 col-lg-4 col-md-6 py-3">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 py-3 text-center">
                                         <div class="border">
                                             <!-- Product Name -->
                                             <div class="p-4 border-bottom">
                                                 <span class="fs-12 text-gray">{{ translate('Name')}}</span>
                                                 <h5 class="mb-0 text-dark h-45px text-truncate-2 mt-1">
-                                                    <a class="text-reset fs-14 fw-700 hov-text-primary" href="{{ route('product', \App\Models\Product::find($item)->slug) }}" title="{{ \App\Models\Product::find($item)->getTranslation('name') }}">
+                                                    <a class=" fs-14 fw-700 hov-text-primary m-auto" href="{{ route('product', \App\Models\Product::find($item)->slug) }}" title="{{ \App\Models\Product::find($item)->getTranslation('name') }}">
                                                         {{ \App\Models\Product::find($item)->getTranslation('name') }}
                                                     </a>
                                                 </h5>
@@ -36,7 +36,7 @@
                                                 </div>
                                             </div>
                                             <!-- Price -->
-                                            <div class="p-4 border-bottom">
+                                            {{-- <div class="p-4 border-bottom">
                                                 <span class="fs-12 text-gray">{{ translate('Price')}}</span>
                                                 <h5 class="mb-0 fs-14 mt-1">
                                                     @if(home_base_price($product) != home_discounted_base_price($product))
@@ -44,7 +44,7 @@
                                                     @endif
                                                     <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
                                                 </h5>
-                                            </div>
+                                            </div> --}}
                                             <!-- Category -->
                                             <div class="p-4 border-bottom">
                                                 <span class="fs-12 text-gray">{{ translate('Category')}}</span>

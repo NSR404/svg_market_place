@@ -238,7 +238,7 @@
                         <div class="position-relative h-140px h-md-200px img-fit overflow-hidden mb-3">
                             <!-- Image -->
                             <a href="{{ route('product', $wishlist->product->slug) }}" class="d-block h-100">
-                                <img src="{{ uploaded_asset($wishlist->product->thumbnail_img) }}" class="lazyload mx-auto img-fit"
+                                <img src="{{ uploaded_asset($wishlist->product->thumbnail_img) }}" class="lazyload mx-auto img-fit" style="object-fit: contain !important;"
                                     title="{{ $wishlist->product->getTranslation('name') }}">
                             </a>
                             <!-- Remove from wishlisht -->
@@ -253,16 +253,16 @@
                         </div>
                         <!-- Product Name -->
                         <h5 class="fs-14 mb-0 lh-1-5 fw-400 text-truncate-2 mb-3">
-                            <a href="{{ route('product', $wishlist->product->slug) }}" class="text-reset hov-text-primary"
+                            <a href="{{ route('product', $wishlist->product->slug) }}" class="text-center hov-text-primary"
                                 title="{{ $wishlist->product->getTranslation('name') }}">{{ $wishlist->product->getTranslation('name') }}</a>
                         </h5>
                         <!-- Price -->
-                        <div class="fs-14">
+                        {{-- <div class="fs-14">
                             <span class="fw-600 text-primary">{{ home_discounted_base_price($wishlist->product) }}</span>
                             @if(home_base_price($wishlist->product) != home_discounted_base_price($wishlist->product))
                                 <del class="opacity-60 ml-1">{{ home_base_price($wishlist->product) }}</del>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
                 @endif
             @endforeach
