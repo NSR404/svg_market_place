@@ -1086,14 +1086,14 @@
                                     </a>
                                 </li>
                             @endcan --}}
-                            @can('social_media_logins')
+                            {{-- @can('social_media_logins')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('social_login.index') }}" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('Social media Logins')}}</span>
                                     </a>
                                 </li>
                             @endcan
-                            {{-- @canany(['facebook_chat','facebook_comment'])
+                            @canany(['facebook_chat','facebook_comment'])
                                 <li class="aiz-side-nav-item">
                                     <a href="javascript:void(0);" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('Facebook')}}</span>
@@ -1107,13 +1107,13 @@
                                                 </a>
                                             </li>
                                         @endcan
-                                        {{-- @can('facebook_comment')
+                                        @can('facebook_comment')
                                             <li class="aiz-side-nav-item">
                                                 <a href="{{ route('facebook-comment') }}" class="aiz-side-nav-link">
                                                     <span class="aiz-side-nav-text">{{translate('Facebook Comment')}}</span>
                                                 </a>
                                             </li>
-                                        @endcan --}}
+                                        @endcan
                                     </ul>
                                 </li>
                             @endcanany --}}
