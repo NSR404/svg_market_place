@@ -48,7 +48,19 @@ use custom-style.css
         "Noto Color Emoji";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
+        --general_clr : #148c80;
 }
+
+.general_clr{
+  color: var(--general_clr)!important;
+}
+
+.bg_clr{
+    background-color: var(--general_clr)!important;
+}
+
+
+
 .tagify {
     --tags-border-color: #dfdfe6;
     --tag-bg: #e2e5ec;
@@ -9364,13 +9376,13 @@ div.footable-loader > span.fooicon:after {
     color: var(--warning);
 }
 .todays-deal.aiz-carousel .slick-prev {
-    left: -22px;
-    background-color: #0A7368;
+    left: -28px;
+    background-color: #0a7369bf;
    margin-top: 10px;
 }
 .todays-deal.aiz-carousel .slick-next {
-    right: -22px;
-    background-color: #0A7368;
+    right: -28px;
+    background-color: #0a7369bf;
     margin-top: 10px;
 }
 .aiz-carousel .slick-dots {
