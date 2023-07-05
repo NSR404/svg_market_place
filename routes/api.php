@@ -153,6 +153,8 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
 
         Route::get('payment-types', 'App\Http\Controllers\Api\V2\PaymentTypesController@getList')->middleware('auth:sanctum');
 
+        
+
 
         Route::controller(CustomerPackageController::class)->group(function () {
             Route::post('offline/packages-payment', 'purchase_package_offline')->middleware('auth:sanctum');
