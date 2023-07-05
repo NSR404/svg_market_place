@@ -14,8 +14,8 @@
         $cart_added = $cart->pluck('product_id')->toArray();
     }
 @endphp
-<div class="aiz-card-box h-auto bg-white py-3 hov-scale-img product-box-to-custom col-lg-2 col-md-2 col-sm-3 col-xs-3">
-    <div class="position-relative img-fit overflow-hidden w-100">
+<div class="aiz-card-box h-auto bg-white py-3 hov-scale-img product-box-to-custom col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <div class="position-relative img-fit overflow-hidden w-100 text-center">
         @php
             $product_url = route('product', $product->slug);
             if ($product->auction_product == 1) {
@@ -29,8 +29,8 @@
                 title="{{ $product->getTranslation('name') }}"
                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
         </a>
-        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mt-2 mb-2">
-            <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
+        <h3 class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
+            <a href="{{ $product_url }}" class="d-block text-center hov-text-primary p-0"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>
         <!-- Discount percentage tag -->
