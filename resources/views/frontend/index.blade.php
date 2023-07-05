@@ -261,7 +261,7 @@
     <div class="container">
        {{--  <!-- Start Categoreies number => 1 -->  --}}
        <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Villa Design</h3>
+        <h3 class="">Our Design</h3>
         <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
         href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
       </div>
@@ -332,7 +332,7 @@
 
          {{--  <!-- Start Categoreies number => 2 -->  --}}
     <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Interior design</h3>
+        <h3 class="">Villa design</h3>
         <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
         href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
     </div>
@@ -374,7 +374,7 @@
       {{--  <!-- End Categoreies number => 2 -->  --}}
     {{--  <!-- Start Categoreies number => 3 -->  --}}
     <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Our Design</h3>
+        <h3 class="">Our Projects</h3>
         <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
         href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
 </div>
