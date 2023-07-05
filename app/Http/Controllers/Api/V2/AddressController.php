@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V2;
 
+use App\Http\Requests\Api\Address\AddressCreateRequest;
 use App\Models\City;
 use App\Models\Country;
 use App\Http\Resources\V2\AddressCollection;
@@ -12,6 +13,8 @@ use App\Http\Resources\V2\CountriesCollection;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\State;
+use Illuminate\Support\Facades\Validator;
+
 
 class AddressController extends Controller
 {
@@ -22,14 +25,16 @@ class AddressController extends Controller
 
     public function createShippingAddress(Request $request)
     {
+
         $address = new Address;
         $address->user_id = auth()->user()->id;
         $address->address = $request->address;
         $address->country_id = $request->country_id;
-        $address->state_id = $request->state_id;
-        $address->city_id = $request->city_id;
-        $address->postal_code = $request->postal_code;
+        $address->phone_country_code         = $request->country_code;
         $address->phone = $request->phone;
+        // $address->state_id = $request->state_id;
+        // $address->city_id = $request->city_id;
+        // $address->postal_code = $request->postal_code;
         $address->save();
 
         return response()->json([
@@ -120,7 +125,7 @@ class AddressController extends Controller
 
     public function getShippingInCart(Request $request)
     {
-        
+
            $cart= Cart::where('user_id', auth()->user()->id)->first();
 
            $address = $cart->address;
@@ -138,7 +143,7 @@ class AddressController extends Controller
            foreach ($carts as $key => $cart) {
 
             $cart->shipping_cost = 0;
-            
+
            if($request->shipping_type=="pickup_point"){
             $cart->shipping_type="pickup_point";
             $cart->pickup_point=$request->shipping_id;
@@ -192,7 +197,7 @@ class AddressController extends Controller
              $country_query->where('name', 'like', '%' . $request->name . '%');
         }
         $countries = $country_query->get();
-        
+
         return new CountriesCollection($countries);
     }
 

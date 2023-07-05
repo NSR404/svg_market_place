@@ -15,12 +15,12 @@ class PurchaseHistoryMiniCollection extends ResourceCollection
                     'id' => $data->id,
                     'code' => $data->code,
                     'user_id' => intval($data->user_id),
-                    'payment_type' => ucwords(str_replace('_', ' ', $data->payment_type)) ,
-                    'payment_status' => $data->payment_status,
-                    'payment_status_string' => ucwords(str_replace('_', ' ', $data->payment_status)),
-                    'delivery_status' => $data->delivery_status,
-                    'delivery_status_string' => $data->delivery_status == 'pending'? "Order Placed" : ucwords(str_replace('_', ' ',  $data->delivery_status)),
-                    'grand_total' => format_price($data->grand_total) ,
+                    'status' => ucwords(str_replace('_', ' ', $data->status)) ,
+                    // 'payment_status' => $data->payment_status,
+                    // 'payment_status_string' => ucwords(str_replace('_', ' ', $data->payment_status)),
+                    'type' => $data->type,
+                    // 'delivery_status_string' => $data->delivery_status == 'pending'? "Order Placed" : ucwords(str_replace('_', ' ',  $data->delivery_status)),
+                    // 'grand_total' => format_price($data->grand_total) ,
                     'date' => Carbon::createFromTimestamp($data->date)->format('d-m-Y'),
                     'links' => [
                         'details' => ''

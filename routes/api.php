@@ -132,6 +132,7 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
         Route::post('payments/pay/manual', 'App\Http\Controllers\Api\V2\PaymentController@manualPayment')->middleware('auth:sanctum');
 
         Route::post('order/store', 'App\Http\Controllers\Api\V2\OrderController@store')->middleware('auth:sanctum');
+        Route::post('svg-order/store', 'App\Http\Controllers\Api\V2\OrderController@storeSvgOrder')->middleware('auth:sanctum');
 
         Route::get('profile/counters', 'App\Http\Controllers\Api\V2\ProfileController@counters')->middleware('auth:sanctum');
 
@@ -223,7 +224,7 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
 
     //Use this route outside of auth because initialy we created outside of auth we do not need auth initialy
     //We can't change it now because we didn't send token in header from mobile app.
-    //We need the upload update Flutter app then we will write it in auth middleware. 
+    //We need the upload update Flutter app then we will write it in auth middleware.
     Route::controller(CustomerPackageController::class)->group(function () {
         Route::get("customer-packages", "customer_packages_list");
     });

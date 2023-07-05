@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V2;
 
+use App\Helpers\ResponseHelper;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -16,6 +17,10 @@ use DB;
 use \App\Utility\NotificationUtility;
 use App\Models\CombinedOrder;
 use App\Http\Controllers\AffiliateController;
+use App\Models\SvgOrder;
+use App\Models\SvgOrderProduct;
+use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -25,7 +30,7 @@ class OrderController extends Controller
 
         if(get_setting('minimum_order_amount_check') == 1){
             $subtotal = 0;
-            foreach (Cart::where('user_id', auth()->user()->id)->get() as $key => $cartItem){ 
+            foreach (Cart::where('user_id', auth()->user()->id)->get() as $key => $cartItem){
                 $product = Product::find($cartItem['product_id']);
                 $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
             }
@@ -101,7 +106,7 @@ class OrderController extends Controller
             }else{
                 $order->payment_status = 'unpaid';
             }
-            
+
             $order->save();
 
             $subtotal = 0;
@@ -234,5 +239,86 @@ class OrderController extends Controller
             'result' => true,
             'message' => translate('Your order has been placed successfully')
         ]);
+    }
+
+
+    /**
+     * Store Svg Order.
+     */
+    public function storeSvgOrder(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'type' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'result' => false,
+                    'message' => $validator->errors()
+                ]);
+            }
+            $data   =   $request->toArray();
+            $carts = Cart::where('user_id', auth()->user()->id)->get();
+            if($carts->isEmpty()) {
+                $response   =   [
+                    'status'    =>  false,
+                    'message'   =>  translate('Your cart is empty'),
+                ];
+            }else{
+                $svg_order      =   $this->createSvgOrderAndSyncProducts($data , $carts);
+                NotificationUtility::sendNotification($svg_order ,  $svg_order->status);
+                $response   =   [
+                    'status'        =>   true,
+                    'message'       =>  translate('Order Created Sucessfully.. We Will Contact You Soon'),
+                ];
+            Cart::where('user_id', auth()->user()->id)->delete();
+            }
+        }catch(Throwable $e)
+        {
+            DB::rollBack();
+            $response       =   ResponseHelper::generateResponse(false);
+        }
+        return response()->json($response);
+    }
+
+    /**
+     * Create Svg order.
+     * sync products with created svg order
+     * clean the cart
+     */
+    protected function createSvgOrderAndSyncProducts($data , $carts)
+    {
+        $svg_order  =   [
+            'address_id'        =>  $carts[0]->address_id,
+            'type'              =>  $data['type'],
+            'user_id'           =>  auth()->user()->id,
+        ];
+        $created_svg_order      =   SvgOrder::query()->create($svg_order);
+        $product_ids            =   [];
+        DB::beginTransaction();
+        foreach($carts as $cart)
+        {
+            SvgOrderProduct::query()->create([
+                'product_id'        =>  $cart['product_id'],
+                'quantity'          =>  $cart['quantity'],
+                'variation'          =>  $cart['variation'],
+                'svg_order_id'      =>  $created_svg_order->id,
+            ]);
+            array_push($product_ids  , $cart['product_id']);
+        }
+        $this->updateProductNumOfSale($product_ids);
+        DB::commit();
+        return $created_svg_order;
+    }
+    public function updateProductNumOfSale(array $product_ids)
+    {
+        Product::query()->whereIn('id' , $product_ids)->chunk(20 , function($products){
+            foreach($products as $product)
+            {
+                $product->num_of_sale += 1;
+                $product->save();
+            }
+        });
     }
 }
