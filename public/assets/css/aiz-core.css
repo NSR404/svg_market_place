@@ -7205,7 +7205,7 @@ input[type="number"] {
 
 
 .cart-btn{
-    background-color:black;
+    background-color:#0A7368;
     transform: translateY(100%);
     transition: 0.3s;
     overflow: hidden;
@@ -7230,7 +7230,49 @@ input[type="number"] {
 }
 .aiz-card-box:hover .cart-btn{
     transform: translateY(0);
+}
 
+
+/* Style code add to cart for code nsr */
+.item_box{
+        position: relative!important;
+        transition: 0.8s!important;
+    }
+.item_box .cart-btn{
+      display: none!important;
+      transform: translateY(0%)!important;
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      right: 15px;
+      transition: 0.8s!important;
+}
+
+
+.item_box:hover .cart-btn , .item_box:hover .absolute-top-right    {
+    display: inline-flex!important;
+}
+
+.cart-btn:hover .cart-btn-text{
+    margin-top: -40px;
+}
+
+.item_box .absolute-bottom-left{
+    /* position: relative!important; */
+}
+
+
+.item_box .aiz-p-hov-icon a{
+  padding: 10px!important;
+}
+
+.absolute-top-right{
+    position: absolute;
+    top: 13px;
+    display: flex;
+    flex-direction: column;
+    right: 69px;
+    display: none;
 }
 
 /*tabs*/
@@ -11339,11 +11381,15 @@ ul.apps a:hover i{
        background-color: transparent;
     }
 
-    .aiz-p-hov-icon a {
-        display: block;
-        height: 25px;
-        width: 25px;
-        line-height: 25px;
+    .item_box .cart-btn{
+        bottom: -8px!important;
+    }
 
+    .box_row_num_3  .item_box .cart-btn{
+        bottom: 4px!important;
+        margin: -9px!important;
+    }
+    .box_row_num_3 .absolute-top-right{
+        right: 53px!important;
     }
  }
