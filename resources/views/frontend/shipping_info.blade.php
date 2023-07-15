@@ -10,7 +10,8 @@
                     <div class="row gutters-5 sm-gutters-10">
                         <div class="col ">
                             <div class="text-center border border-bottom-6px p-2 text-primary">
-                                <i class="la-3x mb-2 las la-shopping-cart cart-animate" style="margin-left: -100px; transition: 2s;"></i>
+                                <i class="la-3x mb-2 las la-shopping-cart cart-animate"
+                                    style="margin-left: -100px; transition: 2s;"></i>
                                 <h3 class="fs-14 fw-600 d-none d-lg-block">{{ translate('1. My Cart') }}</h3>
                             </div>
                         </div>
@@ -60,19 +61,20 @@
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Country') }}</span>
                                                                 <span
-                                                                    class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->country)->getTranslation('name')}}</span>
+                                                                    class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->country)->getTranslation('name') }}</span>
                                                             </div>
                                                             <div class="row">
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Address') }}</span>
                                                                 <span
-                                                                    class="fs-14 text-dark fw-500 ml-2 col">{{ $address->address }}</span>
+                                                                    class="fs-14 text-dark fw-500 ml-2 col">{{ __('custom.' . $address->state?->name) }}</span>
                                                             </div>
                                                             <div class="row">
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Phone') }}</span>
-                                                                <span
-                                                                    class="fs-14 text-dark fw-500 ml-2 col"><pre>{{ $address->phone }}</pre></span>
+                                                                <span class="fs-14 text-dark fw-500 ml-2 col">
+                                                                    <pre>{{ $address->phone }}</pre>
+                                                                </span>
                                                             </div>
                                                         </span>
                                                     </span>
@@ -112,6 +114,67 @@
                                 </div>
                             </div>
                         @endif
+                        @guest
+                            @foreach (\App\Models\Address::query()->whereUserId(
+                    request()->session()->get('temp_user_id'),
+                )->get() as $key => $address)
+                                <div class="border mb-4">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="aiz-megabox d-block bg-white mb-0">
+                                                <input type="radio" name="address_id" value="{{ $address->id }}"
+                                                    @if ($address->set_default) checked @endif required>
+                                                <span class="d-flex p-3 aiz-megabox-elem border-0">
+                                                    <!-- Checkbox -->
+                                                    <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
+                                                    <!-- Address -->
+                                                    <span class="flex-grow-1 pl-3 text-left">
+                                                        <div class="row">
+                                                            <span
+                                                                class="fs-14 text-secondary col-3">{{ translate('Country') }}</span>
+                                                            <span
+                                                                class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->country)->getTranslation('name') }}</span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span
+                                                                class="fs-14 text-secondary col-3">{{ translate('Address') }}</span>
+                                                            <span
+                                                                class="fs-14 text-dark fw-500 ml-2 col">{{ __('custom.' . $address->state?->name) }}</span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span
+                                                                class="fs-14 text-secondary col-3">{{ translate('Phone') }}</span>
+                                                            <span class="fs-14 text-dark fw-500 ml-2 col">
+                                                                <pre>{{ $address->phone }}</pre>
+                                                            </span>
+                                                        </div>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <!-- Edit Address Button -->
+                                        <div class="col-md-4 p-3 text-right">
+                                            <a class="btn btn-sm btn-warning text-white mr-4 rounded-0 px-4"
+                                                onclick="edit_address('{{ $address->id }}')">{{ translate('Change') }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <!-- Add New Address -->
+                            <div class="mb-5">
+                                <div class="border p-3 c-pointer text-center bg-light has-transition hov-bg-soft-light h-100 d-flex flex-column justify-content-center"
+                                    onclick="add_new_address()">
+                                    <i class="las la-plus la-2x mb-3"></i>
+                                    <div class="alpha-7 fw-700">{{ translate('Add New Address') }}</div>
+                                </div>
+                            </div>
+                            <!-- Continue to Delivery Info -->
+                            <div class="col-md-6 text-center text-md-right">
+                                <button type="submit"
+                                    class="btn btn-primary fs-14 fw-700 rounded-0 px-4">{{ translate('Continue to Delivery Info') }}</a>
+                            </div>
+                        @endguest
                     </form>
                 </div>
             </div>
@@ -123,4 +186,3 @@
     <!-- Address Modal -->
     @include('frontend.partials.address_modal')
 @endsection
-

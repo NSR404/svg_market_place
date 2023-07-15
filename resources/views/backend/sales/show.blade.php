@@ -84,11 +84,11 @@
                 <div class="col text-md-left text-center">
                     <address>
                         <strong class="text-main">
-                            {{ $order->user->name }}
+                            {{ $order->user?->name ?? $order->address?->name }}
                         </strong><br>
-                        {{ $order->user->email }}<br>
+                        {{ $order->user?->email }}<br>
                         {{ $order->address?->country->getTranslation('name') }}<br>
-                        {{ $order->address?->address }}<br>
+                        {{ __('custom.'.$order->address?->state?->name) }}<br>
                         <pre>
                         {{ $order->address?->phone }}</pre><br>
                     </address>

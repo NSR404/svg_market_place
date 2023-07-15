@@ -33,7 +33,7 @@
                       <label for="state_id">{{translate('State')}}</label>
                       <select class="select2 form-control aiz-selectpicker" name="state_id" data-selected="{{ $city->state_id }}" data-toggle="select2" data-placeholder="Choose ..." data-live-search="true">
                           @foreach ($states as $state)
-                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                            <option value="{{ $state->id }}">{{ __('custom.'.$state->name) }}</option>
                           @endforeach
                       </select>
                   </div>

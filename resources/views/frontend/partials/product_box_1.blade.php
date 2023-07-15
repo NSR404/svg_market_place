@@ -23,7 +23,7 @@
             }
         @endphp
         <!-- Image -->
-        <a href="{{ $product_url }}" >
+        <a href="{{ $product_url }}">
             <img class="lazyload mx-auto img-fit has-transition" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                 data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->getTranslation('name') }}"
                 title="{{ $product->getTranslation('name') }}"
@@ -50,7 +50,8 @@
             <div class="absolute-top-right aiz-p-hov-icon">
                 <a href="javascript:void(0)" class="hov-svg-white" onclick="addToWishList({{ $product->id }})"
                     data-toggle="tooltip" data-title="{{ translate('Add to wishlist') }}" data-placement="left">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4" viewBox="0 0 16 14.4" class="w-sm-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4" viewBox="0 0 16 14.4"
+                        class="w-sm-10">
                         <g id="_51a3dbe0e593ba390ac13cba118295e4" data-name="51a3dbe0e593ba390ac13cba118295e4"
                             transform="translate(-3.05 -4.178)">
                             <path id="Path_32649" data-name="Path 32649"

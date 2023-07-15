@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-@if(\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
-<html dir="rtl" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@if (\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
+    <html dir="rtl" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @else
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @endif
+
 <head>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="app-url" content="{{ getBaseURL() }}">
     <meta name="file-base-url" content="{{ getFileBaseURL() }}">
 
-    <title>@yield('meta_title', get_setting('website_name').' | '.get_setting('site_motto'))</title>
+    <title>@yield('meta_title', get_setting('website_name') . ' | ' . get_setting('site_motto'))</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <meta name="description" content="@yield('meta_description', get_setting('meta_description') )" />
-    <meta name="keywords" content="@yield('meta_keywords', get_setting('meta_keywords') )">
+    <meta name="description" content="@yield('meta_description', get_setting('meta_description'))" />
+    <meta name="keywords" content="@yield('meta_keywords', get_setting('meta_keywords'))">
 
     @yield('meta')
 
-    @if(!isset($detailedProduct) && !isset($customer_product) && !isset($shop) && !isset($page) && !isset($blog))
+    @if (!isset($detailedProduct) && !isset($customer_product) && !isset($shop) && !isset($page) && !isset($blog))
         <!-- Schema.org markup for Google+ -->
         <meta itemprop="name" content="{{ get_setting('meta_title') }}">
         <meta itemprop="description" content="{{ get_setting('meta_description') }}">
@@ -31,7 +32,8 @@
         <meta name="twitter:site" content="@publisher_handle">
         <meta name="twitter:title" content="{{ get_setting('meta_title') }}">
         <meta name="twitter:description" content="{{ get_setting('meta_description') }}">
-        <meta name="twitter:creator" content="@author_handle">
+        <meta name="twitter:creator"
+            content="@author_handle">
         <meta name="twitter:image" content="{{ uploaded_asset(get_setting('meta_image')) }}">
 
         <!-- Open Graph data -->
@@ -54,10 +56,10 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css?v=0.01') }}">
-    @if(\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
+    @if (\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
-    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=0.04') }}{{ rand(1000,9999) }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=0.04') }}{{ rand(1000, 9999) }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=0.13') }}">
 
 
@@ -105,7 +107,7 @@
             --soft-dark: #1b1b28;
             --primary: {{ get_setting('base_color', '#d43533') }};
             --hov-primary: {{ get_setting('base_hov_color', '#9d1b1a') }};
-            --soft-primary: {{ hex2rgba(get_setting('base_color','#d43533'),.15) }};
+            --soft-primary: {{ hex2rgba(get_setting('base_color', '#d43533'), 0.15) }};
         }
         body{
             font-family: 'Public Sans', sans-serif;
@@ -154,6 +156,63 @@
 
         .pac-container { z-index: 100000; }
     </style>
+    @if (app()->getLocale() == 'en')
+    <style>
+
+.btn_direction {
+    width: 56px;
+    /* Increased width to accommodate the larger icon */
+    height: 56px;
+    /* Increased height to accommodate the larger icon */
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    /* Increased padding to provide more space around the icon */
+    border: 0;
+    border-radius: 50%;
+    /* Changed border-radius to make the button circular */
+    position: fixed;
+    right: 33px;
+    bottom: 80px;
+    z-index: 10;
+    transition: all 0.5s;
+    font-size: 50px !important;
+}
+
+.btn_direction:hover {
+    cursor: pointer;
+    transform: translate(0, -5px);
+}
+    </style>
+    @else
+    <style>
+
+.btn_direction {
+    width: 56px;
+    /* Increased width to accommodate the larger icon */
+    height: 56px;
+    /* Increased height to accommodate the larger icon */
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    /* Increased padding to provide more space around the icon */
+    border: 0;
+    border-radius: 50%;
+    /* Changed border-radius to make the button circular */
+    position: fixed;
+    left: 33px;
+    bottom: 80px;
+    z-index: 10;
+    transition: all 0.5s;
+    font-size: 50px !important;
+}
+
+.btn_direction:hover {
+    cursor: pointer;
+    transform: translate(0, -5px);
+}
+    </style>
+    @endif
 
 @if (get_setting('google_analytics') == 1)
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -204,6 +263,27 @@
 </style>
 @endif
 </head>
+
+
+{{-- Cart Added Product --}}
+@php
+    if (auth()->user() != null) {
+        $user_id = Auth::user()->id;
+        $cart = \App\Models\Cart::where('user_id', $user_id)->get();
+    } else {
+        $temp_user_id = Session()->get('temp_user_id');
+        if ($temp_user_id) {
+            $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
+        }
+    }
+
+    $cart_added = [];
+    if (isset($cart) && count($cart) > 0) {
+        $cart_added = $cart->pluck('product_id')->toArray();
+    }
+    $_GLOBALS['cart_added'] =   $cart_added;
+@endphp
+
 <body>
 
      {{-- Loader --}}
@@ -287,12 +367,17 @@
             </div>
         </div>
     </div>
+    <div class="btn_direction b_pos">
+        <a href="https://api.whatsapp.com/send?phone={{ get_setting('whatsapp_number') }}" target="_blank">
+          <i class="la la-brands la-whatsapp text-primary "></i>
+        </a>
+      </div>
 
     @yield('modal')
 
     <!-- SCRIPTS -->
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
-    <script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('assets/js/aiz-core.js?v=0.01') }}{{ rand(1000, 9999) }}"></script>
     <script src="{{ static_asset('assets/js/custom/frontend/master.js?v=0.01') }}"></script>
 
 
@@ -540,7 +625,7 @@
         }
 
         function addToCart(){
-            @if(Auth::check() && Auth::user()->user_type != 'customer')
+            @if (Auth::check() && Auth::user()->user_type != 'customer')
                 AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
                 return false;
             @endif
@@ -569,7 +654,7 @@
         }
 
         function buyNow(){
-            @if(Auth::check() && Auth::user()->user_type != 'customer')
+            @if (Auth::check() && Auth::user()->user_type != 'customer')
                 AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
                 return false;
             @endif
@@ -604,16 +689,15 @@
 
         function bid_single_modal(bid_product_id, min_bid_amount){
             @if (Auth::check() && (isCustomer() || isSeller()))
-                var min_bid_amount_text = "({{ translate('Min Bid Amount: ')}}"+min_bid_amount+")";
+                var min_bid_amount_text = "({{ translate('Min Bid Amount: ') }}"+min_bid_amount+")";
                 $('#min_bid_amount').text(min_bid_amount_text);
                 $('#bid_product_id').val(bid_product_id);
                 $('#bid_amount').attr('min', min_bid_amount);
                 $('#bid_for_product').modal('show');
             @elseif (Auth::check() && isAdmin())
-                AIZ.plugins.notify('warning', '{{ translate("Sorry, Only customers & Sellers can Bid.") }}');
+                AIZ.plugins.notify('warning', '{{ translate('Sorry, Only customers & Sellers can Bid.') }}');
             @else
-                $('#login_modal').modal('show');
-            @endif
+                $('#login_modal').modal('show'); @endif
         }
 
         function clickToSlide(btn,id){
@@ -626,106 +710,94 @@
         }
 
         function goToView(params) {
-            document.getElementById(params).scrollIntoView({behavior: "smooth", block: "center"});
-        }
+            document.getElementById(params).scrollIntoView({behavior: "smooth",
+            block: "center" }); } function copyCouponCode(code){ navigator.clipboard.writeText(code);
+            AIZ.plugins.notify('success', "{{ translate('Coupon Code Copied') }}" ); } $(document).ready(function(){
+            $('.cart-animate').animate({margin : 0}, "slow" ); $({deg: 0}).animate({deg: 360}, { duration: 2000, step:
+            function(now) { $('.cart-rotate').css({ transform: 'rotate(' + now + 'deg)' }); } }); setTimeout(function(){
+            $('.cart-ok').css({ fill: '#d43533' }); }, 2000); }); </script>
 
-        function copyCouponCode(code){
-            navigator.clipboard.writeText(code);
-            AIZ.plugins.notify('success', "{{ translate('Coupon Code Copied') }}");
-        }
+        <script type="text/javascript">
+            // Country Code
+            var isPhoneShown = true,
+                countryData = window.intlTelInputGlobals.getCountryData(),
+                input = document.querySelector("#phone-code");
 
-        $(document).ready(function(){
-            $('.cart-animate').animate({margin : 0}, "slow");
+            // for (var i = 0; i < countryData.length; i++) {
+            //     var country = countryData[i];
+            //     if (country.iso2 == 'bd') {
+            //         country.dialCode = '88';
+            //     }
+            // }
 
-            $({deg: 0}).animate({deg: 360}, {
-                duration: 2000,
-                step: function(now) {
-                    $('.cart-rotate').css({
-                        transform: 'rotate(' + now + 'deg)'
-                    });
-                }
-            });
+            // var iti = intlTelInput(input, {
+            //     separateDialCode: true,
+            //     utilsScript: "{{ static_asset('assets/js/intlTelutils.js') }}?1590403638580",
+            //     onlyCountries: @php
+                echo json_encode(
+                    \App\Models\Country::where('status', 1)
+                        ->pluck('code')
+                        ->toArray(),
+                );
+            @endphp,
+            //     customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+            //         if (selectedCountryData.iso2 == 'bd') {
+            //             return "01xxxxxxxxx";
+            //         }
+            //         return selectedCountryPlaceholder;
+            //     }
+            // });
 
-            setTimeout(function(){
-                $('.cart-ok').css({ fill: '#d43533' });
-            }, 2000);
+            // var country = iti.getSelectedCountryData();
+            // $('input[name=country_code]').val(country.dialCode);
 
-        });
-    </script>
+            // input.addEventListener("countrychange", function(e) {
+            //     // var currentMask = e.currentTarget.placeholder;
+            //     var country = iti.getSelectedCountryData();
+            //     $('input[name=country_code]').val(country.dialCode);
 
-    <script type="text/javascript">
-        // Country Code
-        var isPhoneShown = true,
-            countryData = window.intlTelInputGlobals.getCountryData(),
-            input = document.querySelector("#phone-code");
+            // });
 
-        // for (var i = 0; i < countryData.length; i++) {
-        //     var country = countryData[i];
-        //     if (country.iso2 == 'bd') {
-        //         country.dialCode = '88';
-        //     }
-        // }
-
-        // var iti = intlTelInput(input, {
-        //     separateDialCode: true,
-        //     utilsScript: "{{ static_asset('assets/js/intlTelutils.js') }}?1590403638580",
-        //     onlyCountries: @php echo json_encode(\App\Models\Country::where('status', 1)->pluck('code')->toArray()) @endphp,
-        //     customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
-        //         if (selectedCountryData.iso2 == 'bd') {
-        //             return "01xxxxxxxxx";
-        //         }
-        //         return selectedCountryPlaceholder;
-        //     }
-        // });
-
-        // var country = iti.getSelectedCountryData();
-        // $('input[name=country_code]').val(country.dialCode);
-
-        // input.addEventListener("countrychange", function(e) {
-        //     // var currentMask = e.currentTarget.placeholder;
-        //     var country = iti.getSelectedCountryData();
-        //     $('input[name=country_code]').val(country.dialCode);
-
-        // });
-
-        function toggleEmailPhone(el) {
-            if (isPhoneShown) {
-                $('.phone-form-group').addClass('d-none');
-                $('.email-form-group').removeClass('d-none');
-                $('input[name=phone]').val(null);
-                isPhoneShown = false;
-                $(el).html('*{{ translate('Use Phone Instead') }}');
-            } else {
-                $('.phone-form-group').removeClass('d-none');
-                $('.email-form-group').addClass('d-none');
-                $('input[name=email]').val(null);
-                isPhoneShown = true;
-                $(el).html('<i>*{{ translate('Use Email Instead') }}</i>');
-            }
-        }
-    </script>
-
-    <script>
-        var acc = document.getElementsByClassName("aiz-accordion-heading");
-        var i;
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
+            function toggleEmailPhone(el) {
+                if (isPhoneShown) {
+                    $('.phone-form-group').addClass('d-none');
+                    $('.email-form-group').removeClass('d-none');
+                    $('input[name=phone]').val(null);
+                    isPhoneShown = false;
+                    $(el).html('*{{ translate('Use Phone Instead') }}');
                 } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    $('.phone-form-group').removeClass('d-none');
+                    $('.email-form-group').addClass('d-none');
+                    $('input[name=email]').val(null);
+                    isPhoneShown = true;
+                    $(el).html('<i>*{{ translate('Use Email Instead') }}</i>');
                 }
-            });
-        }
-    </script>
+            }
+        </script>
 
-    @yield('script')
+        <script>
+            var acc = document.getElementsByClassName("aiz-accordion-heading");
+            var i;
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
 
-    @php
-        echo get_setting('footer_script');
-    @endphp
 
-</body>
-</html>
+        @yield('script')
+
+        @php
+            echo get_setting('footer_script');
+        @endphp
+
+        </body>
+
+        </html>

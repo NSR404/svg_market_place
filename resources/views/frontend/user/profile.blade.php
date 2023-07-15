@@ -90,7 +90,7 @@
                         </div>
                         <div class="row fs-14 mb-2 mb-md-0">
                             <span class="col-md-2 text-secondary">{{ translate('Address') }}:</span>
-                            <span class="col-md-8 text-dark">{{ $address->address }}</span>
+                            <span class="col-md-8 text-dark">{{ __('custom.'.$address->state?->name) }}</span>
                         </div>
                         <div class="row fs-14 mb-2 mb-md-0">
                             <span class="col-md-2 text-secondary text-secondary">{{ translate('Phone') }}:</span>

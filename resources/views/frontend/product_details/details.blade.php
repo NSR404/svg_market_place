@@ -212,7 +212,7 @@
         @else
             <!-- Without Wholesale -->
             @if (home_price($detailedProduct) != home_discounted_price($detailedProduct))
-                {{-- <div class="row no-gutters mb-3 custom-d-none" >
+                <div class="row no-gutters mb-3 custom-d-none" >
                     <div class="col-sm-2">
                         <div class="text-secondary fs-14 fw-400">{{ translate('Price') }}</div>
                     </div>
@@ -265,9 +265,9 @@
                             @endif
                         </div>
                     </div>
-                </div> --}}
+                </div>
             @else
-                {{-- <div class="row no-gutters mb-3 custom-d-none">
+                 <div class="row no-gutters mb-3 custom-d-none">
                     <div class="col-sm-2">
                         <div class="text-secondary fs-14 fw-400">{{ translate('Price') }}</div>
                     </div>
@@ -311,7 +311,7 @@
                             @endif
                         </div>
                     </div>
-                </div> --}}
+                </div>
             @endif
         @endif
     @endif

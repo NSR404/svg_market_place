@@ -45,7 +45,7 @@ class AddressController extends Controller
         $data['address_data'] = Address::findOrFail($id);
         $data['states'] = State::where('status', 1)->where('country_id', $data['address_data']->country_id)->get();
         $data['cities'] = City::where('status', 1)->where('state_id', $data['address_data']->state_id)->get();
-        
+
         $returnHTML = view('seller.profile.address_edit_modal', $data)->render();
         return response()->json(array('data' => $data, 'html'=>$returnHTML));
     }
@@ -60,7 +60,7 @@ class AddressController extends Controller
     public function update(Request $request, $id)
     {
         $address = Address::findOrFail($id);
-        
+
         $address->address       = $request->address;
         $address->country_id    = $request->country_id;
         $address->state_id      = $request->state_id;
@@ -96,22 +96,22 @@ class AddressController extends Controller
     public function getStates(Request $request) {
         $states = State::where('status', 1)->where('country_id', $request->country_id)->get();
         $html = '<option value="">'.translate("Select State").'</option>';
-        
+
         foreach ($states as $state) {
-            $html .= '<option value="' . $state->id . '">' . $state->name . '</option>';
+            $html .= '<option value="' . $state->id . '">' . __('custom.'.$state->name) . '</option>';
         }
-        
+
         echo json_encode($html);
     }
-    
+
     public function getCities(Request $request) {
         $cities = City::where('status', 1)->where('state_id', $request->state_id)->get();
         $html = '<option value="">'.translate("Select City").'</option>';
-        
+
         foreach ($cities as $row) {
             $html .= '<option value="' . $row->id . '">' . $row->getTranslation('name') . '</option>';
         }
-        
+
         echo json_encode($html);
     }
 

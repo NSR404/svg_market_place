@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App;
+use Str;
 
 class Product extends Model
 {
@@ -82,5 +83,13 @@ class Product extends Model
     public function scopeDigital($query)
     {
         return $query->where('digital', 1);
+    }
+
+    /**
+     * get the name limited to display in a product box
+     */
+    public function getShowName()
+    {
+        return Str::limit($this->name  , 40 , '..');
     }
 }

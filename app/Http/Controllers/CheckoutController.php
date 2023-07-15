@@ -109,7 +109,7 @@ class CheckoutController extends Controller
 
     public function get_shipping_info(Request $request)
     {
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        $carts = $this->getCurrentUserCarts();
 //        if (Session::has('cart') && count(Session::get('cart')) > 0) {
         if ($carts && count($carts) > 0) {
             $categories = Category::all();
@@ -121,6 +121,33 @@ class CheckoutController extends Controller
         return back();
     }
 
+
+    /**
+     * Get Current User Carts either if he was ana auth or guest
+     */
+    public function getCurrentUserCarts()
+    {
+        if(Auth::check())
+        {
+            return Cart::where('user_id', Auth::id())->get();
+        }else{
+            return Cart::where('temp_user_id', request()->session()->get('temp_user_id'))->get();
+        }
+    }
+    /**
+     * Delete Current User Carts either if he was ana auth or guest
+     */
+    public function deleteCurrentUserCarts()
+    {
+        if(Auth::check())
+        {
+            Cart::where('user_id', Auth::id())->delete();
+        }else{
+            Cart::where('temp_user_id', request()->session()->get('temp_user_id'))->delete();
+        }
+    }
+
+
     public function store_shipping_info(Request $request)
     {
         if ($request->address_id == null) {
@@ -128,7 +155,7 @@ class CheckoutController extends Controller
             return back();
         }
 
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        $carts = $this->getCurrentUserCarts();
         if($carts->isEmpty()) {
             flash(translate('Your cart is empty'))->warning();
             return redirect()->route('home');
@@ -365,7 +392,7 @@ class CheckoutController extends Controller
     {
         try{
                 $data   =   $request->toArray();
-                $carts = Cart::where('user_id', Auth::user()->id)->get();
+                $carts = $this->getCurrentUserCarts();
                 if($carts->isEmpty()) {
                     $response   =   [
                         'status'    =>  false,
@@ -380,7 +407,7 @@ class CheckoutController extends Controller
                         'message'       =>  translate('Order Created Sucessfully.. We Will Contact You Soon'),
                         'redirect'      =>  route('home'),
                     ];
-                Cart::where('user_id', Auth::user()->id)->delete();
+                $this->deleteCurrentUserCarts();
                 }
         }catch(Throwable $e)
         {
@@ -403,7 +430,8 @@ class CheckoutController extends Controller
         $svg_order  =   [
             'address_id'        =>  $carts[0]->address_id,
             'type'              =>  $data['type'],
-            'user_id'           =>  Auth::id(),
+            'user_id'           =>  Auth::check() ?  Auth::id() : null,
+            'is_guest'          =>  Auth::check() ? false : true,
         ];
         $created_svg_order      =   SvgOrder::query()->create($svg_order);
         $product_ids            =   [];

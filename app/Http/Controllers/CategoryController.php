@@ -68,6 +68,7 @@ class CategoryController extends Controller
         $category->digital = $request->digital;
         $category->banner = $request->banner;
         $category->icon = $request->icon;
+        $category->is_product_price_visible = $request->is_product_price_visible  == 'on' ? 1 : 0;
         $category->cover_image = $request->cover_image;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
@@ -150,6 +151,7 @@ class CategoryController extends Controller
         $category->digital = $request->digital;
         $category->banner = $request->banner;
         $category->icon = $request->icon;
+        $category->is_product_price_visible = $request->is_product_price_visible  == 'on' ? 1 : 0;
         $category->cover_image = $request->cover_image;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;

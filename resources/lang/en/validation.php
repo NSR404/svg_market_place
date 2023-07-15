@@ -170,6 +170,7 @@ return [
         'applicable_discount_type.*'          =>  'Applicable Discount Type',
         'type'                          =>      'Order Type',
 
+        'state_id'                      =>      'State',
 
 
     ],

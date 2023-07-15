@@ -170,7 +170,7 @@ if (!function_exists('currency_symbol')) {
         if (request()->header('Currency-Code')) {
             return request()->header('Currency-Code');
         }
-        return get_system_default_currency()->symbol;
+        return app()->getLocale() == 'en' ? 'AED ' : 'د.إ'; #get_system_default_currency()->symbol;
     }
 }
 
