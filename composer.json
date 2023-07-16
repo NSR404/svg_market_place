@@ -92,7 +92,7 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "symfony/thanks": false
+            "symfony/thanks": true
         }
     },
     "minimum-stability": "dev",

@@ -65,35 +65,37 @@ class AuthController extends Controller
             'verification_code' => rand(100000, 999999)
         ]);
 
-        $user->email_verified_at = null;
-        if ($user->email != null) {
-            if (BusinessSetting::where('type', 'email_verification')->first()->value != 1) {
-                $user->email_verified_at = date('Y-m-d H:m:s');
-            }
-        }
+        $user->email_verified_at = date('Y-m-d H:m:s');
+        // if ($user->email != null) {
+        //     if (BusinessSetting::where('type', 'email_verification')->first()->value != 1) {
+        //         $user->email_verified_at = date('Y-m-d H:m:s');
+        //     }
+        // }
 
-        if ($user->email_verified_at == null) {
-            if ($request->register_by == 'email') {
-                try {
-                    $user->notify(new AppEmailVerificationNotification());
-                } catch (\Exception $e) {
-                }
-            } else {
-                $otpController = new OTPVerificationController();
-                $otpController->send_code($user);
-            }
-        }
+        // if ($user->email_verified_at == null) {
+        //     if ($request->register_by == 'email') {
+        //         try {
+        //             $user->notify(new AppEmailVerificationNotification());
+        //         } catch (\Exception $e) {
+        //         }
+        //     } else {
+        //         $otpController = new OTPVerificationController();
+        //         $otpController->send_code($user);
+        //     }
+        // }
 
         $user->save();
 
-        //create token
-        $user->createToken('tokens')->plainTextToken;
+        return $this->loginSuccess($user);
 
-        return response()->json([
-            'result' => true,
-            'message' => translate('Registration Successful. Please verify and log in to your account.'),
-            'user_id'=>$user->id
-        ], 201);
+        //create token
+        // $user->createToken('tokens')->plainTextToken;
+
+        // return response()->json([
+        //     'result' => true,
+        //     'message' => translate('Registration Successful. Please verify and log in to your account.'),
+        //     'user_id'=>$user->id
+        // ], 201);
     }
 
     public function resendCode(Request $request)
