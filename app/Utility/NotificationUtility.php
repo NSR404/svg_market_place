@@ -60,7 +60,7 @@ class NotificationUtility
         // } else {
             // }
         $users             =   User::query()->where('user_type', 'admin')->pluck('id')->toArray();
-        array_push($users , $order->user->id);
+        array_push($users , $order->user?->id);
         $users = User::findMany($users);
         $order_notification = array();
         $order_notification['order_id'] = $order->id;

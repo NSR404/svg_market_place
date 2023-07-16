@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td class="w-50 fw-600">{{ translate('address') }}:</td>
-                            <td>{{ $order->address->address }},
+                            <td>{{  __('custom.'. $order->address?->state?->name) }},
                                 {{ $order->address->country->getTranslation('name') }}
                                 <pre>+{{ $order->address->phone_country_code }} {{ $order->address->phone }}
                                 </pre>

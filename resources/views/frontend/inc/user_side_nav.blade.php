@@ -145,7 +145,7 @@
                 </li>
 
                 <!-- Followed Sellers -->
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="{{ route('followed_seller') }}" class="aiz-side-nav-link {{ areActiveRoutes(['followed_seller']) }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                             <g id="Group_8114" data-name="Group 8114" transform="translate(-1501.679 -486)">
@@ -154,7 +154,7 @@
                         </svg>
                         <span class="aiz-side-nav-text ml-3">{{ translate('Followed Sellers') }}</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Classified Products -->
                 @if (get_setting('classified_product') == 1)

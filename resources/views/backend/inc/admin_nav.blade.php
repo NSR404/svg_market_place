@@ -55,7 +55,7 @@
                                 <i class="fs-24 la-bell las pl-2"></i>
                                 @if (Auth::user()->unreadNotifications->count() > 0)
                                     <span
-                                        class="absolute-top-right badge badge-circle badge-primary fs-10 p-2 position-absolute notifications-count">
+                                        class="@if (app()->getLocale() == 'sa') absolute-top-right @endif badge badge-circle badge-primary fs-10 p-2 position-absolute notifications-count">
                                         {{ Auth::user()->unreadNotifications->count() }}
                                     </span>
                                 @endif

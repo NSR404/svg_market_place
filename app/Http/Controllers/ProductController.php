@@ -347,6 +347,7 @@ class ProductController extends Controller
             Artisan::call('cache:clear');
         }catch(Throwable $e)
         {
+            dd($e);
             DB::rollBack();
             $response = ResponseHelper::generateResponse(false);
         }

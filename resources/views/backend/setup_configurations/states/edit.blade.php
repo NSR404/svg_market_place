@@ -18,7 +18,7 @@
                     @csrf
                     <div class="form-group mb-3">
                         <label for="name">{{ translate('Name') }}</label>
-                        <input type="text" placeholder="{{ translate('Name') }}" value="{{ $state->name }}" name="name" class="form-control" required>
+                        <input type="text" placeholder="{{ translate('Name') }}" value="{{ __('custom.'.$state->name) }}" name="name" class="form-control" required>
                     </div>
 
                     <div class="form-group">

@@ -14,6 +14,22 @@
                 @csrf
                 <div class="modal-body c-scrollbar-light">
 
+                    @guest
+                        <!-- Name -->
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('Name') }}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" name="user_id" value="{{ request()->session()->get('temp_user_id') }}" hidden>
+                    @endguest
+
+
                     <!-- Country -->
                     <div class="row">
                         <div class="col-md-2">
@@ -34,22 +50,20 @@
                             </div>
                         </div>
                     </div>
+                    <!-- State -->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>{{ translate('State') }}</label>
+                        </div>
+                        <div class="col-md-10">
+                            <select class="form-control mb-3 aiz-selectpicker rounded-0" data-live-search="true"
+                                name="state_id" required>
 
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="p-3">
-                        <!-- Address -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Address') }}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <textarea required class="form-control mb-3 rounded-0" placeholder="{{ translate('Your Address') }}" rows="2"
-                                    name="address" required></textarea>
-                            </div>
-                        </div>
-
-
-
 
                         @if (get_setting('google_map') == 1)
                             <!-- Google Map -->
@@ -166,6 +180,36 @@
             });
         }
         var utilsScriptVar = "{{ static_asset('assets/js/intlTelutils.js') }}";
+
+        function get_states(country_id) {
+            $('[name="state"]').html("");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('get-state') }}",
+                type: 'POST',
+                data: {
+                    country_id: country_id
+                },
+                success: function(response) {
+                    var obj = JSON.parse(response);
+                    if (obj != '') {
+                        $('[name="state_id"]').html(obj);
+                        AIZ.plugins.bootstrapSelect('refresh');
+                    }
+                }
+            });
+        }
+
+        $(document).on('change', '[name=country_id]', function() {
+            var country_id = $(this).val();
+            get_states(country_id);
+        });
+        $(document).ready(function() {
+            var country_id = $('select[name=country_id]').val();
+            get_states(country_id);
+        });
     </script>
     <script src="{{ static_asset('assets/js/custom/phone.js?v=0.01') }}"></script>
 

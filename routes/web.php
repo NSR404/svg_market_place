@@ -257,7 +257,7 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
     Route::get('/all-notifications', [NotificationController::class, 'index'])->name('all-notifications');
 });
 
-Route::group(['middleware' => ['customer', 'verified', 'unbanned']], function () {
+Route::group(['middleware' => []], function () {
 
     // Checkout Routs
     Route::group(['prefix' => 'checkout'], function () {
@@ -348,11 +348,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('messages', MessageController::class);
 
     //Address
-    Route::resource('addresses', AddressController::class);
+    Route::resource('addresses', AddressController::class)->withoutMiddleware(['auth'  , 'verified']);
     Route::controller(AddressController::class)->group(function () {
-        Route::post('/get-states', 'getStates')->name('get-state');
+        Route::post('/get-states', 'getStates')->name('get-state')->withoutMiddleware(['auth'  , 'verified']);
         Route::post('/get-cities', 'getCities')->name('get-city');
-        Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
+        Route::post('/addresses/update/{id}', 'update')->name('addresses.update')->withoutMiddleware(['auth'  , 'verified']);
         Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
         Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
     });

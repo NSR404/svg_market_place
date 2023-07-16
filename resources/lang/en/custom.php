@@ -25,4 +25,12 @@ return [
         'Success'                                       =>  'Success',
 
     ],
+
+    'Abu Zabi' => 'Abu Dhabi',
+    'Ajman' => 'Ajman',
+    'Dubai' => 'Dubai',
+    'Ras al-Khaymah' => 'Ras al-Khaimah',
+    'Sharjah' => 'Sharjah',
+    'Umm al Qaywayn' => 'Umm al Qaywayn',
+    'al-Fujayrah' => 'Al-Fujayrah',
 ];

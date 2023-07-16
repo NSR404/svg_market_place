@@ -181,7 +181,8 @@
                     </div>
                 @endif
                 <!-- Products -->
-                <div class="section_products" style="background-color: {{ get_setting('todays_deal_bg_color', '#efefef') }}">
+                <div class="section_products"
+                    style="background-color: {{ get_setting('todays_deal_bg_color', '#efefef') }}">
                     <div class="text-right px-4 px-xl-5 pt-2 pt-md-2">
                         <a href="{{ route('todays-deal') }}"
                             class="fs-15 fw-700 general_clr has-transition hov-text-warning">{{ translate('View All') }}</a>
@@ -206,7 +207,8 @@
                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
                                                     width="100%">
                                             </div>
-                                            <h3 class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
+                                            <h3
+                                                class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
                                                 <a href="" class="d-block text-center hov-text-primary p-0"
                                                     title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
                                             </h3>
@@ -230,23 +232,70 @@
         </section>
     @endif
 
-    <!-- Banner section 1 -->
-    @if (@json_decode(get_setting('home_banner1_links'), true)[0] )
+
+    {{-- START   Highest Priorty Category "Usally Offers" --}}
+    <div>
+        @if (count($offers_category_products) > 0)
+            <section class="mb-2 mb-md-3 mt-2 mt-md-3">
+                <div class="container">
+                    <!-- Top Section -->
+                    <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
+                        <!-- Title -->
+                        <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
+                            <span class="">{{ $offers_category_products->first()->category->name }}</span>
+                        </h3>
+                        <!-- Links -->
+                        <div class="d-flex">
+                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                                href="{{ route('products.category', $offers_category_products?->first()?->category?->slug) }}">{{ translate('View All') }}</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Products Section -->
+                    <div class="box_products">
+                        <div class="row m-auto">
+                            <!-- Swiper -->
+                            <div class="swiper mySwiper">
+
+                                <div class="swiper-wrapper">
+                                    @foreach ($offers_category_products as $key => $product)
+                                        @include('frontend.partials.product_swiper_box', [
+                                            'product' => $product,
+                                            'is_price_visible'  => true,
+                                        ])
+                                    @endforeach
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+    </div>
+    {{-- END   Highest Priorty Category "Usally Offers" --}}
+
+
+
+
+    <!-- Video Section -->
+    @if (@json_decode(get_setting('home_banner1_links'), true)[0])
         <div class="mb-2 mb-md-3 mt-2 mt-md-3">
             <div class="container">
                 <div class="w-100">
                     <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15 text-center"
-                        data-items="1" data-xxl-items="1"
-                        data-xl-items="1" data-lg-items="1"
-                        data-md-items="1" data-sm-items="1" data-xs-items="1" data-arrows="true"
-                        data-dots="false">
+                        data-items="1" data-xxl-items="1" data-xl-items="1" data-lg-items="1" data-md-items="1"
+                        data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
                         <div class="carousel-box overflow-hidden hov-scale-img ">
-                             <div class="row p-3">
-                                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto">
-                                    <iframe   id="home_iframe" src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}" style="margin:auto !important;"
-                                    frameborder="0" allowfullscreen width="100%" height="320px"></iframe>
-                                   </div>
-                             </div>
+                            <div class="row p-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto">
+                                    <iframe id="home_iframe"
+                                        src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}"
+                                        style="margin:auto !important;" frameborder="0" allowfullscreen width="100%"
+                                        height="320px"></iframe>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -256,221 +305,42 @@
 
 
 
- {{--  <!--Start Section Categories -->  --}}
- <section class="section_categ p-2 py-2">
-    <div class="container">
-       {{--  <!-- Start Categoreies number => 1 -->  --}}
-       <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Our Design</h3>
-        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
-        href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
-      </div>
-    <hr />
-      <div class="row">
-         {{--  <!--Start Box products num => 1 -->  --}}
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
-               <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2 ">
-                       <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" >
-                      <h5 class="my-2">غرف معيشة </h6>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                     <img src="{{ static_asset('uploads/all/3rj1mY9AlgYALBxR0hxMSkQES9CFVGLGW0ZRdhIs.webp') }}" alt="image product" width="100%" >
-                    <h5 class="my-2">غرف نوم رئيسية  </h6>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                     <img src="{{ static_asset('uploads/all/3rj1mY9AlgYALBxR0hxMSkQES9CFVGLGW0ZRdhIs.webp') }}" alt="image product" width="100%" >
-                    <h5 class="my-2"> البناء والتركيب</h6>
-                  </div>
+    {{-- Start Home Categories Section --}}
+    @if (get_setting('home_categories') != null)
+        @include('frontend.partials.home_categories_section', ['home_categories' => $home_categories])
+    @endif
+    {{-- End Home Categories Section --}}
 
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                     <img src="{{ static_asset('uploads/all/fEaj8jzwe3Rx85RyqTosrvK28aGMT00p1zLMTVvR.png') }}" alt="image product" width="100%" >
-                    <h5 class="my-2"> فيلا متعددة الطوابق</h6>
-                  </div>
-               </div>
-          </div>
-         {{--  <!--End Box products num => 1 -->  --}}
-         {{--  <!--Start Box products num => 2 -->  --}}
-         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
-             <img src="{{ static_asset('uploads/all/K4KfLUhF5yWMku8ZCGA1DFqdtr089amLGdNrVD4k.webp') }}" alt="image product" width="100%" height="85%">
-             <h5 class="my-2">غرف معيشة </h6>
-         </div>
-        {{--  <!--End Box products num => 2 -->  --}}
-        {{--  <!--Start Box products num => 3 -->  --}}
-         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
-             <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" height="85%">
-             <h5 class="my-2">غرف معيشة </h6>
-         </div>
-        {{--  <!--End Box products num => 3 -->  --}}
 
-       {{--  <!--Start Box products num => 4 -->  --}}
-         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2">
-             <div class="row">
-                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                     <img src="{{ static_asset('uploads/all/Yr38gFEu79PeQQQNx5XbPj3K6MpEz1KyKPpaHluA.png') }}" alt="image product" width="100%" >
-                 <h5 class="my-2">غرف معيشة </h6>
-                 </div>
-                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/U6SUkK0zmi05FBQ1mzGE2yGfRzuuU3NQZ4ns32cx.webp') }}" alt="image product" width="100%" >
-                 <h5 class="my-2">غرف نوم رئيسية  </h6>
-             </div>
-             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/tZ8Lepux7iuRRGuqMWxAuC52pZmT6H83YYRY5ybp.webp') }}" alt="image product" width="100%" >
-                 <h5 class="my-2"> البناء والتركيب</h6>
-             </div>
 
-             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" >
-                 <h5 class="my-2"> فيلا متعددة الطوابق</h6>
-             </div>
-             </div>
-         </div>
-       {{--  <!--End Box products num => 5 -->  --}}
-
-      </div>
-       {{--  <!-- End Categoreies number => 1 -->  --}}
-
-         {{--  <!-- Start Categoreies number => 2 -->  --}}
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Villa design</h3>
-        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
-        href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
-    </div>
-    <hr />
-    <div class="text-center">
-        <div class="row mx-auto my-auto">
-            <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
-                <div class="carousel-inner w-100" role="listbox">
-                    <div class="carousel-item active w-100">
-                        <div class="col-lg-2">
-                            <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product"  height="80%"  width="100%">
-                            <h5 class="my-2 mt-2 general_clr2">غرف معيشة </h6>
+    <!-- Banner Section 2 -->
+    @if (get_setting('home_banner2_images') != null)
+        <div class="mb-2 mb-md-3 mt-2 mt-md-3">
+            <div class="container">
+                @php
+                    $banner_2_imags = json_decode(get_setting('home_banner2_images'));
+                    $data_md = count($banner_2_imags) >= 2 ? 2 : 1;
+                @endphp
+                <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15"
+                    data-items="{{ count($banner_2_imags) }}" data-xxl-items="{{ count($banner_2_imags) }}"
+                    data-xl-items="{{ count($banner_2_imags) }}" data-lg-items="{{ $data_md }}"
+                    data-md-items="{{ $data_md }}" data-sm-items="1" data-xs-items="1" data-arrows="true"
+                    data-dots="false">
+                    @foreach ($banner_2_imags as $key => $value)
+                        <div class="carousel-box overflow-hidden hov-scale-img">
+                            <a href="{{ json_decode(get_setting('home_banner2_links'), true)[$key] }}"
+                                class="d-block text-reset overflow-hidden">
+                                <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
+                                    data-src="{{ uploaded_asset($value) }}" alt="{{ env('APP_NAME') }} promo"
+                                    class="img-fluid lazyload w-100 has-transition"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
+                            </a>
                         </div>
-                    </div>
-                    <div class="carousel-item w-100">
-                        <div class="col-lg-2">
-                            <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" height="80%"  >
-                            <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>                            </div>
-                    </div>
-                    <div class="carousel-item w-100">
-                        <div class="col-lg-2">
-                            <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" height="80%"  >
-                            <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>                            </div>
-                    </div>
-
+                    @endforeach
                 </div>
-
-                <a class="carousel-control-prev bg_clr  w-auto" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next bg_clr w-auto" href="#myCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
         </div>
-    </div>
-      {{--  <!-- End Categoreies number => 2 -->  --}}
-    {{--  <!-- Start Categoreies number => 3 -->  --}}
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="">Our Projects</h3>
-        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
-        href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
-</div>
-<hr />
-  <div class="row">
-          {{--  <!--Start Box products num => 1 -->  --}}
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                    <img src="{{ static_asset('uploads/all/Yr38gFEu79PeQQQNx5XbPj3K6MpEz1KyKPpaHluA.png') }}" alt="image product" width="100%" >
-                <h5 class="my-2">غرف معيشة </h6>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                <img src="{{ static_asset('uploads/all/U6SUkK0zmi05FBQ1mzGE2yGfRzuuU3NQZ4ns32cx.webp') }}" alt="image product" width="100%" >
-                <h5 class="my-2">غرف نوم رئيسية  </h6>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                <img src="{{ static_asset('uploads/all/tZ8Lepux7iuRRGuqMWxAuC52pZmT6H83YYRY5ybp.webp') }}" alt="image product" width="100%" >
-                <h5 class="my-2"> البناء والتركيب</h6>
-            </div>
-
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" >
-                <h5 class="my-2"> فيلا متعددة الطوابق</h6>
-            </div>
-            </div>
-        </div>
-          {{--  <!--End Box products num => 1 -->  --}}
-          {{--  <!--Start Box products num => 2 -->  --}}
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
-              <img src="{{ static_asset('uploads/all/K4KfLUhF5yWMku8ZCGA1DFqdtr089amLGdNrVD4k.webp') }}" alt="image product" width="100%" height="85%">
-              <h5 class="my-2">غرف معيشة </h6>
-          </div>
-         {{--  <!--End Box products num => 2 -->  --}}
-           {{--  <!--Start Box products num => 3 -->  --}}
-           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2">
-             <div class="row">
-                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                     <img src="{{ static_asset('uploads/all/Yr38gFEu79PeQQQNx5XbPj3K6MpEz1KyKPpaHluA.png') }}" alt="image product" width="100%" >
-                 <h5 class="my-2">غرف معيشة </h6>
-                 </div>
-                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/U6SUkK0zmi05FBQ1mzGE2yGfRzuuU3NQZ4ns32cx.webp') }}" alt="image product" width="100%" >
-                 <h5 class="my-2">غرف نوم رئيسية  </h6>
-             </div>
-             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/tZ8Lepux7iuRRGuqMWxAuC52pZmT6H83YYRY5ybp.webp') }}" alt="image product" width="100%" >
-                 <h5 class="my-2"> البناء والتركيب</h6>
-             </div>
-
-             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2">
-                 <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" >
-                 <h5 class="my-2"> فيلا متعددة الطوابق</h6>
-             </div>
-             </div>
-         </div>
-       {{--  <!--End Box products num => 3 -->  --}}
-
-         {{--  <!--Start Box products num => 4 -->  --}}
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
-              <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}" alt="image product" width="100%" height="85%">
-              <h5 class="my-2">غرف معيشة </h6>
-          </div>
-         {{--  <!--End Box products num => 4 -->  --}}
-
-
- </div>
-   {{--  <!-- End Categoreies number => 3 -->  --}}
-
-    </div>
- </section>
-{{--  <!--End Section Categories -->  --}}
-
-
-
-   <!-- Banner Section 2 -->
-   @if (get_setting('home_banner2_images') != null)
-   <div class="mb-2 mb-md-3 mt-2 mt-md-3">
-       <div class="container">
-           @php
-               $banner_2_imags = json_decode(get_setting('home_banner2_images'));
-               $data_md = count($banner_2_imags) >= 2 ? 2 : 1;
-           @endphp
-           <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15" data-items="{{ count($banner_2_imags) }}" data-xxl-items="{{ count($banner_2_imags) }}" data-xl-items="{{ count($banner_2_imags) }}" data-lg-items="{{ $data_md }}" data-md-items="{{ $data_md }}" data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
-               @foreach ($banner_2_imags as $key => $value)
-                   <div class="carousel-box overflow-hidden hov-scale-img">
-                       <a href="{{ json_decode(get_setting('home_banner2_links'), true)[$key] }}" class="d-block text-reset overflow-hidden">
-                           <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}" data-src="{{ uploaded_asset($value) }}"
-                           alt="{{ env('APP_NAME') }} promo" class="img-fluid lazyload w-100 has-transition" onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                       </a>
-                   </div>
-               @endforeach
-           </div>
-       </div>
-   </div>
-   @endif
+    @endif
 
 
 
@@ -488,66 +358,30 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            {{-- <a type="button" class="arrow-prev slide-arrow link-disable text-secondary mr-2 px-3" onclick="clickToSlide('slick-prev','section_newest')"><i class="las la-angle-left fs-20 fw-600"></i></a> --}}
                             <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
-                            {{-- <a type="button" class="arrow-next slide-arrow text-secondary ml-2" onclick="clickToSlide('slick-next','section_newest')"><i class="las la-angle-right fs-20 fw-600"></i></a> --}}
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <!-- Products Section -->
                     <div class="box_products">
                         <div class="row m-auto">
                             <!-- Swiper -->
                             <div class="swiper mySwiper">
-                              <div class="swiper-wrapper">
-                                @foreach ($newest_products as $key => $product)
-                                <div class="swiper-slide">
-                                    <a href="" >
-                                        <img class="lazyload mx-auto img-fit has-transition" src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                            data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->getTranslation('name') }}"
-                                            title="{{ $product->getTranslation('name') }}"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
-                                    </a>
-                                    <h3 class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
-                                        <a href="" class="d-block text-center hov-text-primary p-0"
-                                            title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
-                                    </h3>
+                                <div class="swiper-wrapper">
+
+                                    @foreach ($newest_products as $key => $product)
+                                        @include('frontend.partials.product_swiper_box', [
+                                            'product' => $product,
+                                        ])
+                                    @endforeach
+
                                 </div>
-                                {{--  <div class="col-lg-3 col-d-3 col-sm-3 col-xs-3">  --}}
-                                {{--  <div class="col-3 text-center border-right border-bottom has-transition hov-shadow-out z-1">  --}}
-                                         {{--  @include('frontend.partials.product_box_1', ['product' => $product])  --}}
-                                {{--  </div>  --}}
-                                {{--  </div>  --}}
-                            @endforeach
-
-                              </div>
-                              <div class="swiper-pagination"></div>
+                                <div class="swiper-pagination"></div>
                             </div>
 
                         </div>
                     </div>
-
-                    {{--  <div class="px-sm-3">
-                    <div
-                        class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-4 row-cols-sm-4 row-cols-4 gutters-16 border-top border-left">
-                        @foreach ($newest_products as $key => $product)
-                            <div class="col-3 text-center border-right border-bottom has-transition hov-shadow-out z-1 mb-2">
-                                @include('frontend.partials.product_box_1', ['product' => $product])
-                            </div>
-                        @endforeach
-                    </div>
-                </div>  --}}
-                    {{-- <!-- Products Section -->
-                <div class="px-sm-3">
-                    <div class="aiz-carousel arrow-none sm-gutters-16" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="4" data-sm-items="4" data-xs-items="4" data-arrows='true' data-infinite='false'>
-                        @foreach ($newest_products as $key => $new_product)
-                        <div class="carousel-box px-3 position-relative has-transition border-right border-top border-bottom @if ($key == 0) border-left @endif hov-animate-outline">
-                            @include('frontend.partials.product_box_1',['product' => $new_product])
-                        </div>
-                        @endforeach
-                    </div>
-                </div> --}}
                 </div>
             </section>
         @endif
@@ -581,27 +415,34 @@
 
 
 
-       <!-- Banner Section 2 -->
-   @if (get_setting('home_banner3_images') != null)
-   <div class="mb-2 mb-md-3 mt-2 mt-md-3">
-       <div class="container">
-           @php
-               $banner_2_imags = json_decode(get_setting('home_banner3_images'));
-               $data_md = count($banner_2_imags) >= 2 ? 2 : 1;
-           @endphp
-           <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15" data-items="{{ count($banner_2_imags) }}" data-xxl-items="{{ count($banner_2_imags) }}" data-xl-items="{{ count($banner_2_imags) }}" data-lg-items="{{ $data_md }}" data-md-items="{{ $data_md }}" data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
-               @foreach ($banner_2_imags as $key => $value)
-                   <div class="carousel-box overflow-hidden hov-scale-img">
-                       <a href="{{ json_decode(get_setting('home_banner3_links'), true)[$key] }}" class="d-block text-reset overflow-hidden">
-                           <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}" data-src="{{ uploaded_asset($value) }}"
-                           alt="{{ env('APP_NAME') }} promo" class="img-fluid lazyload w-100 has-transition" onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                       </a>
-                   </div>
-               @endforeach
-           </div>
-       </div>
-   </div>
-   @endif
+    <!-- Banner Section 2 -->
+    @if (get_setting('home_banner3_images') != null)
+        <div class="mb-2 mb-md-3 mt-2 mt-md-3">
+            <div class="container">
+                @php
+                    $banner_2_imags = json_decode(get_setting('home_banner3_images'));
+                    $data_md = count($banner_2_imags) >= 2 ? 2 : 1;
+                @endphp
+                <div class="aiz-carousel gutters-16 overflow-hidden arrow-inactive-none arrow-dark arrow-x-15"
+                    data-items="{{ count($banner_2_imags) }}" data-xxl-items="{{ count($banner_2_imags) }}"
+                    data-xl-items="{{ count($banner_2_imags) }}" data-lg-items="{{ $data_md }}"
+                    data-md-items="{{ $data_md }}" data-sm-items="1" data-xs-items="1" data-arrows="true"
+                    data-dots="false">
+                    @foreach ($banner_2_imags as $key => $value)
+                        <div class="carousel-box overflow-hidden hov-scale-img">
+                            <a href="{{ json_decode(get_setting('home_banner3_links'), true)[$key] }}"
+                                class="d-block text-reset overflow-hidden">
+                                <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
+                                    data-src="{{ uploaded_asset($value) }}" alt="{{ env('APP_NAME') }} promo"
+                                    class="img-fluid lazyload w-100 has-transition"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
 
 
@@ -819,8 +660,8 @@
                                             tabindex="0"
                                             style="border: 1px solid #e5e5e5; border-radius: 50%; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.06);">
                                             <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
-                                                data-src="{{ uploaded_asset($seller->logo) }}"
-                                                alt="{{ $seller->name }}" class="img-fit lazyload has-transition"
+                                                data-src="{{ uploaded_asset($seller->logo) }}" alt="{{ $seller->name }}"
+                                                class="img-fit lazyload has-transition"
                                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
                                         </a>
                                         <div class="absolute-top-right z-1 mr-md-2 mt-1 rounded-content bg-white">
@@ -933,26 +774,25 @@
     <script>
         $('#myCarousel').carousel({
             interval: 2000
-          })
+        })
 
-          $('.carousel .carousel-item').each(function(){
-              var minPerSlide = 3;
-              var next = $(this).next();
-              if (!next.length) {
-              next = $(this).siblings(':first');
-              }
-              next.children(':first-child').clone().appendTo($(this));
+        $('.carousel .carousel-item').each(function() {
+            var minPerSlide = 3;
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
 
-              for (var i=0;i<minPerSlide;i++) {
-                  next=next.next();
-                  if (!next.length) {
-                      next = $(this).siblings(':first');
-                    }
-
-                  next.children(':first-child').clone().appendTo($(this));
+            for (var i = 0; i < minPerSlide; i++) {
+                next = next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
                 }
-          });
 
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
     </script>
     <script>
         $(document).ready(function() {
@@ -974,12 +814,12 @@
                 $('#auction_products').html(data);
                 AIZ.plugins.slickCarousel();
             });
-            $.post('{{ route('home.section.home_categories') }}', {
-                _token: '{{ csrf_token() }}'
-            }, function(data) {
-                $('#section_home_categories').html(data);
-                AIZ.plugins.slickCarousel();
-            });
+            // $.post('{{ route('home.section.home_categories') }}', {
+            //     _token: '{{ csrf_token() }}'
+            // }, function(data) {
+            //     $('#section_home_categories').html(data);
+            //     AIZ.plugins.slickCarousel();
+            // });
             $.post('{{ route('home.section.best_sellers') }}', {
                 _token: '{{ csrf_token() }}'
             }, function(data) {
@@ -987,33 +827,30 @@
                 AIZ.plugins.slickCarousel();
             });
         });
-
     </script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
     <!-- Initialize Swiper -->
     <script>
-
-      var swiper = new Swiper(".mySwiper", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        coverflowEffect: {
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-        },
-         autoplay: {
-            delay: 2500,
-          },
-      });
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            autoplay: {
+                delay: 2500,
+            },
+        });
     </script>
-
 @endsection

@@ -49,7 +49,7 @@
                             @foreach($states as $key => $state)
                                 <tr>
                                     <td>{{ ($key+1) + ($states->currentPage() - 1)*$states->perPage() }}</td>
-                                    <td>{{ $state->name }}</td>
+                                    <td>{{ __('custom.'.$state->name) }}</td>
                                     <td>{{ $state->country->name }}</td>
                                     <td>
                                         <label class="aiz-switch aiz-switch-success mb-0">

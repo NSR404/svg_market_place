@@ -24,7 +24,7 @@
                                 <option value="">{{ translate('Select State') }}</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}" @if ($sort_state == $state->id) selected @endif {{$sort_state}}>
-                                        {{ $state->name }}
+                                        {{ __('custom.'.$state->name) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -94,7 +94,7 @@
                             <label for="country">{{translate('State')}}</label>
                             <select class="select2 form-control aiz-selectpicker" name="state_id" data-toggle="select2" data-placeholder="Choose ..." data-live-search="true">
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                    <option value="{{ $state->id }}">{{ __('custom.'.$state->name) }}</option>
                                 @endforeach
                             </select>
                         </div>

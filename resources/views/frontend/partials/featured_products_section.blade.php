@@ -1,20 +1,22 @@
 @php
-    $featured_products = Cache::remember('featured_products', 3600, function () {
-        return filter_products(\App\Models\Product::where('featured', '1'))
-            ->latest()
-            ->limit(12)
+    $featured_products = Cache::remember('featured_products', 86400, function () {
+        return filter_products(\App\Models\Product::inRandomOrder())
+            ->limit(7)
             ->get();
     });
+    $featured_products_first_section = $featured_products->slice(0, 3);
+    $featured_products_second_section = $featured_products->slice(3)->take(4);
+
 @endphp
 
 @if (count($featured_products) > 0)
-    <section class="mb-2 mb-md-3 mt-2 mt-md-3 section_featured">
+    <section class="mb-2 mb-md-3 mt-2 mt-md-3">
         <div class="container">
             <!-- Top Section -->
             <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
                 <!-- Title -->
                 <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                    <span class="">{{ translate('Featured Products') }}</span>
+                    <span class="">{{ translate('Recommended Products') }}</span>
                 </h3>
                 <!-- Links -->
                 <div class="d-flex">
@@ -27,40 +29,26 @@
             <hr />
             <!-- Products Section -->
             <div class="px-sm-3 w-100">
-                <div class="row">
-                    <div class="box_row_num_3 row my-2 pb-4">
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4 text-center my-2 p-1">
-                            <img src="{{ static_asset('uploads/all/k2gOY5Y7vmOFCPsBK4tZ1WLK6Pdetsl9VWJODBo7.webp') }}" alt="image product" width="100%" height="83%">
-                               <h5 class="my-2 general_clr">غرف معيشة </h6>
+                <div class="box_row_num_3 row">
+                    @foreach ($featured_products_second_section as $product)
+                        <div
+                            class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4 text-center my-2 p-1 item_box @if ($loop->last) display_none @endif">
+                            @include('frontend.partials.home_center_box', ['product' => $product])
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4 text-center my-2 p-1">
-                              <img src="{{ static_asset('uploads/all/sLI9ku0D4tUtvdTTVRuF5ZkCjoAuk2JpjJRtnQgF.webp') }}" alt="image product" width="100%" height="83%">
-                                <h5 class="my-2 general_clr">غرف معيشة </h6>
-                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4 text-center my-2 p-1">
-                            <img src="{{ static_asset('uploads/all/K4KfLUhF5yWMku8ZCGA1DFqdtr089amLGdNrVD4k.webp') }}" alt="image product" width="100%" height="83%">
-                            <h5 class="my-2 general_clr">غرف معيشة </h6>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4 text-center my-2 p-1 display_none">
-                            <img src="{{ static_asset('uploads/all/U6SUkK0zmi05FBQ1mzGE2yGfRzuuU3NQZ4ns32cx.webp') }}" alt="image product" width="100%" height="83%">
-                            <h5 class="my-2 general_clr">غرف معيشة </h6>
-                        </div>
-                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6 text-center my-2">
-                    <img src="{{ static_asset('uploads/all/K4KfLUhF5yWMku8ZCGA1DFqdtr089amLGdNrVD4k.webp') }}" alt="image product" width="100%" height="85%">
-                    <h5 class="my-2 general_clr">غرف معيشة </h6>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6  text-center my-2">
-                        <img src="{{ static_asset('uploads/all/k2gOY5Y7vmOFCPsBK4tZ1WLK6Pdetsl9VWJODBo7.webp') }}" alt="image product" width="100%" height="85%">
-                        <h5 class="my-2 general_clr">غرف معيشة </h6>
-                     </div>
-                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4   text-center my-2 display_none">
-                        <img src="{{ static_asset('uploads/all/lNryfQzQ97ERKl8pHlA7EuNwt3PQo63sqpXFePea.webp') }}" alt="image product" width="100%" height="85%">
-                        <h5 class="my-2 general_clr">غرف معيشة </h6>
-                     </div>
-
+                    @endforeach
                 </div>
-         </div>
+                <div class="row">
+                    @foreach ($featured_products_first_section as $product)
+                        <div
+                            class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6 text-center my-2 item_box @if ($loop->last) display_none @endif">
+                            @include('frontend.partials.home_center_box', ['product' => $product])
+
+                        </div>
+                    @endforeach
+                </div>
+
+
+            </div>
         </div>
     </section>
 @endif

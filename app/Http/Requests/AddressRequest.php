@@ -14,7 +14,7 @@ class AddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -24,11 +24,13 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'address'           =>  'required',
+            'state_id'           =>  'nullable',
             'phone'             =>  'required|numeric',
             'country_id'        =>  'required',
             'country_code'      =>  'required',
+            'name'              =>  Auth::check() ? 'nullable' : 'required',
         ];
     }
 }
