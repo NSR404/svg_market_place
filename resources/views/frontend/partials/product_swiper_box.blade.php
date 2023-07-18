@@ -52,7 +52,7 @@
     </div>
     <h3 class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
         <a href="{{ route('product', $product->slug) }}" class="d-block text-center hov-text-primary p-0"
-            title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
+            title="{{ $product->getTranslation('name') }}">{{ $product->getShowName() }}</a>
     </h3>
 
 

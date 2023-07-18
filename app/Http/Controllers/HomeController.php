@@ -79,7 +79,10 @@ class HomeController extends Controller
 
         $data['cart_added']             =   $this->getCurrentCart();
         $data['offers_category_products']   =   get_cached_products($data['home_categories']->first());
-
+        $data['offers_category_products_for_slider']    =   $data['offers_category_products']->slice(0,20);
+        $data['offers_category_products_for_grid_1']    =   $data['offers_category_products']->slice(19,4);
+        $data['offers_category_products_for_grid_2']    =   $data['offers_category_products']->slice(23,2);
+        $data['offers_category_products_for_grid_3']    =   $data['offers_category_products']->slice(25,4);
         return view('frontend.index', $data);
     }
 
