@@ -59,7 +59,7 @@ class AddressController extends Controller
             $address->address       = $request->address;
             $address->name       = $request->name;
             $address->country_id    = $request->country_id;
-            $address->state_id      = $request->state_id;
+            // $address->state_id      = $request->state_id;
             $address->city_id       = $request->city_id;
             $address->longitude     = $request->longitude;
             $address->latitude      = $request->latitude;

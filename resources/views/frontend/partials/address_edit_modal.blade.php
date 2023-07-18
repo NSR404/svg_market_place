@@ -37,7 +37,7 @@
         </div>
 
         <!-- State -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-2">
                 <label>{{ translate('State') }}</label>
             </div>
@@ -51,7 +51,7 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
 
 
         <!-- Phone -->
