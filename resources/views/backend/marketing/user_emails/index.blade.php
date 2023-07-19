@@ -55,7 +55,7 @@
                                 {{ $user->group->name }}
                             </td>
                             <td class="text-right">
-                                @can('edit_user_group')
+                                @can('edit_user_emails')
                                     <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" data-toggle="modal"
                                         data-target="#create-update-user-email-modal"
                                         data-form-action="{{ route('user-emails.update', $user->id) }}" data-is-create="0"
@@ -64,7 +64,7 @@
                                         <i class="las la-edit"></i>
                                     </a>
                                 @endcan
-                                @can('delete_user_group')
+                                @can('delete_user_emails')
                                     <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete"
                                         data-href="{{ route('user-emails.destroy', $user->id) }}"
                                         title="{{ translate('Delete') }}">

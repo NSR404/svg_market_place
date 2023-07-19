@@ -11,7 +11,7 @@
             <div class="col-md-6">
                 <h1 class="h3">{{ translate('All User Groups') }}</h1>
             </div>
-            @can('add_product_group')
+            @can('add_user_group')
                 <div class="col-md-6 text-md-right">
                     <a data-toggle="modal" data-target="#create-update-user-group-modal" data-is-create="1"
                         data-form-action="{{ route('user-groups.store') }}" class="btn btn-primary">
