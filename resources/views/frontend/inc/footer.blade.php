@@ -1,5 +1,5 @@
 <!-- footer top Bar -->
-<section class="bg-light border-top mt-auto">
+{{-- <section class="bg-light border-top mt-auto">
     <div class="container px-xs-0">
         <div class="row no-gutters border-left border-soft-light">
             <!-- Terms & conditions -->
@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 <!-- footer subscription & icons -->
 <section class="py-3 text-light footer-widget border-bottom"
