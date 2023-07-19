@@ -17,3 +17,4 @@
 <div class="modal-footer">
     <button class="btn btn-default" data-dismiss="modal">{{translate('Cancel')}}</button>
 </div>
+

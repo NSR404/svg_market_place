@@ -12,7 +12,7 @@
                     <h3 class="h5 fw-700 mb-0">
                         <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Best Sellers')}}</span>
                     </h3>
-                    <a href="{{ route('sellers') }}" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ translate('View All Sellers') }}</a>
+                    <a href="{{ route('sellers') }}" class=" veiw_btn ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ translate('View All Sellers') }}</a>
                 </div>
                 <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="3" data-lg-items="3"  data-md-items="2" data-sm-items="2" data-xs-items="1" data-rows="2">
                     @foreach ($best_selers as $key => $seller)
