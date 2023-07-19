@@ -92,13 +92,11 @@
                         {{ translate('View cart') }}
                     </a>
                 </div>
-                @if (Auth::check())
                 <div class="col-sm-6">
                     <a href="{{ route('checkout.shipping_info') }}" class="btn btn-primary btn-sm btn-block rounded-4">
                         {{ translate('Finish') }}
                     </a>
                 </div>
-                @endif
             </div>
         </div>
     @else

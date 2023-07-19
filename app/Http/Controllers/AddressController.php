@@ -45,15 +45,21 @@ class AddressController extends Controller
         try{
 
             $address = new Address;
-            if($request->has('customer_id')){
-                $address->user_id   = $request->customer_id;
-            }
-            else{
-                $address->user_id   = Auth::user()->id;
+            if(Auth::check())
+            {
+                if($request->has('customer_id')){
+                    $address->user_id   = $request->customer_id;
+                }
+                else{
+                    $address->user_id   = Auth::user()->id;
+                }
+            }else{
+                $address->user_id   = $request->user_id;
             }
             $address->address       = $request->address;
+            $address->name       = $request->name;
             $address->country_id    = $request->country_id;
-            $address->state_id      = $request->state_id;
+            // $address->state_id      = $request->state_id;
             $address->city_id       = $request->city_id;
             $address->longitude     = $request->longitude;
             $address->latitude      = $request->latitude;
@@ -91,6 +97,7 @@ class AddressController extends Controller
     {
         $data['address_data'] = Address::findOrFail($id);
         $data['countries']    = Country::query()->get();
+        $data['states'] = State::where('status', 1)->where('country_id', $data['address_data']->country_id)->get();
         $returnHTML = view('frontend.partials.address_edit_modal', $data)->render();
         return response()->json(array('data' => $data, 'html'=>$returnHTML));
     }
@@ -102,11 +109,12 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddressRequest $request, $id)
     {
         $address = Address::findOrFail($id);
 
         $address->address       = $request->address;
+        $address->name       = $request->name;
         $address->country_id    = $request->country_id;
         $address->state_id      = $request->state_id;
         $address->city_id       = $request->city_id;
@@ -140,11 +148,12 @@ class AddressController extends Controller
     }
 
     public function getStates(Request $request) {
+        // State::query()->whereCountryId(229)->update(['status'=> 1]);
         $states = State::where('status', 1)->where('country_id', $request->country_id)->get();
         $html = '<option value="">'.translate("Select State").'</option>';
 
         foreach ($states as $state) {
-            $html .= '<option value="' . $state->id . '">' . $state->name . '</option>';
+            $html .= '<option value="' . $state->id . '">' . __('custom.'.$state->name) . '</option>';
         }
 
         echo json_encode($html);

@@ -46,8 +46,12 @@ use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UpdateController;
+use App\Http\Controllers\UserEmailController;
+use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\ZoneController;
+use App\Models\UserEmail;
+use App\Models\UserGroup;
 
 /*
   |--------------------------------------------------------------------------
@@ -178,6 +182,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
         Route::post('/newsletter/send', 'send')->name('newsletters.send');
         Route::post('/newsletter/test/smtp', 'testEmail')->name('test.smtp');
     });
+
+    // user Groiups
+    Route::resource('user-groups', UserGroupController::class);
+    Route::get('/user-groups/destroy/{id}', [UserGroupController::class , 'destroy'])->name('user-groups.destroy');
+    // user emails
+    Route::resource('user-emails', UserEmailController::class);
+    Route::get('/user-emails/destroy/{id}', [UserEmailController::class , 'destroy'])->name('user-emails.destroy');
+
+
 
     Route::resource('profile', ProfileController::class);
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    protected $fillable = ['set_default'];
+    protected $fillable = ['set_default' , 'name'];
 
 
     ##### START GETTER/SETTER #######

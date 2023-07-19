@@ -33,6 +33,16 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-sm-2 col-from-label" for="name">{{translate('Emails')}} ({{translate('Groups')}})</label>
+                        <div class="col-sm-10">
+                            <select class="form-control aiz-selectpicker" name="groups_emails[]" multiple data-selected-text-format="count" data-actions-box="true">
+                                @foreach($groups as $group)
+                                    <option value="{{$group->id}}">{{$group->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-sm-2 col-from-label" for="subject">{{translate('Newsletter subject')}}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="subject" id="subject" required>

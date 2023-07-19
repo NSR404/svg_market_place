@@ -33,6 +33,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Mail\SecondEmailVerifyMailManager;
 use App\Models\Branch;
 use App\Models\Cart;
+use App\Models\CategoryTranslation;
 use App\Models\Contact;
 use App\Models\Country;
 use Throwable;
@@ -46,20 +47,105 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $featured_categories = Cache::rememberForever('featured_categories', function () {
+
+        // $products  = Product::query()->inRandomOrder()->first();
+        // for($i = 0; $i < 50; $i++)
+        // {
+        //     $s = $products->replicate();
+        //     $s->category_id = 4;
+        //     $s->save();
+        // }
+        // dd('Do');
+        // $c = Category::query()->whereNotNull('cover_image')->first();
+        // for($i = 0; $i < 10; $i++)
+        // {
+        //     $s = $c->replicate();
+        //     $s->parent_id = 3;
+        //     $s->featured = 1;
+        //     $s->save();
+        // }
+        // dd('Do');
+
+        $data['featured_categories'] = Cache::rememberForever('featured_categories', function () {
             return Category::where('featured', 1)->get();
         });
 
-        $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
+        $data['todays_deal_products'] = Cache::rememberForever('todays_deal_products', function () {
             return filter_products(Product::where('todays_deal', '1'))->get();
         });
 
-        $newest_products = Cache::remember('newest_products', 3600, function () {
+        $data['newest_products'] = Cache::remember('newest_products', 3600, function () {
             return filter_products(Product::latest())->limit(18)->get();
         });
 
-        return view('frontend.index', compact('featured_categories', 'todays_deal_products', 'newest_products'));
+        $data['recommended_products']   =   $this->getRecommendedProducts();
+
+        $data['home_categories'] = $this->getHomeCategories();
+
+        $data['cart_added']             =   $this->getCurrentCart();
+        $data['offers_category_products']               =   get_cached_products($data['home_categories']->first()?->id);
+        $data['offers_category_products_for_slider']    =   $data['offers_category_products']->slice(0,20);
+        $data['offers_category_products_for_grid_1']    =   $data['offers_category_products']->slice(19,4);
+        $data['offers_category_products_for_grid_2']    =   $data['offers_category_products']->slice(23,2);
+        $data['offers_category_products_for_grid_3']    =   $data['offers_category_products']->slice(25,4);
+
+        return view('frontend.index', $data);
     }
+
+
+    public function getRecommendedProducts()
+    {
+        return Cache::rememberForever('recommended_products', function () {
+                    $user = Auth::user();
+                    if($user && $user->wishlists()->count() > 0)
+                    {
+                        $user_wished_products_ids                       =   $user->wishlists()->inRandomOrder()->limit(15)->pluck('product_id')->toArray();
+                        $recommended_products_categories_ids            =    Product::query()->whereIn('id' , $user_wished_products_ids)->pluck('category_id')->toArray();
+                        $recommended_products                           =    Product::query()->whereNotIn('id' , $user_wished_products_ids)
+                                                                                ->whereIn('category_id' , $recommended_products_categories_ids)
+                                                                                ->limit(7)->get();
+                    }else{
+                        $recommended_products = filter_products(\App\Models\Product::inRandomOrder())
+                        ->limit(7)
+                        ->get();
+                    }
+                    return $recommended_products;
+            });
+
+    }
+
+
+    public function getHomeCategories()
+    {
+        $home_categories_ids = json_decode(get_setting('home_categories'));
+        return Cache::rememberForever('home_categories', function ()use($home_categories_ids) {
+            return Category::query()->whereIn('id' , $home_categories_ids)->orderByDesc('order_level')->get();
+        });
+    }
+
+
+
+
+    public function getCurrentCart()
+    {
+        if (auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $cart = \App\Models\Cart::where('user_id', $user_id)->get();
+        } else {
+            $temp_user_id = Session()->get('temp_user_id');
+            if ($temp_user_id) {
+                $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
+            }
+        }
+
+        $cart_added = [];
+        if (isset($cart) && count($cart) > 0) {
+            $cart_added = $cart->pluck('product_id')->toArray();
+        }
+        return $cart_added;
+    }
+
+
 
     public function login()
     {

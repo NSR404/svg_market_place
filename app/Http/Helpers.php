@@ -117,7 +117,7 @@ if (!function_exists('get_cached_products')) {
         return Cache::remember('products-category-' . $category_id, 86400, function () use ($category_id) {
             $category_ids = CategoryUtility::children_ids($category_id);
             $category_ids[] = $category_id;
-            return filter_products(Product::whereIn('category_id', $category_ids))->latest()->take(20)->get();
+            return filter_products(Product::whereIn('category_id', $category_ids))->orderByDesc('order_level')->latest()->take(30)->get();
         });
     }
 }
@@ -170,7 +170,7 @@ if (!function_exists('currency_symbol')) {
         if (request()->header('Currency-Code')) {
             return request()->header('Currency-Code');
         }
-        return get_system_default_currency()->symbol;
+        return app()->getLocale() == 'en' ? 'AED ' : 'د.إ'; #get_system_default_currency()->symbol;
     }
 }
 

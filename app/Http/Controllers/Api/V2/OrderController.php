@@ -277,6 +277,7 @@ class OrderController extends Controller
         }catch(Throwable $e)
         {
             DB::rollBack();
+            dd($e);
             $response       =   ResponseHelper::generateResponse(false);
         }
         return response()->json($response);

@@ -114,7 +114,7 @@
                                     {{ $order->products()->count() }}
                                 </td>
                                 <td>
-                                    {{ $order->user->name }}
+                                    {{ $order->user?->name ?? $order->address?->name }}
                                 </td>
                                 <td>
                                     {{ date('d-m-Y', $order->date) }}
@@ -141,11 +141,11 @@
                                             <i class="las la-eye"></i>
                                         </a>
                                     @endcan
-                                    <a class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                    {{-- <a class="btn btn-soft-info btn-icon btn-circle btn-sm"
                                         href="{{ route('invoice.download', $order->id) }}"
                                         title="{{ translate('Download Invoice') }}">
                                         <i class="las la-download"></i>
-                                    </a>
+                                    </a> --}}
                                     @can('delete_order')
                                         <a href="#" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete"
                                             data-href="{{ route('orders.destroy', $order->id) }}"

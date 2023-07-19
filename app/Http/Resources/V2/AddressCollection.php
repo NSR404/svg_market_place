@@ -20,18 +20,17 @@ class AddressCollection extends ResourceCollection
                     $lat = floatval($data->latitude) ;
                     $lang = floatval($data->longitude);
                 }
-
                 return [
                     'id'      =>(int) $data->id,
                     'user_id' =>(int) $data->user_id,
                     'address' => $data->address,
                     'country_id' => (int)  $data->country_id,
+                    'country_name' => $data->country->name,
                     'state_id' =>  (int) $data->state_id,
                     'city_id' =>  (int) $data->city_id,                    
-                    'country_name' => $data->country->name,
                     'state_name' => $data->state->name,
                     'city_name' => $data->city->name,
-                    'postal_code' => $data->postal_code,
+                    // 'postal_code' => $data->postal_code,
                     'phone' => $data->phone,
                     'set_default' =>(int) $data->set_default,
                     'location_available' => $location_available,

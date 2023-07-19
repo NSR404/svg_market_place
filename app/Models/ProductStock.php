@@ -12,7 +12,7 @@ class ProductStock extends Model
     	return $this->belongsTo(Product::class);
     }
 
-    public function wholesalePrices() {
-        return $this->hasMany(WholesalePrice::class);
-    }
+    // public function wholesalePrices() {
+    //     return $this->hasMany(WholesalePrice::class);
+    // }
 }

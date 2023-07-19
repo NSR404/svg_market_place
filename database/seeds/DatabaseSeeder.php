@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->seedUploiadedFilesPermissions();
 
         $this->seedCountries();
+
+        $this->seedUserEmailsAndGroupsforMarkettingPermissions();
     }
 
 
@@ -516,5 +518,30 @@ class DatabaseSeeder extends Seeder
                 $country_data
             );
             }
+    }
+
+
+    public function seedUserEmailsAndGroupsforMarkettingPermissions()
+    {
+        $user_group_permissinos =   ['view_user_groups' , 'add_user_group' ,  'edit_user_group' , 'delete_user_group'];
+        foreach($user_group_permissinos as $permission)
+        {
+            $data = [
+                'name'           =>  $permission,
+                'section'        => 'marketing',
+                'guard_name'     => 'web',
+            ];
+            Permission::query()->updateOrCreate($data, $data);
+        }
+        $user_group_permissinos =   ['view_user_emails' , 'add_user_emails' ,  'edit_user_emails' , 'delete_user_emails'];
+        foreach($user_group_permissinos as $permission)
+        {
+            $data = [
+                'name'           =>  $permission,
+                'section'        => 'marketing',
+                'guard_name'     => 'web',
+            ];
+            Permission::query()->updateOrCreate($data, $data);
+        }
     }
 }
