@@ -23,6 +23,7 @@ return [
     'response_messages'   =>        [
         'error'                                         =>  'Someting Went Wrong',
         'Success'                                       =>  'Success',
+        'success'                                       =>  'Success',
 
     ],
 

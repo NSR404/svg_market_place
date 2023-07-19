@@ -171,6 +171,7 @@ return [
         'type'                          =>      'Order Type',
 
         'state_id'                      =>      'State',
+        'group_id'                      =>      'Group',
 
 
     ],

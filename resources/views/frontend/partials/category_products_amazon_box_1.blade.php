@@ -1,12 +1,14 @@
 @php
 
-    $sub_categories = $category
-        ->childrenCategories()
-        ->where('featured', 1)
-        // ->orderByDesc('order_level')
-        ->orderByDesc('created_at')
-        ->limit(10)
-        ->get();
+    $sub_categories = Cache::rememberForever('sub-category-' . $category->id, function () use ($category) {
+        return $category
+            ->childrenCategories()
+            ->where('featured', 1)
+            ->orderByDesc('order_level')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+    });
     $first_box_products = $sub_categories->slice(0, 4);
     $second_box_products = $sub_categories->slice(5, 2);
     $third_box_products = $sub_categories->slice(7)->take(4);

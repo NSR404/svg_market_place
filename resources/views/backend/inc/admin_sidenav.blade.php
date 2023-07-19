@@ -621,6 +621,20 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('view_user_groups')
+                                <li class="aiz-side-nav-item">
+                                    <a href="{{route('user-groups.index')}}" class="aiz-side-nav-link">
+                                        <span class="aiz-side-nav-text">{{ translate('User Gropus') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view_user_emails')
+                                <li class="aiz-side-nav-item">
+                                    <a href="{{route('user-emails.index')}}" class="aiz-side-nav-link">
+                                        <span class="aiz-side-nav-text">{{ translate('Users') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('send_newsletter')
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('newsletters.index')}}" class="aiz-side-nav-link">
