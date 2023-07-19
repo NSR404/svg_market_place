@@ -99,6 +99,7 @@
                 @endif
             </a>
         </div>
+        
         <div class="row">
             <!-- about & subscription -->
             <div class="col-xl-6 col-lg-7">
