@@ -253,14 +253,14 @@
                             <input type="hidden" name="types[]" value="facebook_link">
                             <input type="text" class="form-control" placeholder="http://" name="facebook_link" value="{{ get_setting('facebook_link')}}">
                         </div>
-						<!-- Twitter Link -->
+						{{-- <!-- Twitter Link -->
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="lab la-twitter"></i></span>
                             </div>
                             <input type="hidden" name="types[]" value="twitter_link">
                             <input type="text" class="form-control" placeholder="http://" name="twitter_link" value="{{ get_setting('twitter_link')}}">
-                        </div>
+                        </div> --}}
 						<!-- Instagram Link -->
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
@@ -268,6 +268,14 @@
                             </div>
                             <input type="hidden" name="types[]" value="instagram_link">
                             <input type="text" class="form-control" placeholder="http://" name="instagram_link" value="{{ get_setting('instagram_link')}}">
+                        </div>
+						<!-- Pinterest Link -->
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="lab la-pinterest"></i></span>
+                            </div>
+                            <input type="hidden" name="types[]" value="pinterest_link">
+                            <input type="text" class="form-control" placeholder="http://" name="pinterest_link" value="{{ get_setting('pinterest_link')}}">
                         </div>
 						<!-- Youtube Link -->
                         <div class="input-group form-group">

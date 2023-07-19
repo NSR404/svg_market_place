@@ -506,17 +506,22 @@
                         data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
                         <div class="carousel-box overflow-hidden hov-scale-img ">
                             <div class="row p-3">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto div_child_iframe">
+                                <div
+                                    class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto div_child_iframe text-center">
+                                    <a href="https://www.youtube.com/@svec-uae" target="_blank">
+                                        <img src="{{ asset('assets/img/custom/youtube-subscribe.png') }}" width="60%"
+                                            class="m-auto">
+                                    </a>
                                     <iframe id="home_iframe"
                                         src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}"
                                         style="margin:auto !important;" frameborder="0" allowfullscreen width="100%"
                                         height="320px">
                                     </iframe>
                                     <div class="btn_youtube">
-                                          <a href="" class="btn_first">
-                                              <span>Subsecribe</span>
-                                          </a>
-                                          <a href="" class="btn_seconed">
+                                        <a href="https://www.youtube.com/@svec-uae" class="btn_first"  target="_blank">
+                                            <span>Subsecribe</span>
+                                        </a>
+                                        <a href="https://www.youtube.com/@svec-uae" class="btn_seconed"  target="_blank">
                                             <span>Like</span>
                                         </a>
                                     </div>

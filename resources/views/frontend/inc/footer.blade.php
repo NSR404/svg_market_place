@@ -129,32 +129,39 @@
             <div class="col d-none d-lg-block"></div>
 
             <!-- Follow & Apps -->
-            <div class="col-xxl-3 col-xl-4 col-lg-4">
+            <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-12 text-center">
                 <!-- Social -->
                 @if (get_setting('show_social_links'))
                     <h5 class="fs-14 fw-700 text-secondary text-uppercase mt-3 mt-lg-0">{{ translate('Follow Us') }}
                     </h5>
                     <ul class="list-inline social colored mb-4">
                         @if (!empty(get_setting('facebook_link')))
-                            <li class="list-inline-item ml-2 mr-2">
+                            <li class="list-inline-item ml-2 mr-2 mb-2">
                                 <a href="{{ get_setting('facebook_link') }}" target="_blank" class="facebook"><i
                                         class="lab la-facebook-f"></i></a>
                             </li>
                         @endif
                         @if (!empty(get_setting('twitter_link')))
-                            <li class="list-inline-item ml-2 mr-2">
+                            <li class="list-inline-item ml-2 mr-2 mb-2">
                                 <a href="{{ get_setting('twitter_link') }}" target="_blank" class="twitter"><i
                                         class="lab la-twitter"></i></a>
                             </li>
                         @endif
+                        @if (!empty(get_setting('pinterest_link')))
+                            <li class="list-inline-item ml-2 mr-2 mb-2">
+                                <a href="{{ get_setting('pinterest_link') }}" target="_blank" class="youtube"><i
+                                        class="lab la-pinterest"></i></a>
+                            </li>
+                        @endif
+                        <br>
                         @if (!empty(get_setting('instagram_link')))
-                            <li class="list-inline-item ml-2 mr-2">
+                            <li class="list-inline-item ml-2 mr-2 mb-2">
                                 <a href="{{ get_setting('instagram_link') }}" target="_blank" class="instagram"><i
                                         class="lab la-instagram"></i></a>
                             </li>
                         @endif
                         @if (!empty(get_setting('youtube_link')))
-                            <li class="list-inline-item ml-2 mr-2">
+                            <li class="list-inline-item ml-2 mr-2 mb-2">
                                 <a href="{{ get_setting('youtube_link') }}" target="_blank" class="youtube"><i
                                         class="lab la-youtube"></i></a>
                             </li>
@@ -720,6 +727,12 @@
                         <li class="list-inline-item ml-2 mr-2">
                             <a href="{{ get_setting('twitter_link') }}" target="_blank" class="twitter"><i
                                     class="lab la-twitter"></i></a>
+                        </li>
+                    @endif
+                    @if (!empty(get_setting('pinterest_link')))
+                        <li class="list-inline-item ml-2 mr-2">
+                            <a href="{{ get_setting('pinterest_link') }}" target="_blank" class="youtube"><i
+                                    class="lab la-pinterest"></i></a>
                         </li>
                     @endif
                     @if (!empty(get_setting('instagram_link')))

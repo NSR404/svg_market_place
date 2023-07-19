@@ -374,33 +374,36 @@
       </div>
 
 
-   {{--Start Section social media  --}}
+   {{-- Start Section social media  --}}
     <section class="section_social_right">
         <div  class="s-soft   d-sm-block">
-            <a rel="noopener" aria-label="Make a Call" name="phone" target="_blank" href="tel:+971553133349" ptooltip="Make a Call" class="s-item phone_social">
+            <a rel="noopener" aria-label="Make a Call" name="phone"  href="tel:{{ get_setting('contact_phone') }}" ptooltip="Make a Call" class="s-item phone_social">
                 <span class="la la-phone"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="whatsapp" target="_blank" href="https://wa.me/971564204228" ptooltip="Whatsapp" class="s-item whatsapp_social">
+            <a rel="noopener" aria-label="Make a Call" name="whatsapp" target="_blank" href="https://wa.me/{{ get_setting('whatsapp_number') }}" ptooltip="Whatsapp" class="s-item whatsapp_social">
                 <span class="la la-whatsapp"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="facebook" target="_blank" href="www.facebook.com/svec.uae.uae" ptooltip="Facebook" class="s-item facebook_social">
+            <a rel="noopener" aria-label="Make a Call" name="facebook" target="_blank" href="{{ get_setting('facebook_link') }}" ptooltip="Facebook" class="s-item facebook_social">
                 <span class="la la-facebook"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="instagram" target="_blank" href="https://www.instagram.com/svec.uae/" ptooltip="Instagram" class="s-item instagram_social">
+            <a rel="noopener" aria-label="Make a Call" name="instagram" target="_blank" href="{{ get_setting('instagram_link') }}" ptooltip="Instagram" class="s-item instagram_social">
                 <span class="la la-instagram"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="pinterest" target="_blank" href="https://in.pinterest.com/svecuae/?eq=svec.uae&amp;etslf=1543" ptooltip="Pinterest" class="s-item pinterest_social">
+            <a rel="noopener" aria-label="Make a Call" name="twitter" target="_blank" href="{{ get_setting('twitter_link') }}" ptooltip="Twitter" class="s-item phone_social">
+                <span class="la la-twitter"></span>
+            </a>
+            <a rel="noopener" aria-label="Make a Call" name="pinterest" target="_blank" href="{{ get_setting('pinterest_link') }}" ptooltip="Pinterest" class="s-item pinterest_social">
                 <span class="la la-pinterest"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="envelope" target="_blank" href="email:https://info@svec.ae" ptooltip="Email" class="s-item envelope_social">
+            <a rel="noopener" aria-label="Make a Call" name="envelope" target="_blank" href="mailto:{{ get_setting('contact_email') }}" ptooltip="Email" class="s-item envelope_social">
                 <span class="la la-envelope"></span>
             </a>
-            <a rel="noopener" aria-label="Make a Call" name="youtube" target="_blank" href="https://www.youtube.com/channel/UCsPyZlRCI_yq-lxSanzbD9Q" ptooltip="Youtube" class="s-item youtube_social">
+            <a rel="noopener" aria-label="Make a Call" name="youtube" target="_blank" href="{{ get_setting('youtube_link') }}" ptooltip="Youtube" class="s-item youtube_social">
                 <span class="la la-youtube"></span>
             </a>
      </div>
     </section>
-   {{--End Section social media  --}}
+   {{-- End Section social media  --}}
 
 
 
