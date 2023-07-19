@@ -1,5 +1,5 @@
 @php
-    $producs = get_cached_products($category);
+    $producs = get_cached_products($category->id);
     $first_box_products = $producs->slice(0, 4);
     $second_box_products = $producs->slice(4, 2);
     $third_box_products = $producs->slice(6)->take(4);

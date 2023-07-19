@@ -1,9 +1,5 @@
 @php
-    $featured_products = Cache::remember('featured_products', 86400, function () {
-        return filter_products(\App\Models\Product::inRandomOrder())
-            ->limit(7)
-            ->get();
-    });
+    $featured_products = Cache::get('recommended_products') ?? [];
     $featured_products_first_section = $featured_products->slice(0, 3);
     $featured_products_second_section = $featured_products->slice(3)->take(4);
 

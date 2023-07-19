@@ -33,6 +33,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Mail\SecondEmailVerifyMailManager;
 use App\Models\Branch;
 use App\Models\Cart;
+use App\Models\CategoryTranslation;
 use App\Models\Contact;
 use App\Models\Country;
 use Throwable;
@@ -46,6 +47,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         // $products  = Product::query()->inRandomOrder()->first();
         // for($i = 0; $i < 50; $i++)
         // {
@@ -75,16 +77,41 @@ class HomeController extends Controller
         $data['newest_products'] = Cache::remember('newest_products', 3600, function () {
             return filter_products(Product::latest())->limit(18)->get();
         });
+
+        $data['recommended_products']   =   $this->getRecommendedProducts();
+
         $data['home_categories'] = $this->getHomeCategories();
 
         $data['cart_added']             =   $this->getCurrentCart();
-        $data['offers_category_products']   =   get_cached_products($data['home_categories']->first());
+        $data['offers_category_products']               =   get_cached_products($data['home_categories']->first()?->id);
         $data['offers_category_products_for_slider']    =   $data['offers_category_products']->slice(0,20);
         $data['offers_category_products_for_grid_1']    =   $data['offers_category_products']->slice(19,4);
         $data['offers_category_products_for_grid_2']    =   $data['offers_category_products']->slice(23,2);
         $data['offers_category_products_for_grid_3']    =   $data['offers_category_products']->slice(25,4);
-        
+
         return view('frontend.index', $data);
+    }
+
+
+    public function getRecommendedProducts()
+    {
+        return Cache::rememberForever('recommended_products', function () {
+                    $user = Auth::user();
+                    if($user && $user->wishlists()->count() > 0)
+                    {
+                        $user_wished_products_ids                       =   $user->wishlists()->inRandomOrder()->limit(15)->pluck('product_id')->toArray();
+                        $recommended_products_categories_ids            =    Product::query()->whereIn('id' , $user_wished_products_ids)->pluck('category_id')->toArray();
+                        $recommended_products                           =    Product::query()->whereNotIn('id' , $user_wished_products_ids)
+                                                                                ->whereIn('category_id' , $recommended_products_categories_ids)
+                                                                                ->limit(7)->get();
+                    }else{
+                        $recommended_products = filter_products(\App\Models\Product::inRandomOrder())
+                        ->limit(7)
+                        ->get();
+                    }
+                    return $recommended_products;
+            });
+
     }
 
 
@@ -95,6 +122,8 @@ class HomeController extends Controller
             return Category::query()->whereIn('id' , $home_categories_ids)->orderByDesc('order_level')->get();
         });
     }
+
+
 
 
     public function getCurrentCart()

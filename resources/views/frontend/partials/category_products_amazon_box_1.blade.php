@@ -10,8 +10,8 @@
             ->get();
     });
     $first_box_products = $sub_categories->slice(0, 4);
-    $second_box_products = $sub_categories->slice(5, 2);
-    $third_box_products = $sub_categories->slice(7)->take(4);
+    $second_box_products = $sub_categories->slice(4, 2);
+    $third_box_products = $sub_categories->slice(6)->take(4);
 @endphp
 <div class="row">
     {{--  <!--Start Box products num => 1 -->  --}}

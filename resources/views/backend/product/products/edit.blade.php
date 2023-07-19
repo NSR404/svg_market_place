@@ -78,6 +78,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 col-from-label">{{ translate('Order Level') }}
+                                    <br>
+                                    <small>{{ translate('Higher number has high priority') }}</small>
+
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="number" class="form-control" name="order_level" value="{{ $product->order_level }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 {{-- <label class="col-md-3 col-from-label">{{ translate('Weight') }}
                                     <small>({{ translate('In Kg') }})</small></label> --}}
                                 <div class="col-md-8">
@@ -449,13 +459,13 @@
                     </div>
 
                     <!--                <div class="card">
-                            <div class="card-header">
-                                <h5 class="mb-0 h6">{{ translate('Product Shipping Cost') }}</h5>
-                            </div>
-                            <div class="card-body">
+                                <div class="card-header">
+                                    <h5 class="mb-0 h6">{{ translate('Product Shipping Cost') }}</h5>
+                                </div>
+                                <div class="card-body">
 
-                            </div>
-                        </div>-->
+                                </div>
+                            </div>-->
 
                     <div class="card">
                         <div class="card-header">
@@ -902,19 +912,19 @@
                 success: function(data) {
                     var obj = JSON.parse(data);
                     $('#customer_choice_options').append('\
-                        <div class="form-group row">\
-                            <div class="col-md-3">\
-                                <input type="hidden" name="choice_no[]" value="' + i + '">\
-                                <input type="text" class="form-control" name="choice[]" value="' + name +
+                            <div class="form-group row">\
+                                <div class="col-md-3">\
+                                    <input type="hidden" name="choice_no[]" value="' + i + '">\
+                                    <input type="text" class="form-control" name="choice[]" value="' + name +
                         '" placeholder="{{ translate('Choice Title') }}" readonly>\
-                            </div>\
-                            <div class="col-md-8">\
-                                <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
+                                </div>\
+                                <div class="col-md-8">\
+                                    <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
                         i + '[]" multiple>\
-                                    ' + obj + '\
-                                </select>\
-                            </div>\
-                        </div>');
+                                        ' + obj + '\
+                                    </select>\
+                                </div>\
+                            </div>');
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             });

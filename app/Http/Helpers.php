@@ -117,7 +117,7 @@ if (!function_exists('get_cached_products')) {
         return Cache::remember('products-category-' . $category_id, 86400, function () use ($category_id) {
             $category_ids = CategoryUtility::children_ids($category_id);
             $category_ids[] = $category_id;
-            return filter_products(Product::whereIn('category_id', $category_ids))->latest()->take(30)->get();
+            return filter_products(Product::whereIn('category_id', $category_ids))->orderByDesc('order_level')->latest()->take(30)->get();
         });
     }
 }
