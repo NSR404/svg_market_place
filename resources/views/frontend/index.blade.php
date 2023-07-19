@@ -69,10 +69,10 @@
                     <div>
                         <div class="text-dark d-flex align-items-center mb-0">
                             <a href="{{ route('flash-deals') }}"
-                                class="fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary mr-3">{{ translate('View All Flash Sale') }}</a>
+                                class="veiw_btn fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary mr-3">{{ translate('View All Flash Sale') }}</a>
                             <span class=" border-left border-soft-light border-width-2 pl-3">
                                 <a href="{{ route('flash-deal-details', $flash_deal->slug) }}"
-                                    class="fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary">{{ translate('View All Products from This Flash Sale') }}</a>
+                                    class="veiw_btn fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary">{{ translate('View All Products from This Flash Sale') }}</a>
                             </span>
                         </div>
                     </div>
@@ -183,9 +183,9 @@
                 <!-- Products -->
                 <div class="section_products"
                     style="background-color: {{ get_setting('todays_deal_bg_color', '#efefef') }}">
-                    <div class="text-right px-4 px-xl-5 pt-2 pt-md-2">
+                    <div class="text-right px-4 px-xl-5 pt-2 pt-md-2 padding_t">
                         <a href="{{ route('todays-deal') }}"
-                            class="fs-15 fw-700 general_clr has-transition hov-text-warning">{{ translate('View All') }}</a>
+                            class="fs-15 fw-700 general_clr has-transition  veiw_btn hov-text-warning">{{ translate('View All') }}</a>
                     </div>
                     <div class="c-scrollbar-light overflow-hidden p-3 pb-3 pt-2  pt-md-2">
                         <div class="h-100 d-flex flex-column justify-content-center">
@@ -246,7 +246,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="veiw_btn general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('products.category', $offers_category_products?->first()?->category?->slug) }}">{{ translate('View All') }}</a>
                         </div>
                     </div>
@@ -506,11 +506,20 @@
                         data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
                         <div class="carousel-box overflow-hidden hov-scale-img ">
                             <div class="row p-3">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto div_child_iframe">
                                     <iframe id="home_iframe"
                                         src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}"
                                         style="margin:auto !important;" frameborder="0" allowfullscreen width="100%"
-                                        height="320px"></iframe>
+                                        height="320px">
+                                    </iframe>
+                                    <div class="btn_youtube">
+                                          <a href="" class="btn_first">
+                                              <span>Subsecribe</span>
+                                          </a>
+                                          <a href="" class="btn_seconed">
+                                            <span>Like</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -575,7 +584,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="veiw_btn general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
                         </div>
                     </div>
@@ -739,7 +748,7 @@
                     </div>
                     <div class="col-xl-4 text-center text-xl-right mt-4">
                         <a href="{{ route('coupons.all') }}"
-                            class="btn text-white hov-bg-white hov-text-dark border border-width-2 fs-16 px-4"
+                            class="btn veiw_btn text-white hov-bg-white hov-text-dark border border-width-2 fs-16 px-4"
                             style="border-radius: 28px;background: rgba(255, 255, 255, 0.2);box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.16);">{{ translate('View All Coupons') }}</a>
                     </div>
                 </div>
@@ -767,7 +776,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('customer.products') }}">{{ translate('View All Products') }}</a>
                         </div>
                     </div>
@@ -857,7 +866,7 @@
                     </h3>
                     <!-- Links -->
                     <div class="d-flex">
-                        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                        <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                             href="{{ route('sellers') }}">{{ translate('View All Sellers') }}</a>
                     </div>
                 </div>
@@ -954,7 +963,7 @@
                     <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">{{ translate('Top Brands') }}</h3>
                     <!-- Links -->
                     <div class="d-flex">
-                        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                        <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                             href="{{ route('brands.all') }}">{{ translate('View All Brands') }}</a>
                     </div>
                 </div>

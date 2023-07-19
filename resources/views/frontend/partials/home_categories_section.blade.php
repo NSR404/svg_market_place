@@ -48,7 +48,7 @@
         @if($category->products()->count() > 0)
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <h3 class="">{{ $category->getTranslation('name') }}</h3>
-                <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                <a class="veiw_btn general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                     href="{{ route('products.category', $category->slug) }}">{{ translate('View All') }}</a>
             </div>
             <hr />
@@ -98,7 +98,7 @@
         {{--  <!-- Start Categoreies number => 2 -->  --}}
         {{-- <div class="d-flex justify-content-between align-items-center mt-3">
             <h3 class="">Villa design</h3>
-            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+            <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                 href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
         </div>
         <hr />
