@@ -40,7 +40,7 @@
                     </div>
                     <br>
                     @php
-                        $exclueded_sections = ['system', 'seller'];
+                        $exclueded_sections = ['seller'];
                         $excluded_permissions = [
                             'delete_classified_package',
                             'seller_verification_form_configuration',
@@ -89,6 +89,9 @@
                             'manage_shipping_cities',
                             'manage_zones',
                             'manage_carriers',
+                            'system_update',
+                            'server_status',
+                            'manage_addons',
                         ];
                         $permission_groups = \App\Models\Permission::all()
                             ->whereNotIn('section', $exclueded_sections)
