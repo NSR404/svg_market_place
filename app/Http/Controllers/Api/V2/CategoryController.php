@@ -23,8 +23,10 @@ class CategoryController extends Controller
 
     public function featured()
     {
-        return Cache::remember('app.featured_categories', 86400, function(){
-            return new CategoryCollection(Category::where('featured', 1)->get());
+        $home_categories_ids = json_decode(get_setting('home_categories'));
+        
+        return Cache::remember('app.featured_categories', 86400, function() use($home_categories_ids) {
+            return new CategoryCollection(Category::query()->whereIn('id' , $home_categories_ids)->orderByDesc('order_level')->get());
         });
     }
 

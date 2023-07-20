@@ -29,10 +29,11 @@ class AuthController extends Controller
     {
         $messages = array(
             'name.required' => translate('Name is required'),
-            'email_or_phone.required' => $request->register_by == 'email' ? translate('Email is required') : translate('Phone is required'),
-            'email_or_phone.email' => translate('Email must be a valid email address'),
-            'email_or_phone.numeric' => translate('Phone must be a number.'),
-            'email_or_phone.unique' => $request->register_by == 'email' ? translate('The email has already been taken') : translate('The phone has already been taken'),
+            'email.required' => translate('Email is required'),
+            'phone.required' => translate('Phone is required'),
+            'email.email' => translate('Email must be a valid email address'),
+            'email.unique' => translate('The email has already been taken'),
+            'phone.unique' => translate('The phone has already been taken'),
             'password.required' => translate('Password is required'),
             'password.confirmed' => translate('Password confirmation does not match'),
             'password.min' => translate('Minimum 6 digits required for password')
@@ -40,14 +41,16 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'password' => 'required|min:6|confirmed',
-            'email_or_phone' => [
-                'required',
-                Rule::when($request->register_by === 'email', ['email', 'unique:users,email']),
-                Rule::when($request->register_by === 'phone', ['numeric', 'unique:users,phone']),
-            ],
-            'g-recaptcha-response' => [
-                Rule::when(get_setting('google_recaptcha') == 1, ['required', new Recaptcha()], ['sometimes'])
-            ]
+            'email'=>'required|email|unique:users,email',
+            'phone'=>'required|unique:users,phone',
+            // 'email_or_phone' => [
+            //     'required',
+            //     Rule::when($request->register_by === 'email',),
+            //     Rule::when($request->register_by === 'phone', ),
+            // ],
+            // 'g-recaptcha-response' => [
+            //     Rule::when(get_setting('google_recaptcha') == 1, ['required', new Recaptcha()], ['sometimes'])
+            // ]
         ], $messages);
 
         if ($validator->fails()) {
@@ -57,15 +60,26 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = new User([
-            'name' => $request->name,
-            'email' => $request->register_by == 'email' ? $request->email_or_phone : '',
-            'phone' => $request->register_by == 'phone' ? $request->email_or_phone : '',
-            'password' => bcrypt($request->password),
-            'verification_code' => rand(100000, 999999)
-        ]);
+        try {
+            $user = new User([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'verification_code' => rand(100000, 999999)
+            ]);
+            $user->email_verified_at = date('Y-m-d H:m:s');
+            $user->save();
+            return $this->loginSuccess($user);
 
-        $user->email_verified_at = date('Y-m-d H:m:s');
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success'=>false,
+                'message'=>'somting_went_wrong',
+                'debug'=>$th->getMessage()
+            ], 200);
+        }
+
         // if ($user->email != null) {
         //     if (BusinessSetting::where('type', 'email_verification')->first()->value != 1) {
         //         $user->email_verified_at = date('Y-m-d H:m:s');
@@ -84,9 +98,7 @@ class AuthController extends Controller
         //     }
         // }
 
-        $user->save();
 
-        return $this->loginSuccess($user);
 
         //create token
         // $user->createToken('tokens')->plainTextToken;
