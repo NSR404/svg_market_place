@@ -42,7 +42,7 @@
 							</label>
 						</div>
 					</div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-md-3 col-from-label">{{translate('Show Currency Switcher?')}}</label>
 						<div class="col-md-8">
 							<label class="aiz-switch aiz-switch-success mb-0">
@@ -51,7 +51,7 @@
 								<span></span>
 							</label>
 						</div>
-					</div>
+					</div> --}}
 	                <div class="form-group row">
 						<label class="col-md-3 col-from-label">{{translate('Enable stikcy header?')}}</label>
 						<div class="col-md-8">

@@ -72,6 +72,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-3 col-from-label">{{ translate('Order Level') }}
+                                    <br>
+                                    <small>{{ translate('Higher number has high priority') }}</small>
+
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="number" class="form-control" name="order_level" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 {{-- <label class="col-md-3 col-from-label">{{ translate('Weight') }} --}}
                                 {{-- <small>({{ translate('In Kg') }})</small></label> --}}
                                 <div class="col-md-8">
@@ -367,13 +377,13 @@
                     </div>
 
                     <!--                <div class="card">
-                            <div class="card-header">
-                                <h5 class="mb-0 h6">{{ translate('Product Shipping Cost') }}</h5>
-                            </div>
-                            <div class="card-body">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 h6">{{ translate('Product Shipping Cost') }}</h5>
+                                        </div>
+                                        <div class="card-body">
 
-                            </div>
-                        </div>-->
+                                        </div>
+                                    </div>-->
 
                     <div class="card">
                         <div class="card-header">
@@ -716,9 +726,12 @@
 
             {{-- Hidden Inputs --}}
             <input type="radio" name="shipping_type" value="free" checked hidden>
-            <input type="number" lang="en" min="0" value="0" step="0.01" placeholder="{{ translate('Shipping cost') }}" name="flat_shipping_cost" class="form-control" hidden  required>
+            <input type="number" lang="en" min="0" value="0" step="0.01"
+                placeholder="{{ translate('Shipping cost') }}" name="flat_shipping_cost" class="form-control" hidden
+                required>
             <input type="checkbox" name="is_quantity_multiplied" value="0" hidden>
-            <input type="number" class="form-control" name="est_shipping_days" min="1" step="1" placeholder="{{translate('Shipping Days')}}" hidden>
+            <input type="number" class="form-control" name="est_shipping_days" min="1" step="1"
+                placeholder="{{ translate('Shipping Days') }}" hidden>
             <input type="text" class="form-control" name="flash_deal_id" hidden>
 
 
@@ -772,19 +785,19 @@
                 success: function(data) {
                     var obj = JSON.parse(data);
                     $('#customer_choice_options').append('\
-                        <div class="form-group row">\
-                            <div class="col-md-3">\
-                                <input type="hidden" name="choice_no[]" value="' + i + '">\
-                                <input type="text" class="form-control" name="choice[]" value="' + name +
+                                    <div class="form-group row">\
+                                        <div class="col-md-3">\
+                                            <input type="hidden" name="choice_no[]" value="' + i + '">\
+                                            <input type="text" class="form-control" name="choice[]" value="' + name +
                         '" placeholder="{{ translate('Choice Title') }}" readonly>\
-                            </div>\
-                            <div class="col-md-8">\
-                                <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
+                                        </div>\
+                                        <div class="col-md-8">\
+                                            <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
                         i + '[]" multiple>\
-                                    ' + obj + '\
-                                </select>\
-                            </div>\
-                        </div>');
+                                                ' + obj + '\
+                                            </select>\
+                                        </div>\
+                                    </div>');
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             });

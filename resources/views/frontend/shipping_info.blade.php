@@ -57,18 +57,26 @@
                                                         <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
                                                         <!-- Address -->
                                                         <span class="flex-grow-1 pl-3 text-left">
+                                                            @guest
+                                                                <div class="row">
+                                                                    <span
+                                                                        class="fs-14 text-secondary col-3">{{ translate('Name') }}</span>
+                                                                    <span
+                                                                        class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->name)->name }}</span>
+                                                                </div>
+                                                            @endguest
                                                             <div class="row">
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Country') }}</span>
                                                                 <span
                                                                     class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->country)->getTranslation('name') }}</span>
                                                             </div>
-                                                            <div class="row">
+                                                            {{-- <div class="row">
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Address') }}</span>
                                                                 <span
                                                                     class="fs-14 text-dark fw-500 ml-2 col">{{ __('custom.' . $address->state?->name) }}</span>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="row">
                                                                 <span
                                                                     class="fs-14 text-secondary col-3">{{ translate('Phone') }}</span>
@@ -131,16 +139,22 @@
                                                     <span class="flex-grow-1 pl-3 text-left">
                                                         <div class="row">
                                                             <span
+                                                                class="fs-14 text-secondary col-3">{{ translate('Name') }}</span>
+                                                            <span
+                                                                class="fs-14 text-dark fw-500 ml-2 col">{{ $address->name }}</span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span
                                                                 class="fs-14 text-secondary col-3">{{ translate('Country') }}</span>
                                                             <span
                                                                 class="fs-14 text-dark fw-500 ml-2 col">{{ optional($address->country)->getTranslation('name') }}</span>
                                                         </div>
-                                                        <div class="row">
+                                                        {{-- <div class="row">
                                                             <span
                                                                 class="fs-14 text-secondary col-3">{{ translate('Address') }}</span>
                                                             <span
                                                                 class="fs-14 text-dark fw-500 ml-2 col">{{ __('custom.' . $address->state?->name) }}</span>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="row">
                                                             <span
                                                                 class="fs-14 text-secondary col-3">{{ translate('Phone') }}</span>

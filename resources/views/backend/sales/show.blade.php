@@ -87,8 +87,8 @@
                             {{ $order->user?->name ?? $order->address?->name }}
                         </strong><br>
                         {{ $order->user?->email }}<br>
-                        {{ $order->address?->country->getTranslation('name') }}<br>
-                        {{ __('custom.'.$order->address?->state?->name) }}<br>
+                        {{ $order->address?->country->getTranslation('name') }}
+                        {{-- {{ __('custom.'.$order->address?->state?->name) }}<br> --}}
                         <pre>
                         {{ $order->address?->phone }}</pre><br>
                     </address>

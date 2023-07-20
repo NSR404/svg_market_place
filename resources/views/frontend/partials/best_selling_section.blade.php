@@ -21,7 +21,7 @@
                 <!-- Links -->
                 <div class="d-flex">
                     {{-- <a type="button" class="arrow-prev slide-arrow link-disable text-secondary mr-2 px-3" onclick="clickToSlide('slick-prev','section_newest')"><i class="las la-angle-left fs-20 fw-600"></i></a> --}}
-                    <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                    <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                         href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
                     {{-- <a type="button" class="arrow-next slide-arrow text-secondary ml-2" onclick="clickToSlide('slick-next','section_newest')"><i class="las la-angle-right fs-20 fw-600"></i></a> --}}
                 </div>

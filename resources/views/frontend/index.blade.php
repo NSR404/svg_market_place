@@ -69,10 +69,10 @@
                     <div>
                         <div class="text-dark d-flex align-items-center mb-0">
                             <a href="{{ route('flash-deals') }}"
-                                class="fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary mr-3">{{ translate('View All Flash Sale') }}</a>
+                                class="veiw_btn fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary mr-3">{{ translate('View All Flash Sale') }}</a>
                             <span class=" border-left border-soft-light border-width-2 pl-3">
                                 <a href="{{ route('flash-deal-details', $flash_deal->slug) }}"
-                                    class="fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary">{{ translate('View All Products from This Flash Sale') }}</a>
+                                    class="veiw_btn fs-10 fs-md-12 fw-700 text-reset has-transition opacity-60 hov-opacity-100 hov-text-primary animate-underline-primary">{{ translate('View All Products from This Flash Sale') }}</a>
                             </span>
                         </div>
                     </div>
@@ -183,9 +183,9 @@
                 <!-- Products -->
                 <div class="section_products"
                     style="background-color: {{ get_setting('todays_deal_bg_color', '#efefef') }}">
-                    <div class="text-right px-4 px-xl-5 pt-2 pt-md-2">
+                    <div class="text-right px-4 px-xl-5 pt-2 pt-md-2 padding_t">
                         <a href="{{ route('todays-deal') }}"
-                            class="fs-15 fw-700 general_clr has-transition hov-text-warning">{{ translate('View All') }}</a>
+                            class="fs-15 fw-700 general_clr has-transition  veiw_btn hov-text-warning">{{ translate('View All') }}</a>
                     </div>
                     <div class="c-scrollbar-light overflow-hidden p-3 pb-3 pt-2  pt-md-2">
                         <div class="h-100 d-flex flex-column justify-content-center">
@@ -207,11 +207,11 @@
                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
                                                     width="100%">
                                             </div>
-                                            <h3
+                                            {{-- <h3
                                                 class="fw-600 fs-16 text-truncate-2 lh-1-4 mb-0 h-35px text-center fs-mobile-9 py-3 mx-0 mb-3 ">
                                                 <a href="" class="d-block text-center hov-text-primary p-0"
                                                     title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
-                                            </h3>
+                                            </h3> --}}
                                             <!-- Price -->
                                             <div class="fs-14 mt-3 text-center custom-d-none">
                                                 <span
@@ -246,7 +246,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="veiw_btn general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('products.category', $offers_category_products?->first()?->category?->slug) }}">{{ translate('View All') }}</a>
                         </div>
                     </div>
@@ -256,12 +256,11 @@
                         <div class="row m-auto">
                             <!-- Swiper -->
                             <div class="swiper mySwiper">
-
                                 <div class="swiper-wrapper">
-                                    @foreach ($offers_category_products as $key => $product)
+                                    @foreach ($offers_category_products_for_slider as $key => $product)
                                         @include('frontend.partials.product_swiper_box', [
                                             'product' => $product,
-                                            'is_price_visible'  => true,
+                                            'is_price_visible' => true,
                                         ])
                                     @endforeach
                                 </div>
@@ -270,6 +269,224 @@
 
                         </div>
                     </div>
+                    {{--  <!--Start offers product grid layout  -->  --}}
+                    <div class="row mt-5">
+                        {{--  <!--Start Box products num => 1 -->  --}}
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center">
+                            <div class="row">
+                                @foreach ($offers_category_products_for_grid_1 as $product)
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2 item_box">
+                                        <div class="div_img_with_cart">
+                                            <a href="{{ route('product', $product->slug) }}">
+                                                <img class="lazyload   has-transition"
+                                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                    data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                                    alt="{{ $product->getTranslation('name') }}"
+                                                    title="{{ $product->getTranslation('name') }}" width="100%">
+                                            </a>
+                                            @if (home_base_price($product) != home_discounted_base_price($product))
+                                                <span>
+                                                    <del
+                                                        class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
+                                                </span>
+                                            @endif
+                                            <!-- price -->
+                                            <span
+                                                class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+                                            <a href="{{ route('product', $product->slug) }}">
+                                                <h6 class="my-2">{{ $product->getShowName() }} </h6>
+                                            </a>
+
+                                            {{--  <!-- add to cart -->  --}}
+                                            <a class="cart-btn   h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column   justify-content-center align-items-center  @if (in_array($product->id, $cart_added)) active @endif"
+                                                href="javascript:void(0)"
+                                                onclick="showAddToCartModal({{ $product->id }})">
+                                                <span class="cart-btn-text">
+                                                    {{ translate('Add to Cart') }}
+                                                </span>
+                                                <br>
+                                                <span><i class="las la-2x la-shopping-cart"></i></span>
+                                            </a>
+                                        </div>
+                                        <!-- wishlisht & compare icons -->
+                                        <div class="absolute-top-right aiz-p-hov-icon"
+                                            style="margin-left:17% !important;z-index:99 !important;">
+                                            <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                                style="margin-left:9% !important;"
+                                                onclick="addToWishList({{ $product->id }})">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4"
+                                                    viewBox="0 0 16 14.4" class="w-sm-10">
+                                                    <g id="_51a3dbe0e593ba390ac13cba118295e4"
+                                                        data-name="51a3dbe0e593ba390ac13cba118295e4"
+                                                        transform="translate(-3.05 -4.178)">
+                                                        <path id="Path_32649" data-name="Path 32649"
+                                                            d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                            transform="translate(0 0)" fill="#919199" />
+                                                        <path id="Path_32650" data-name="Path 32650"
+                                                            d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                            transform="translate(0 0)" fill="#919199" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                                onclick="addToCompare({{ $product->id }})">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 16 16">
+                                                    <path id="_9f8e765afedd47ec9e49cea83c37dfea"
+                                                        data-name="9f8e765afedd47ec9e49cea83c37dfea"
+                                                        d="M18.037,5.547v.8a.8.8,0,0,1-.8.8H7.221a.4.4,0,0,0-.4.4V9.216a.642.642,0,0,1-1.1.454L2.456,6.4a.643.643,0,0,1,0-.909L5.723,2.227a.642.642,0,0,1,1.1.454V4.342a.4.4,0,0,0,.4.4H17.234a.8.8,0,0,1,.8.8Zm-3.685,4.86a.642.642,0,0,0-1.1.454v1.661a.4.4,0,0,1-.4.4H2.84a.8.8,0,0,0-.8.8v.8a.8.8,0,0,0,.8.8H12.854a.4.4,0,0,1,.4.4V17.4a.642.642,0,0,0,1.1.454l3.267-3.268a.643.643,0,0,0,0-.909Z"
+                                                        transform="translate(-2.037 -2.038)" fill="#919199" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--  <!--End Box products num => 1 -->  --}}
+
+                        {{--  <!--Start Box products num => 2 -->  --}}
+                        @foreach ($offers_category_products_for_grid_2 as $product)
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2 text-center item_box">
+                                <div class="div_img_with_cart">
+                                    <a href="{{ route('product', $product->slug) }}">
+                                        <img class="lazyload   has-transition"
+                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                            data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                            alt="{{ $product->getTranslation('name') }}"
+                                            title="{{ $product->getTranslation('name') }}" width="100%">
+                                    </a>
+                                    @if (home_base_price($product) != home_discounted_base_price($product))
+                                        <span>
+                                            <del class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
+                                        </span>
+                                    @endif
+                                    <!-- price -->
+                                    <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+                                    <a href="{{ route('product', $product->slug) }}">
+                                        <h6 class="my-2">{{ $product->getShowName() }} </h6>
+                                    </a>
+                                    {{--  <!-- add to cart -->  --}}
+                                    <a class="cart-btn   h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column   justify-content-center align-items-center  @if (in_array($product->id, $cart_added)) active @endif"
+                                        href="javascript:void(0)" onclick="showAddToCartModal({{ $product->id }})">
+                                        <span class="cart-btn-text">
+                                            {{ translate('Add to Cart') }}
+                                        </span>
+                                        <br>
+                                        <span><i class="las la-2x la-shopping-cart"></i></span>
+                                    </a>
+                                </div>
+                                <!-- wishlisht & compare icons -->
+                                <div class="absolute-top-right aiz-p-hov-icon"
+                                    style="margin-left:17% !important;z-index:99 !important;">
+                                    <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                        onclick="addToWishList({{ $product->id }})">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4"
+                                            viewBox="0 0 16 14.4" class="w-sm-10">
+                                            <g id="_51a3dbe0e593ba390ac13cba118295e4"
+                                                data-name="51a3dbe0e593ba390ac13cba118295e4"
+                                                transform="translate(-3.05 -4.178)">
+                                                <path id="Path_32649" data-name="Path 32649"
+                                                    d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                    transform="translate(0 0)" fill="#919199" />
+                                                <path id="Path_32650" data-name="Path 32650"
+                                                    d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                    transform="translate(0 0)" fill="#919199" />
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                        onclick="addToCompare({{ $product->id }})">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 16 16">
+                                            <path id="_9f8e765afedd47ec9e49cea83c37dfea"
+                                                data-name="9f8e765afedd47ec9e49cea83c37dfea"
+                                                d="M18.037,5.547v.8a.8.8,0,0,1-.8.8H7.221a.4.4,0,0,0-.4.4V9.216a.642.642,0,0,1-1.1.454L2.456,6.4a.643.643,0,0,1,0-.909L5.723,2.227a.642.642,0,0,1,1.1.454V4.342a.4.4,0,0,0,.4.4H17.234a.8.8,0,0,1,.8.8Zm-3.685,4.86a.642.642,0,0,0-1.1.454v1.661a.4.4,0,0,1-.4.4H2.84a.8.8,0,0,0-.8.8v.8a.8.8,0,0,0,.8.8H12.854a.4.4,0,0,1,.4.4V17.4a.642.642,0,0,0,1.1.454l3.267-3.268a.643.643,0,0,0,0-.909Z"
+                                                transform="translate(-2.037 -2.038)" fill="#919199" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                        {{--  <!--End Box products num => 2 -->  --}}
+
+
+
+                        {{--  <!--Start Box products num => 4 -->  --}}
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 col-12 p-2">
+                            <div class="row">
+                                @foreach ($offers_category_products_for_grid_3 as $product)
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 text-center mb-2 item_box">
+                                        <div class="div_img_with_cart">
+                                            <a href="{{ route('product', $product->slug) }}">
+                                                <img class="lazyload   has-transition"
+                                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                    data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                                    alt="{{ $product->getTranslation('name') }}"
+                                                    title="{{ $product->getTranslation('name') }}" width="100%">
+                                            </a>
+                                            @if (home_base_price($product) != home_discounted_base_price($product))
+                                                <span>
+                                                    <del
+                                                        class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
+                                                </span>
+                                            @endif
+                                            <!-- price -->
+                                            <span
+                                                class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+                                            <a href="{{ route('product', $product->slug) }}">
+                                                <h6 class="my-2">{{ $product->getShowName() }} </h6>
+                                            </a>
+                                            {{--  <!-- add to cart -->  --}}
+                                            <a class="cart-btn   h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column   justify-content-center align-items-center  @if (in_array($product->id, $cart_added)) active @endif"
+                                                href="javascript:void(0)"
+                                                onclick="showAddToCartModal({{ $product->id }})">
+                                                <span class="cart-btn-text">
+                                                    {{ translate('Add to Cart') }}
+                                                </span>
+                                                <br>
+                                                <span><i class="las la-2x la-shopping-cart"></i></span>
+                                            </a>
+                                        </div>
+                                        <!-- wishlisht & compare icons -->
+                                        <div class="absolute-top-right aiz-p-hov-icon"
+                                            style="margin-left:17% !important;z-index:99 !important;">
+                                            <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                                onclick="addToWishList({{ $product->id }})">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4"
+                                                    viewBox="0 0 16 14.4" class="w-sm-10">
+                                                    <g id="_51a3dbe0e593ba390ac13cba118295e4"
+                                                        data-name="51a3dbe0e593ba390ac13cba118295e4"
+                                                        transform="translate(-3.05 -4.178)">
+                                                        <path id="Path_32649" data-name="Path 32649"
+                                                            d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                            transform="translate(0 0)" fill="#919199" />
+                                                        <path id="Path_32650" data-name="Path 32650"
+                                                            d="M11.3,5.507l-.247.246L10.8,5.506A4.538,4.538,0,1,0,4.38,11.919l.247.247,6.422,6.412,6.422-6.412.247-.247A4.538,4.538,0,1,0,11.3,5.507Z"
+                                                            transform="translate(0 0)" fill="#919199" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
+                                                onclick="addToCompare({{ $product->id }})">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 16 16">
+                                                    <path id="_9f8e765afedd47ec9e49cea83c37dfea"
+                                                        data-name="9f8e765afedd47ec9e49cea83c37dfea"
+                                                        d="M18.037,5.547v.8a.8.8,0,0,1-.8.8H7.221a.4.4,0,0,0-.4.4V9.216a.642.642,0,0,1-1.1.454L2.456,6.4a.643.643,0,0,1,0-.909L5.723,2.227a.642.642,0,0,1,1.1.454V4.342a.4.4,0,0,0,.4.4H17.234a.8.8,0,0,1,.8.8Zm-3.685,4.86a.642.642,0,0,0-1.1.454v1.661a.4.4,0,0,1-.4.4H2.84a.8.8,0,0,0-.8.8v.8a.8.8,0,0,0,.8.8H12.854a.4.4,0,0,1,.4.4V17.4a.642.642,0,0,0,1.1.454l3.267-3.268a.643.643,0,0,0,0-.909Z"
+                                                        transform="translate(-2.037 -2.038)" fill="#919199" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--  <!--End Box products num => 5 -->  --}}
+
+                    </div>
+
+                    {{--  <!--End offers product grid layout  -->  --}}
                 </div>
             </section>
         @endif
@@ -289,11 +506,25 @@
                         data-sm-items="1" data-xs-items="1" data-arrows="true" data-dots="false">
                         <div class="carousel-box overflow-hidden hov-scale-img ">
                             <div class="row p-3">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto">
+                                <div
+                                    class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 m-auto div_child_iframe text-center">
+                                    <a href="https://www.youtube.com/@svec-uae" target="_blank">
+                                        <img src="{{ asset('assets/img/custom/youtube-subscribe.png') }}" width="60%"
+                                            class="m-auto">
+                                    </a>
                                     <iframe id="home_iframe"
                                         src="{{ json_decode(get_setting('home_banner1_links'), true)[0] }}"
                                         style="margin:auto !important;" frameborder="0" allowfullscreen width="100%"
-                                        height="320px"></iframe>
+                                        height="320px">
+                                    </iframe>
+                                    <div class="btn_youtube">
+                                        <a href="https://www.youtube.com/@svec-uae" class="btn_first"  target="_blank">
+                                            <span>Subsecribe</span>
+                                        </a>
+                                        <a href="https://www.youtube.com/@svec-uae" class="btn_seconed"  target="_blank">
+                                            <span>Like</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +589,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="veiw_btn general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('search', ['sort_by' => 'newest']) }}">{{ translate('View All') }}</a>
                         </div>
                     </div>
@@ -522,7 +753,7 @@
                     </div>
                     <div class="col-xl-4 text-center text-xl-right mt-4">
                         <a href="{{ route('coupons.all') }}"
-                            class="btn text-white hov-bg-white hov-text-dark border border-width-2 fs-16 px-4"
+                            class="btn veiw_btn text-white hov-bg-white hov-text-dark border border-width-2 fs-16 px-4"
                             style="border-radius: 28px;background: rgba(255, 255, 255, 0.2);box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.16);">{{ translate('View All Coupons') }}</a>
                     </div>
                 </div>
@@ -550,7 +781,7 @@
                         </h3>
                         <!-- Links -->
                         <div class="d-flex">
-                            <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                            <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                                 href="{{ route('customer.products') }}">{{ translate('View All Products') }}</a>
                         </div>
                     </div>
@@ -640,7 +871,7 @@
                     </h3>
                     <!-- Links -->
                     <div class="d-flex">
-                        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                        <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                             href="{{ route('sellers') }}">{{ translate('View All Sellers') }}</a>
                     </div>
                 </div>
@@ -660,8 +891,8 @@
                                             tabindex="0"
                                             style="border: 1px solid #e5e5e5; border-radius: 50%; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.06);">
                                             <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
-                                                data-src="{{ uploaded_asset($seller->logo) }}" alt="{{ $seller->name }}"
-                                                class="img-fit lazyload has-transition"
+                                                data-src="{{ uploaded_asset($seller->logo) }}"
+                                                alt="{{ $seller->name }}" class="img-fit lazyload has-transition"
                                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
                                         </a>
                                         <div class="absolute-top-right z-1 mr-md-2 mt-1 rounded-content bg-white">
@@ -737,7 +968,7 @@
                     <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">{{ translate('Top Brands') }}</h3>
                     <!-- Links -->
                     <div class="d-flex">
-                        <a class="general_clr fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                        <a class="general_clr veiw_btn fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
                             href="{{ route('brands.all') }}">{{ translate('View All Brands') }}</a>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
         return $category
             ->products()
             ->where('published' , 1)
+            ->orderByDesc('order_level')
             ->latest()
             ->take(80)
             ->get();

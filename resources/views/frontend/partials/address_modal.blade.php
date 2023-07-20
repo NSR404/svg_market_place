@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- State -->
+                    {{-- <!-- State -->
                     <div class="row">
                         <div class="col-md-2">
                             <label>{{ translate('State') }}</label>
@@ -61,7 +61,7 @@
 
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="p-3">
 
