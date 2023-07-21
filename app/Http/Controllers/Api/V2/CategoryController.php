@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Resources\V2\CategoryCollection;
+use App\Http\Resources\V2\CategoryWithProductsCollection;
 use App\Models\BusinessSetting;
 use App\Models\Category;
+use App\Models\Product;
 use Cache;
 
 class CategoryController extends Controller
@@ -29,6 +31,35 @@ class CategoryController extends Controller
             return new CategoryCollection(Category::query()->whereIn('id' , $home_categories_ids)->orderByDesc('order_level')->get());
         });
     }
+
+
+    function featuredProducts() {
+        $home_categories_ids = json_decode(get_setting('home_categories'));
+        $featured_categories_with_products=Category::query()->whereIn('id' , $home_categories_ids)
+        ->with(['products'=>function($q){
+            $q->physical()->where('published',1)->where('approved',1);
+        }])->orderByDesc('order_level')->get();
+        return new CategoryWithProductsCollection($featured_categories_with_products);
+        // ->map(function ($category) {
+        //     $category->products = $category->products->take(6);
+        //     return $category;
+        // });
+
+        // ->with(['products',function($q){
+        //     $q->physical()->where('published',1)->where('approved',1)->get()->take(6);
+
+        // }])
+        // $featured_categories_products=Product::physical()->where('published',1)->where('approved',1)->whereIn('category_id',$featured_categories_ids)->get()->groupBy('category_id')->map(function($category) {
+        //     return $category->take(6);
+        // });
+        // dd($featured_categories_products);
+        return response()->json($featured_categories_with_products, 200);
+
+
+
+    }
+
+
 
     public function home()
     {

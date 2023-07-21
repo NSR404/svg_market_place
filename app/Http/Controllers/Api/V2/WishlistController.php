@@ -22,7 +22,7 @@ class WishlistController extends Controller
 
         //get wishlist items categories
         $existing_product_categories_ids = Product::whereIn('id', $product_ids)->pluck("category_id")->toArray();
-        $recommendations=Product::whereIn('category_id',$existing_product_categories_ids)
+        $recommendations=Product::physical()->where('published',1)->where('approved',1)->whereIn('category_id',$existing_product_categories_ids)
         ->orderByDesc('num_of_sale')->get()->take(12);
 
         return response()->json([
