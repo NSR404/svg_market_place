@@ -110,7 +110,7 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
         Route::get('wishlists-add-product', 'App\Http\Controllers\Api\V2\WishlistController@add')->middleware('auth:sanctum');
         Route::get('wishlists-remove-product', 'App\Http\Controllers\Api\V2\WishlistController@remove')->middleware('auth:sanctum');
         Route::get('wishlists', 'App\Http\Controllers\Api\V2\WishlistController@index')->middleware('auth:sanctum');
-        Route::apiResource('wishlists', 'App\Http\Controllers\Api\V2\WishlistController')->except(['index', 'update', 'show']);
+        Route::apiResource('wishlists', 'App\Http\Controllers\Api\V2\WishlistController')->except(['index', 'update', 'show'])->middleware('auth:sanctum');
 
         Route::get('user/shipping/address', 'App\Http\Controllers\Api\V2\AddressController@addresses')->middleware('auth:sanctum');
         Route::post('user/shipping/create', 'App\Http\Controllers\Api\V2\AddressController@createShippingAddress')->middleware('auth:sanctum');
@@ -182,6 +182,7 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
     Route::apiResource('business-settings', 'App\Http\Controllers\Api\V2\BusinessSettingController')->only('index');
 
     Route::get('categories/featured', 'App\Http\Controllers\Api\V2\CategoryController@featured');
+    Route::get('categories/featured/products','App\Http\Controllers\Api\V2\CategoryController@featuredProducts');
     Route::get('categories/home', 'App\Http\Controllers\Api\V2\CategoryController@home');
     Route::get('categories/top', 'App\Http\Controllers\Api\V2\CategoryController@top');
     Route::apiResource('categories', 'App\Http\Controllers\Api\V2\CategoryController')->only('index');

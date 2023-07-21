@@ -26,21 +26,31 @@ class AddressController extends Controller
     public function createShippingAddress(Request $request)
     {
 
-        $address = new Address;
-        $address->user_id = auth()->user()->id;
-        $address->address = $request->address;
-        $address->country_id = $request->country_id;
-        $address->phone_country_code         = $request->country_code;
-        $address->phone = $request->phone;
-        $address->state_id = $request->state_id;
-        $address->city_id = $request->city_id;
-        // $address->postal_code = $request->postal_code;
-        $address->save();
+        try {
+            $address = new Address;
+            $address->user_id = auth()->user()->id;
+            $address->address = $request->address;
+            $address->country_id = $request->country_id;
+            $address->phone_country_code= $request->country_code;
+            $address->phone = $request->phone;
+            $address->set_default = 1;
+            $address->save();
+            // $address->state_id = $request->state_id;
+            // $address->city_id = $request->city_id;
+            // $address->postal_code = $request->postal_code;
 
-        return response()->json([
-            'result' => true,
-            'message' => translate('Shipping information has been added successfully')
-        ]);
+            return response()->json([
+                'result' => true,
+                'message' => translate('Shipping information has been added successfully')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'result' => false,
+                'message' => translate('Unable to add address'),
+                'debug'=>$th->getMessage()
+            ]);
+        }
+
     }
 
     public function updateShippingAddress(Request $request)

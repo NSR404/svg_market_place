@@ -37,7 +37,11 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
-            dd($e);
+            // dd($e->getMessage());
+            echo($e->getMessage().'/');
+            echo($e->getLine().'/');
+            echo($e->getFile().'/');
+            die;
         });
     }
 

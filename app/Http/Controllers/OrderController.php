@@ -113,8 +113,8 @@ class OrderController extends Controller
             flash(translate('Your cart is empty'))->warning();
             return redirect()->route('home');
         }
-
-        $address = Address::where('id', $carts[0]['address_id'])->first();
+        //get default address that created when user registerd
+        $address = Address::where('user_id',Auth::user()->id)->first();
 
         $shippingAddress = [];
         if ($address != null) {

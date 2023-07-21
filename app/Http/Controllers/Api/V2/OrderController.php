@@ -291,7 +291,7 @@ class OrderController extends Controller
     protected function createSvgOrderAndSyncProducts($data , $carts)
     {
         $svg_order  =   [
-            'address_id'        =>  $carts[0]->address_id,
+            'address_id'        =>  Address::where('user_id',auth()->user()->id)->first()->id,
             'type'              =>  $data['type'],
             'user_id'           =>  auth()->user()->id,
         ];
