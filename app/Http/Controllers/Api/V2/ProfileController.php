@@ -8,7 +8,7 @@ use App\Http\Resources\V2\AddressCollection;
 use App\Models\Address;
 use App\Http\Resources\V2\CitiesCollection;
 use App\Http\Resources\V2\CountriesCollection;
-use App\Models\Order;
+use App\Models\SvgOrder;
 use App\Models\Upload;
 use App\Models\User;
 use App\Models\Wishlist;
@@ -25,7 +25,7 @@ class ProfileController extends Controller
         return response()->json([
             'cart_item_count' => Cart::where('user_id', auth()->user()->id)->count(),
             'wishlist_item_count' => Wishlist::where('user_id', auth()->user()->id)->count(),
-            'order_count' => Order::where('user_id', auth()->user()->id)->count(),
+            'order_count' => SvgOrder::where('user_id', auth()->user()->id)->count(),
         ]);
     }
 
