@@ -180,12 +180,12 @@
                     </table>
                 </div>
             </div>
-            <div class="clearfix float-right">
+            {{-- <div class="clearfix float-right">
                 <div class="no-print text-right">
                     <a href="{{ route('invoice.download', $order->id) }}" type="button" class="btn btn-icon btn-light"><i
                             class="las la-print"></i></a>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>
