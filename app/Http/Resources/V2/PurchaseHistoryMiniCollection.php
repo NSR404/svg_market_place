@@ -21,7 +21,7 @@ class PurchaseHistoryMiniCollection extends ResourceCollection
                     'type' => $data->type,
                     // 'delivery_status_string' => $data->delivery_status == 'pending'? "Order Placed" : ucwords(str_replace('_', ' ',  $data->delivery_status)),
                     // 'grand_total' => format_price($data->grand_total) ,
-                    'date' => Carbon::createFromTimestamp($data->created_at)->format('d-m-Y'),
+                    'date' => Carbon::createFromTimestamp($data->created_at->timestamp)->format('d-m-Y'),
                     'links' => [
                         'details' => ''
                     ]
