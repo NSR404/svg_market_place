@@ -9344,8 +9344,8 @@ use custom-style.css
     width: calc(100% + 10px);
  }
  .aiz-carousel.gutters-5 .carousel-box {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
  }
  .aiz-carousel.gutters-10 {
     width: calc(100% + 20px);
@@ -9904,10 +9904,10 @@ use custom-style.css
     padding-bottom: 0.9rem!important;
 }
 
-.list-inline.social{
+/* .list-inline.social{
     display: flex;
     flex-wrap: wrap;
-}
+} */
 
 @media (min-width:320px) and (max-width:769px) {
     .padding_t{

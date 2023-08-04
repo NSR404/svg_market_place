@@ -1,5 +1,5 @@
 {{--  /* <!-- Link Swiper's CSS --> */  --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{{ static_asset('assets/css/swiper-bundle.min.css') }}" />
 
 @extends('frontend.layouts.app')
 @push('css')
@@ -1060,7 +1060,7 @@
         });
     </script>
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="{{ static_asset('assets/js/swiper-bundle.min.js') }}"></script>
 
     <!-- Initialize Swiper -->
     <script>

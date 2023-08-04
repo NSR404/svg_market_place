@@ -103,42 +103,44 @@
         </div>
         <hr />
         <div class="text-center">
-            <div class="row mx-auto my-auto">
-                <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
-                    <div class="carousel-inner w-100" role="listbox">
-                        <div class="carousel-item active w-100">
-                            <div class="col-lg-2">
-                                <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
-                                    alt="image product" height="80%" width="100%">
-                                <h5 class="my-2 mt-2 general_clr2">غرف معيشة </h6>
-                            </div>
-                        </div>
-                        <div class="carousel-item w-100">
-                            <div class="col-lg-2">
-                                <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
-                                    alt="image product" width="100%" height="80%">
-                                <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>
-                            </div>
-                        </div>
-                        <div class="carousel-item w-100">
-                            <div class="col-lg-2">
-                                <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
-                                    alt="image product" width="100%" height="80%">
-                                <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>
-                            </div>
-                        </div>
+            <div class="row mx-auto my-auto dir="ltr"">
+                 <div class="owl-carousel" >
+                     <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
+                         <div class="carousel-inner w-100" role="listbox">
+                             <div class="carousel-item active w-100">
+                                 <div class="col-lg-2">
+                                     <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
+                                         alt="image product" height="80%" width="100%">
+                                     <h5 class="my-2 mt-2 general_clr2">غرف معيشة </h6>
+                                 </div>
+                             </div>
+                             <div class="carousel-item w-100">
+                                 <div class="col-lg-2">
+                                     <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
+                                         alt="image product" width="100%" height="80%">
+                                     <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>
+                                 </div>
+                             </div>
+                             <div class="carousel-item w-100">
+                                 <div class="col-lg-2">
+                                     <img src="{{ static_asset('uploads/all/1hYXFIQRMMVbY1qJWaDGoUfWWqWAKnuUgaQs0K9L.jpg') }}"
+                                         alt="image product" width="100%" height="80%">
+                                     <h5 class="my-2 mt-2 general_clr">غرف معيشة </h6>
+                                 </div>
+                             </div>
 
-                    </div>
+                         </div>
 
-                    <a class="carousel-control-prev bg_clr  w-auto" href="#myCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next bg_clr w-auto" href="#myCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                         <a class="carousel-control-prev bg_clr  w-auto" href="#myCarousel" dir="rtl" role="button" data-slide="prev">
+                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                             <span class="sr-only">Previous</span>
+                         </a>
+                         <a class="carousel-control-next bg_clr w-auto" href="#myCarousel" dir="ltr" role="button" data-slide="next">
+                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                             <span class="sr-only">Next</span>
+                         </a>
+                     </div>
+                 </div>
             </div>
         </div> --}}
         {{--  <!-- End Categoreies number => 2 -->  --}}
