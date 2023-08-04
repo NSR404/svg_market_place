@@ -312,7 +312,7 @@
                                         <div class="absolute-top-right aiz-p-hov-icon"
                                             style="margin-left:17% !important;z-index:99 !important;">
                                             <a href="javascript:void(0)" class="hov-svg-white" data-placement="left"
-                                                style="margin-left:9% !important;"
+                                                style=""
                                                 onclick="addToWishList({{ $product->id }})">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.4"
                                                     viewBox="0 0 16 14.4" class="w-sm-10">
