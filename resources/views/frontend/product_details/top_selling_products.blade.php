@@ -7,19 +7,19 @@
             @foreach (filter_products(\App\Models\Product::where('user_id', $detailedProduct->user_id)
                         ->orderBy('num_of_sale', 'desc'))->limit(6)->get() as $key => $top_product)
                 <li class="py-3 px-0 list-group-item border-0">
-                    <div class="row gutters-10 align-items-center hov-scale-img hov-shadow-md overflow-hidden has-transition">
-                        <div class="col-xl-4 col-lg-6 col-4">
+                    <div class="row gutters-10 align-items-center hov-scale-img hov-shadow-md overflow-hidden has-transition gap-3">
+                        <div class="col-xl-6 col-lg-6 col-6">
                             <!-- Image -->
                             <a href="{{ route('product', $top_product->slug) }}"
                                 class="d-block text-reset">
-                                <img class="img-fit lazyload h-80px h-md-150px h-lg-80px has-transition"
+                                <img class="img-fit lazyload h-80px h-md-150px h-lg-80px has-transition "
                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                     data-src="{{ uploaded_asset($top_product->thumbnail_img) }}"
                                     alt="{{ $top_product->getTranslation('name') }}"
-                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" width="100%">
                             </a>
                         </div>
-                        <div class="col text-left">
+                        <div class="col-6 text-center ">
                             <!-- Product name -->
                             <div class="d-lg-none d-xl-block mb-3">
                                 <h4 class="fs-14 fw-400 text-truncate-2">

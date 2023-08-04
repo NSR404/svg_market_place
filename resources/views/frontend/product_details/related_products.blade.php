@@ -15,7 +15,7 @@
                         <div class="">
                             <a href="{{ route('product', $related_product->slug) }}"
                                 class="d-block">
-                                <img class="img-fit lazyload mx-auto h-140px h-md-190px has-transition"
+                                <img id="related_img" class="img-fit lazyload mx-auto h-140px h-md-190px has-transition"
                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                     data-src="{{ uploaded_asset($related_product->thumbnail_img) }}"
                                     alt="{{ $related_product->getTranslation('name') }}"
